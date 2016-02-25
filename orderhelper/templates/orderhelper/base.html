@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comenzi</title>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+<body>
+
+<!-- Navigation sidebar -->  
+  <div id="wrapper">      
+        <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul id="sidebar_menu" class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a id="menu-toggle" href="#">Menu
+            <span id="main_icon" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ul>
+      <ul class="sidebar-nav" id="sidebar">     
+        <li>
+          <a href="{% url 'add_home' %}">Add
+            <span id="sub_icon" class="glyphicon glyphicon-plus"></span>
+            </a>
+        </li>
+        <li class="current">
+          <a href="{% url 'pending_comanda' %}">Pending
+            <span id="sub_icon" class="glyphicon glyphicon-tasks"></span>
+          </a>
+        </li>
+        <li>
+           <a href="{% url 'order_history' %}">History
+            <span id="sub_icon" class="glyphicon glyphicon-book"></span>
+          </a>
+        </li>
+        <li>
+          <a>Export
+            <span id="sub_icon" class="glyphicon glyphicon-export"></span>
+          </a>
+        </li>
+        <li>
+          <a onclick="location.reload();location.href='search.html'">Search
+            <span id="sub_icon" class="glyphicon glyphicon-search"></span>
+          </a>
+        </li>
+        <li>
+          <a onclick="location.reload();location.href='profile.html'">Profile
+          <span id="sub_icon" class="glyphicon glyphicon-user"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- end Navigation sidebar -->  
+
+  <div class="container">
+  {% block content %}
+  {% endblock %}  
+
+	</div>	
+
+	 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+    <script src="{% static 'js/ie10-viewport-bug-workaround.js' %>"</script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'orderhelper/base.html' %}
+
+	{% block content %}
+	{% if user.is_authenticated %}
+	<h1 class="sub-header">Orders history</h1>
+	<br /><br />
+
+	<div class="list-group">
+
+		{% for comanda in comenzi %}
+		<button type="button" class="list-group-item">
+			<!-- {{ comanda.is_late }} -->
+			{% if comanda.is_late < 0 %}
+				<p>late!</p>
+			{% endif %}
+            <h4 class="list-group-item-heading"><a href="{% url 'comanda_subcomenzi' pk=comanda.pk %}"> Comanda: {{ comanda.numar_unic }}</a></h4>
+			<div class="table-responsive">
+            <table class="table">
+              	<thead>
+	                <tr>
+	                  <th>Data</th>
+	                  <th>Obiect</th>
+	                  <th>Solicitant</th>
+	                  <th>Proiect</th>
+	                  <th>Data livrare</th>
+	                </tr>
+              	</thead>
+               <tbody>
+	                <tr>
+	                  <td>{{ comanda.data }}</td>
+	                  <td>{{ comanda.obiect_succint }}</td>
+	                  <td>{{ comanda.solicitant }}</td>
+	                  <td>{{ comanda.proiect }}</td>
+	                  <td>{{ comanda.data_livrare }}</td>
+	                </tr>
+                </tbody>
+            </table>     
+        </button>
+        </br>
+        {% endfor %}  
+    </div>
+
+    <nav>
+	  <ul class="pagination">
+	    {% if comenzi.has_previous %}
+	    <li><a href="?page={{ comanda.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+	    {% endif %}
+	    <li class="active"><a href="#">{{ comenzi.number }}<span class="sr-only"></span></a></li>
+	    {% if comenzi.has_next %}
+	    	<li><a href="?page={{ comenzi.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+	    {% endif %}
+	  </ul>
+	</nav>
+
+    {% endif %}
+    {% endblock %}
