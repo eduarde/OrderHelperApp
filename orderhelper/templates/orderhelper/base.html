@@ -13,59 +13,50 @@
 </head>
 <body>
 
-<!-- Navigation sidebar -->  
-  <div id="wrapper">      
-        <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <ul id="sidebar_menu" class="sidebar-nav">
-        <li class="sidebar-brand">
-          <a id="menu-toggle" href="#">Menu
-            <span id="main_icon" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-          </a>
-        </li>
-      </ul>
-      <ul class="sidebar-nav" id="sidebar">     
-        <li>
-          <a href="{% url 'dashboard' %}">Board
-            <span id="sub_icon" class="glyphicon glyphicon-plus"></span>
-            </a>
-        </li>
-        <li class="current">
-          <a href="{% url 'pending_comanda' %}">Pending
-            <span id="sub_icon" class="glyphicon glyphicon-tasks"></span>
-          </a>
-        </li>
-        <li>
-           <a href="{% url 'order_history' %}">History
-            <span id="sub_icon" class="glyphicon glyphicon-book"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#">Export
-            <span id="sub_icon" class="glyphicon glyphicon-export"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#">Search
-            <span id="sub_icon" class="glyphicon glyphicon-search"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#">Profile
-          <span id="sub_icon" class="glyphicon glyphicon-user"></span>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <nav class="navbar navbar-fixed-top navbar-inverse">
+    <div role="navbar_order" class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">OrderHelper</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li class="current"><a href="{% url 'pending_comanda' %}">Pending</a></li>
+          <li><a href="{% url 'order_history' %}">History</a></li>
+          <li><a href="#">Export</a></li>
+          <li><a href="#">Search</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+  </nav><!-- /.navbar -->
 
-    <!-- end Navigation sidebar -->  
-
-  <div class="container">
+  <div role="main" class="container">
   {% block content %}
   {% endblock %}  
 
+
+  <!-- FOOTER -->
+  
+
 	</div>	
-   </div>
+
+
+  <div id="footer" class="container">
+   <hr class="featurette-divider">
+    <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2016 Eduard Erja. &middot; <a href="https://twitter.com/yippeeEd" class="twitter-follow-button" data-show-count="false">Follow @yippeeEd</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> &middot; <!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/eduarde" aria-label="Follow @eduarde on GitHub">Follow @eduarde</a></p>
+    </footer>
+  </div>
 
 	 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %>"</script>
@@ -75,6 +66,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/menu.js' %}"></script>
-
+    <!-- Place this tag right after the last button or just before your close body tag. -->
+    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
