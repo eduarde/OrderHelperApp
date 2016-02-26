@@ -26,7 +26,7 @@
       </ul>
       <ul class="sidebar-nav" id="sidebar">     
         <li>
-          <a href="{% url 'add_home' %}">Add
+          <a href="{% url 'dashboard' %}">Board
             <span id="sub_icon" class="glyphicon glyphicon-plus"></span>
             </a>
         </li>
@@ -41,22 +41,23 @@
           </a>
         </li>
         <li>
-          <a>Export
+          <a href="#">Export
             <span id="sub_icon" class="glyphicon glyphicon-export"></span>
           </a>
         </li>
         <li>
-          <a onclick="location.reload();location.href='search.html'">Search
+          <a href="#">Search
             <span id="sub_icon" class="glyphicon glyphicon-search"></span>
           </a>
         </li>
         <li>
-          <a onclick="location.reload();location.href='profile.html'">Profile
+          <a href="#">Profile
           <span id="sub_icon" class="glyphicon glyphicon-user"></span>
           </a>
         </li>
       </ul>
     </div>
+
     <!-- end Navigation sidebar -->  
 
   <div class="container">
@@ -64,6 +65,7 @@
   {% endblock %}  
 
 	</div>	
+   </div>
 
 	 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %>"</script>

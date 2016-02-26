@@ -12,6 +12,7 @@ def pending_comanda(request):
 	comenzi = Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('data')
 	return render(request,'orderhelper/pending_comanda.html', {'comenzi':comenzi})
 
+@login_required
 def comanda_subcomenzi(request, pk):
 	comanda = get_object_or_404(Comanda, pk=pk)
 	# subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=476)
@@ -19,14 +20,16 @@ def comanda_subcomenzi(request, pk):
 	comanda = Comanda.objects.get(pk=pk)
 	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
 
-
+@login_required
 def persoana_new(request):
 	form = PersoanaForm()
 	return render(request,'orderhelper/persoana_new.html', {'form': form})
 
-def add_home(request):
-	return render(request,'orderhelper/add_home.html', {})
+@login_required
+def dashboard(request):
+	return render(request,'orderhelper/dashboard.html', {})
 
+@login_required
 def order_history(request):
 	groups_list = request.user.groups.all()
 	comenda_list = Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
