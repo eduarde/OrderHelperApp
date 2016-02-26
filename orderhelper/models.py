@@ -128,7 +128,10 @@ class Comanda(models.Model):
 		subcomenzi_finished = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic,status__text='Inchis').count()
 		if subcomenzi_total == 0:
 			return 0
-		return ( subcomenzi_finished * 100 ) / subcomenzi_total	
+		return ( subcomenzi_finished * 100 ) / subcomenzi_total
+
+	def show_subcomenzi(self):
+		return Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic)
 		
 	def __str__(self):
 		return 'Comanda #' + str(self.numar_unic)

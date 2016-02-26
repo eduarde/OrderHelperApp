@@ -5,43 +5,62 @@
 	<h1 class="sub-header">Pending orders</h1>
 	<br /><br />
 
-	<div class="list-group">
 
-		{% for comanda in comenzi %}
-		<button type="button" class="list-group-item{% if comanda.is_late %} list-group-item-danger {% endif %} {% if comanda.is_today %}  list-group-item-warning {% endif %}">
-			
-            <h4 class="list-group-item-heading"><a href="{% url 'comanda_subcomenzi' pk=comanda.pk %}"> Comanda: {{ comanda.numar_unic }}</a></h4>
-            <div class="progress">
-  				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: {{ comanda.calculate_progress }}%">
-    			<span class="sr-only">60% Complete (warning)</span>
-  				</div>
-			</div>
-			<div class="table-responsive">
-            <table class="table">
-              	<thead>
-	                <tr>
-	                  <th>Data</th>
-	                  <th>Obiect</th>
-	                  <th>Solicitant</th>
-	                  <th>Proiect</th>
-	                  <th>Data livrare</th>
-	                </tr>
-              	</thead>
-               <tbody>
-	                <tr>
-	                  <td>{{ comanda.data }}</td>
-	                  <td>{{ comanda.obiect_succint }}</td>
-	                  <td>{{ comanda.solicitant }}</td>
-	                  <td>{{ comanda.proiect }}</td>
-	                  <td>{{ comanda.data_livrare }}</td>
-	                </tr>
-                </tbody>
-            </table>     
-        </button>
-        </br>
-        {% endfor %}  
-    </div>
+	<div class="list-group">
+	{% for comanda in comenzi %}	
+		  <div class="panel {% if comanda.is_late %} panel-danger {% else %} {% if comanda.is_today %} panel-warning {% else %} panel-default {% endif %}{% endif %}">
+		    <div class="panel-heading" role="tab" id="headingOne">
+		      <h4 class="panel-title">
+		        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ comanda.pk }}" aria-expanded="false" aria-controls="{{ comanda.pk }}">
+		        	<h4>Comanda: {{ comanda.numar_unic }}</h4>
+		        	<div class="progress">
+  						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: {{ comanda.calculate_progress }}%">
+    						<span class="sr-only">60% Complete (warning)</span>
+  						</div>
+					</div>
+
+		        	<div class="row">
+				   		
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Data">{{ comanda.data }}</div>
+				   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Preluare">{{ comanda.preluat }}</div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ comanda.data_livrare }}</div>
+				   		
+		   			</div>	
+		        </a>
+		      </h4>
+		    </div>
+
+		    <div id="{{ comanda.pk }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		      <div class="panel-body">
+		      	<div class="list-group">
+		        {% for subcomanda in comanda.show_subcomenzi %}
+		   			 <button type="button" class="list-group-item">
+		   			 	<div class="row">
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cod reper">{{ subcomanda.reper.cod_reper }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Reper">{{ subcomanda.reper.reper }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">{{ subcomanda.cantitate }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
+		   			 		</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div>
+		   			 	</div>	
+
+		   			 </button>
+		        
+		        {% endfor %}
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		   {% endfor %}  
+		</div>	
     {% endif %}
     {% endblock %}
-	
-	
