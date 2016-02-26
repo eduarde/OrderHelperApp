@@ -2,6 +2,7 @@
 
 
 	{% block content %}
+  {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard</h1>
 	<br />
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
@@ -40,4 +41,5 @@
             </div>
           </div>
           </div>
-             {% endblock %}
+{% endif %}
+{% endblock %}
