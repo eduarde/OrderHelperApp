@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Comanda, Subcomanda
-from .forms import PersoanaForm
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -44,3 +44,69 @@ def order_history(request):
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		comenzi = paginator.page(paginator.num_pages)
 	return render(request,'orderhelper/order_history.html', {'comenzi' : comenzi})
+
+@login_required
+def proiect_all(request):
+	groups_list = request.user.groups.all()
+	proiecte = Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	if request.method == "POST":
+		form = ProiectForm(request.POST)
+		if form.is_valid():
+			proiect = form.save(commit=True)
+			proiect.save()
+			return redirect('proiect_all')
+	else:
+		form = ProiectForm()
+
+	return render(request,'orderhelper/proiect_all.html', {'proiecte':proiecte, 'form': form})
+
+@login_required
+def furnizor_all(request):
+	groups_list = request.user.groups.all()
+	furnizori = Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	if request.method == "POST":
+		form = FurnizorForm(request.POST)
+		if form.is_valid():
+			furnizor = form.save(commit=True)
+			furnizor.save()
+			return redirect('furnizor_all')
+	else:
+		form = FurnizorForm()
+
+	return render(request,'orderhelper/furnizor_all.html', {'furnizori':furnizori, 'form': form})
+
+
+@login_required
+def producator_all(request):
+	groups_list = request.user.groups.all()
+	producatori = Producator.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	if request.method == "POST":
+		form = ProducatorForm(request.POST)
+		if form.is_valid():
+			producator = form.save(commit=True)
+			producator.save()
+			return redirect('producator_all')
+	else:
+		form = ProducatorForm()
+
+	return render(request,'orderhelper/producator_all.html', {'producatori':producatori, 'form': form})
+
+@login_required
+def reper_all(request):
+	groups_list = request.user.groups.all()
+	reperi = Reper.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	if request.method == "POST":
+		form = ReperForm(request.POST)
+		if form.is_valid():
+			reper = form.save(commit=True)
+			reper.save()
+			return redirect('reper_all')
+	else:
+		form = ReperForm()
+
+	return render(request,'orderhelper/reper_all.html', {'reperi':reperi, 'form': form})
+

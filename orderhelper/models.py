@@ -14,6 +14,7 @@ class Persoana(models.Model):
 	nume = models.CharField('Nume', max_length=100)
 	prenume = models.CharField('Prenume', max_length=100)
 	telefon = models.CharField('Telefon', max_length=10)
+	group = models.ManyToManyField(Group, related_name='persoanas')
 
 	def __str__(self):
 		return self.nume + ' ' + self.prenume;
@@ -21,7 +22,7 @@ class Persoana(models.Model):
 class Proiect(models.Model):
 	titlu = models.CharField('Denumire', max_length=255)
 	descriere = models.TextField('Descriere', blank=True, null=True)
-	telefon = models.CharField('Telefon', max_length=10, blank=True, null=True)
+	group = models.ManyToManyField(Group, related_name='proiects')
 
 	def __str__(self):
 		return self.titlu
@@ -30,6 +31,7 @@ class Producator(models.Model):
 	nume = models.CharField('Nume', max_length=255)
 	descriere = models.TextField('Descriere', blank=True, null=True)
 	telefon = models.CharField('Telefon', max_length=10, blank=True, null=True)
+	group = models.ManyToManyField(Group, related_name='producators')
 
 	def __str__(self):
 		return self.nume
@@ -38,6 +40,7 @@ class Furnizor(models.Model):
 	nume = models.CharField('Nume', max_length=255)
 	descriere = models.TextField('Descriere', blank=True, null=True)
 	telefon = models.CharField('Telefon', max_length=10, blank=True, null=True)
+	group = models.ManyToManyField(Group, related_name='furnizors')
 
 	def __str__(self):
 		return self.nume
@@ -57,6 +60,7 @@ class ModPlata(models.Model):
 class Reper(models.Model):
 	cod_reper = models.CharField('Cod reper', max_length=100, null=True)
 	reper = models.TextField('Reper',null=True)
+	group = models.ManyToManyField(Group, related_name='repers')
 
 	def __str__(self):
 		return self.cod_reper
@@ -80,6 +84,7 @@ class Subcomanda(models.Model):
 	data_de_facturare = models.DateField('Data de facturare', null=True, blank=True)
 	termen_plata = models.ForeignKey('TermenPlata', null=True)
 	mod_plata = models.ForeignKey('ModPlata', null=True)
+	group = models.ManyToManyField(Group, related_name='subcomandas')
 
 	def pret_total(self):
 		self.pret * self.cantitate
