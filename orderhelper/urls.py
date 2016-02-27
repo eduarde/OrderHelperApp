@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^furnizor/all/$', views.furnizor_all, name='furnizor_all'),
     url(r'^producator/all/$', views.producator_all, name='producator_all'),
     url(r'^reper/all/$', views.reper_all, name='reper_all'),
+    url(r'^logout/$', views.logout_page, name='logout_page'),
 ]

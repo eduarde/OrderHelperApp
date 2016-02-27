@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
 
 @login_required
 def pending_comanda(request):
@@ -109,4 +111,9 @@ def reper_all(request):
 		form = ReperForm()
 
 	return render(request,'orderhelper/reper_all.html', {'reperi':reperi, 'form': form})
+
+@login_required
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 

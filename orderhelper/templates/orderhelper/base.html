@@ -31,7 +31,21 @@
           <li><a href="{% url 'order_history' %}">History</a></li>
           <li><a href="#">Export</a></li>
           <li><a href="#">Search</a></li>
-          <li><a href="#">Profile</a></li>
+          <li>
+            <div id="profile">
+              <!-- Split button -->
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                 {{ user.last_name }}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="#">Change password</a></li>
+                  <li><a href="/logout/">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
         </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->

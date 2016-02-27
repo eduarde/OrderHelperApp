@@ -186,10 +186,19 @@ body{
   margin-top: 15px;
 }
 
+button#profileDropdown.btn.btn-default.dropdown-toggle{
+  background-color: #222222;
+  color: white;
+  size: 2px;
+  border-color: #222222;
+  padding-top: 14px;
+}
+
 #footer{
   margin-top: 6%;
   margin-bottom: 2%;
 }
+
 
 @media (max-width:767px) {
     #wrapper {
