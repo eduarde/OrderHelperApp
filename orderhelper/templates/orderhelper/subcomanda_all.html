@@ -1,0 +1,87 @@
+{% extends 'orderhelper/base.html' %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+	<h1 class="sub-header">Dashboard - <em> Subcomanda </em> </h1>
+
+	<br /> <br />
+	<div class="btn-group" role="group" aria-label="...">
+ 		<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add</button>
+  		<button type="button" class="btn btn-default disabled">Update</button>
+  		<button type="button" class="btn btn-default disabled">Delete</button>
+	</div>
+	<br /> <br />
+	<hr class="featurette-divider">
+
+	<div class="table-responsive">
+		<table class="table">
+		    <thead>
+			    <tr>
+			    	<th></th>
+			    	<th>ID</th>
+			        <th>Comanda</th>
+			        <th>Status</th>
+			        <th>Producator</th>
+			        <th>Cod reper</th>
+			        <th>Reper</th>
+			        <th>Link</th>
+			        <th>Furnizor</th>
+			        <th>Cantitate</th>
+			        <th>Data Livare</th>
+			      	<th>Pret</th>
+			      	<th>Termen Plata</th>
+			      	<th>Mod plata</th>
+ 				</tr>
+		    </thead>
+		    <tbody>
+		              
+			{% for subcomanda in subcomenzi %}			
+			<tr>         
+				<td><input type="checkbox" aria-label="select"></td>  
+			    <td>{{ subcomanda.pk }}</td>
+				<td>{{ subcomanda.comanda_ref.numar_unic }}</td>
+				<td><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></td>
+				<td>{{ subcomanda.producator }}</td>
+				<td>{{ subcomanda.reper.cod_reper }}</td>
+				<td>{{ subcomanda.reper.reper }}</td>
+				 <td><a href="{{ subcomanda.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
+				<td>{{ subcomanda.furnizor }}</td>
+				<td>{{ subcomanda.cantitate }}</td>
+				<td>{{ subcomanda.data_livrare }}</td>
+				<td>{{ subcomanda.pret }}</td>
+				<td>{{ subcomanda.termen_plata }}</td>
+				<td>{{ subcomanda.mod_plata }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>     	
+	</div>
+
+<!-- modal to add proiect -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	    <form method="POST" class="proiect-form">{% csrf_token %}
+	    	<div class="modal-header">
+
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Adauga furnizor</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div class="row">
+          			<div class="col-md-6">
+	        			{{ form.as_p }}
+	        		</div>
+	        	</div>		
+	      	</div>
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+	      	</div>
+	    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+  {% endif %}
+{% endblock %}

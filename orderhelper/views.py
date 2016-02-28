@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
+from datetime import date, datetime, timedelta
 
 @login_required
 def pending_comanda(request):
@@ -117,3 +118,15 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+@login_required
+def comanda_all(request):
+	groups_list = request.user.groups.all()
+	comenzi = Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+	return render(request,'orderhelper/comanda_all.html', {'comenzi':comenzi})
+
+@login_required
+def subcomanda_all(request):
+	groups_list = request.user.groups.all()
+	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list).order_by('pk')
+	# subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data_livrare__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+	return render(request,'orderhelper/subcomanda_all.html', {'subcomenzi':subcomenzi})

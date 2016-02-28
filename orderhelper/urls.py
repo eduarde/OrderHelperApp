@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^producator/all/$', views.producator_all, name='producator_all'),
     url(r'^reper/all/$', views.reper_all, name='reper_all'),
     url(r'^logout/$', views.logout_page, name='logout_page'),
+    url(r'^comanda/all/$', views.comanda_all, name='comanda_all'),
+    url(r'^subcomanda/all/$', views.subcomanda_all, name='subcomanda_all'),
 ]

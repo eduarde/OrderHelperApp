@@ -11,12 +11,12 @@
 
           <div class="row placeholders">
             <div id="bubble" class="col-sm-6 col-md-4 placeholder">
-              <img src="{% static 'img/comanda.jpg' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <a href="{% url 'comanda_all' %}">  <img src="{% static 'img/comanda.jpg' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4>Comanda</h4>
             <!--   <span class="text-muted">adauga comanda noua</span> -->
             </div>
             <div id="bubble" class="col-sm-6 col-md-4 placeholder">
-              <img src="{% static 'img/subcomanda.jpg' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <a href="{% url 'subcomanda_all' %}"> <img src="{% static 'img/subcomanda.jpg' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4>Subcomanda</h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
