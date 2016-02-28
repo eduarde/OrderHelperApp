@@ -136,16 +136,25 @@ def comanda_new(request):
 	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
 	if request.method == "POST":
-		form = ComandaForm(request.POST)
-		if form.is_valid():
-			comanda = form.save(commit=False)
-			comanda.status = status_deschis
-			comanda.data = datetime.now()
-			comanda.preluat = request.user
-			comanda.save()
-			form.save_m2m()
-			return redirect('comanda_all')
+		if 'newcomanda' in request.POST:
+			comandaform = ComandaForm(request.POST)
+			if comandaform.is_valid():
+				comanda = comandaform.save(commit=False)
+				comanda.status = status_deschis
+				comanda.data = datetime.now()
+				comanda.preluat = request.user
+				comanda.save()
+				comandaform.save_m2m()
+				return redirect('comanda_all')
+			proiectform = ProiectForm()
+		elif 'newproiect' in request.POST:
+			proiectform = ProiectForm(request.POST)
+			if proiectform.is_valid():
+				proiect = proiectform.save(commit=True)
+				proiect.save()
+			comandaform = ComandaForm()
 	else:
-		form = ComandaForm()
+		comandaform = ComandaForm()
+		proiectform = ProiectForm()
 
-	return render(request,'orderhelper/comanda_new.html', {'form': form})
+	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform, 'proiectform':proiectform})

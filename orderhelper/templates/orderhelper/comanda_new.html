@@ -12,16 +12,16 @@
 	    
 	    <div class="row">
           	<div class="col-md-6">
-	        	{{ form.as_p }}
+	        	{{ comandaform.as_p }}
 	        </div>
 	        <div class="col-md-2"></div>
 	         <div id="bubble" class="col-md-2 placeholder">
-              <img src="{% static 'img/subcomanda.jpg' %}" data-toggle="modal" data-target="#myModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+              <img src="{% static 'img/subcomanda.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4><span class="glyphicon glyphicon-plus"> solicitant</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
             <div id="bubble" class="col-md-2 placeholder">
-              <a href="{% url 'subcomanda_all' %}"> <img src="{% static 'img/proiect.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+              <img src="{% static 'img/proiect.jpg' %}" data-toggle="modal" data-target="#myModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail">
                 <h4><span class="glyphicon glyphicon-plus"> proiect</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
@@ -29,8 +29,8 @@
 	     
 	    <div class="row"> 
 	      	<div class="col-md-6">
-	      		<button type="button" class="btn btn-default" >Cancel</button>
-		        <button type="submit" class="btn btn-primary">Save changes</button>
+	      		<button type="button" class="btn btn-default">Cancel</button>
+		        <button type="submit" name="newcomanda" class="btn btn-primary">Save changes</button>
 		    </div>
 		</div>
 	      	
@@ -50,13 +50,13 @@
 	      	<div class="modal-body">
 	      		<div class="row">
           			<div class="col-md-6">
-	        			{{ form.as_p }}
+	        			{{ proiectform.as_p }}
 	        		</div>
 	        	</div>		
 	      	</div>
 	      	<div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" class="btn btn-primary">Save changes</button>
+		        <button type="submit" name="newproiect" class="btn btn-primary">Save changes</button>
 	      	</div>
 	    </form>
     </div><!-- /.modal-content -->
