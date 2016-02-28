@@ -21,13 +21,13 @@
 			                  <th>Producator</th>
 			                  <th>Cod reper</th>
 			                  <th>Reper</th>
+			                  <th>Link</th>
 			                  <th>Furnizor</th>
 			                  <th>Cantitate</th>
 			                  <th>Data livrare</th>
 			                  <th>Data primire</th>
 			                  <th>Pret</th>
 			                  <th>Pret Total</th>
-			                  <th>Link</th>
 			                  <th>Termen Plata</th>
 			                  <th>Mod plata</th>
 			                </tr>
@@ -58,13 +58,13 @@
 			                  <td>{{ subcomanda.producator }}</td>
 			                  <td>{{ subcomanda.reper.cod_reper }}</td>
 			                  <td>{{ subcomanda.reper.reper }}</td>
+			                   <td><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
 			                  <td>{{ subcomanda.furnizor }}</td>
 			                  <td>{{ subcomanda.cantitate }}</td>
 			                  <td>{{ subcomanda.data_livrare }}</td>
 			                  <td>{{ subcomanda.data_primire }}</td>
 			                  <td>{{ subcomanda.pret }}</td>
-			                  <td>{{ subcomanda.pret }}</td>
-			                  <td><a href="{{ subcomanda.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
+			                  <td>{{ subcomanda.pret_total }}</td>
 			                  <td>{{ subcomanda.termen_plata }}</td>
 			                  <td>{{ subcomanda.mod_plata }}</td>
 			                </tr>

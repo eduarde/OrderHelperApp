@@ -25,7 +25,7 @@
 				   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Preluare">{{ comanda.preluat }}</div>
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ comanda.data_livrare }}</div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} RON</div>
 				   		
 		   			</div>	
 		        </a>
@@ -34,23 +34,24 @@
 
 		    <div id="{{ comanda.pk }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 		      <div class="panel-body">
-		      	<div class="list-group">
+		      	<div class="list-group ">
 		        {% for subcomanda in comanda.show_subcomenzi %}
-		   			 <button type="button" class="list-group-item">
+		   			 <button type="button" class="list-group-item {%if subcomanda.is_late %}list-group-item-danger{% endif %} {%if subcomanda.is_today %}list-group-item-warning{% endif %} ">
 		   			 	<div class="row">
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cod reper">{{ subcomanda.reper.cod_reper }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Reper">{{ subcomanda.reper.reper }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">{{ subcomanda.cantitate }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
 		   			 		</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} </div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret Total">{{ subcomanda.pret_total }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
+		   			 		<!-- <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
+		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div> -->
 		   			 	</div>	
 
 		   			 </button>

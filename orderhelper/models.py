@@ -60,6 +60,7 @@ class ModPlata(models.Model):
 class Reper(models.Model):
 	cod_reper = models.CharField('Cod reper', max_length=100, null=True)
 	reper = models.TextField('Reper',null=True)
+	link = models.URLField('Link',blank=True,null=True)
 	group = models.ManyToManyField(Group, related_name='repers')
 
 	def __str__(self):
@@ -75,27 +76,27 @@ class Subcomanda(models.Model):
 	cantitate = models.DecimalField('Cantitate', default=0, max_digits=9, decimal_places=0, null=True)
 	data_livrare = models.DateField('Data livrare',null=True)
 	data_primire = models.DateField('Data primire',blank=True, null=True)
-	pret = models.DecimalField('Pret', default=0, max_digits=9, decimal_places=6, null=True)
-	link = models.URLField('Link',blank=True,null=True)
-	facturat = models.DecimalField('Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	de_facturat = models.DecimalField('De facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	tva_facturat = models.DecimalField('TVA Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	tva_de_facturat = models.DecimalField('TVA de Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	data_de_facturare = models.DateField('Data de facturare', null=True, blank=True)
+	pret = models.DecimalField('Pret', default=0, max_digits=9, decimal_places=2, null=True)
+
+	def set_pret_total(self):
+		return self.pret * self.cantitate
+
+	pret_total = property(set_pret_total)
 	termen_plata = models.ForeignKey('TermenPlata', null=True)
 	mod_plata = models.ForeignKey('ModPlata', null=True)
 	group = models.ManyToManyField(Group, related_name='subcomandas')
-
-	def pret_total(self):
-		self.pret * self.cantitate
 
 	def calculate_late(self):
 		self.data_primire - self.data_livrare 	
 
 	def is_late(self):
+		if self.status.text != 'Deschis':
+			return False
 		return date.today().isoformat() > self.data_livrare.isoformat()
 
 	def is_today(self):
+		if self.status.text != 'Deschis':
+			return False
 		return date.today().isoformat() == self.data_livrare.isoformat()	
 
 	def __str__(self):
@@ -110,23 +111,33 @@ class Comanda(models.Model):
 	solicitant = models.ForeignKey('Persoana',null=True, verbose_name='Solicitant')
 	# cc = models.ForeignKey('Persoana', null=True, blank=True, verbose_name='CC')
 	preluat = models.ForeignKey('auth.User', verbose_name='Preluare', null=True)
-	data_livrare = models.DateField('Data livrare', null=True)
-	data_primire = models.DateField('Data primire', null=True,blank=True)
 	proiect = models.ForeignKey('Proiect', null=True)
-	facturat = models.DecimalField('Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	de_facturat = models.DecimalField('De facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	tva_facturat = models.DecimalField('TVA Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
-	tva_de_facturat = models.DecimalField('TVA de Facturat', default=0, max_digits=9, decimal_places=6, null=True, blank=True)
+
+	def set_pret_total(self):
+		subcomenzi = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__numar_unic=self.numar_unic)
+		total = 0
+		for subcomanda in subcomenzi:
+			total += subcomanda.pret_total
+		return total
+
+	pret_total = property(set_pret_total)
+	data_primire = models.DateField('Data primire',blank=True, null=True)
 	group = models.ManyToManyField(Group, related_name='coamandas')
-	# autor = models.ForeignKey('auth.User', verbose_name='Autor', null=True)
-	#total = property(make_total)
 
 
 	def is_late(self):
-		return date.today().isoformat() > self.data_livrare.isoformat()
+		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic, status__text='Deschis')
+		for subcomanda in subcomenzi:
+			if date.today().isoformat() > subcomanda.data_livrare.isoformat():
+				return True
+		return False
 
 	def is_today(self):
-		return date.today().isoformat() == self.data_livrare.isoformat()
+		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic, status__text='Deschis')
+		for subcomanda in subcomenzi:
+			if date.today().isoformat() == subcomanda.data_livrare.isoformat():
+				return True
+		return False
 
 	def calculate_progress(self):
 		subcomenzi_total = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic).count()

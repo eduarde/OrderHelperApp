@@ -21,6 +21,7 @@
 			    	<th>ID</th>
 			        <th>Cod reper</th>
 			        <th>Reper</th>
+			        <th>Link</th>
  				</tr>
 		    </thead>
 		    <tbody>
@@ -30,7 +31,8 @@
 				<td><input type="checkbox" aria-label="select"></td>  
 			    <td>{{ reper.pk }}</td>
 				<td>{{ reper.cod_reper }}</td>
-				<td>{{ reper.reper }}</td>		
+				<td>{{ reper.reper }}</td>
+				 <td><a href="{{ reper.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
 			</tr>
 			{% endfor %}
 			</tbody>

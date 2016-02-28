@@ -47,9 +47,10 @@ class ReperForm(forms.ModelForm):
 
 	class Meta:
 		model = Reper
-		fields = ('cod_reper','reper','group',)
+		fields = ('cod_reper','reper','link','group',)
 		widgets = {
 			'cod_reper': forms.TextInput(attrs={'class': 'form-control'}),
 			'reper': forms.TextInput(attrs={'class': 'form-control'}),
+			'link': forms.TextInput(attrs={'class': 'form-control'}),
             'group': forms.CheckboxSelectMultiple(),
         }
