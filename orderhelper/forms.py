@@ -6,7 +6,13 @@ class PersoanaForm(forms.ModelForm):
 
     class Meta:
         model = Persoana
-        fields = ('nume', 'prenume', 'telefon',)
+        fields = ('nume', 'prenume', 'telefon','group',)
+        widgets = {
+			'nume': forms.TextInput(attrs={'class': 'form-control'}),
+			'prenume': forms.TextInput(attrs={'class': 'form-control'}),
+			'telefon': forms.TextInput(attrs={'class': 'form-control'}),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
  
 class ProiectForm(forms.ModelForm):
 

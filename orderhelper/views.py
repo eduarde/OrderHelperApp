@@ -147,14 +147,25 @@ def comanda_new(request):
 				comandaform.save_m2m()
 				return redirect('comanda_all')
 			proiectform = ProiectForm()
+			solicitantform = PersoanaForm()
 		elif 'newproiect' in request.POST:
 			proiectform = ProiectForm(request.POST)
 			if proiectform.is_valid():
 				proiect = proiectform.save(commit=True)
 				proiect.save()
 			comandaform = ComandaForm()
+			solicitantform = PersoanaForm()
+		elif 'newsolicitant' in request.POST:
+			solicitantform = PersoanaForm(request.POST)
+			if solicitantform.is_valid():
+				solicitant = solicitantform.save(commit=True)
+				solicitant.save()
+			comandaform = ComandaForm()
+			proiectform = ProiectForm()
+
 	else:
 		comandaform = ComandaForm()
 		proiectform = ProiectForm()
+		solicitantform = PersoanaForm()
 
-	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform, 'proiectform':proiectform})
+	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})
