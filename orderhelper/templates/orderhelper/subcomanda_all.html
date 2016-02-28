@@ -19,10 +19,11 @@
 			    <tr>
 			    	<th></th>
 			    	<th>ID</th>
+			    	<th>Nr</th>
 			        <th>Comanda</th>
 			        <th>Status</th>
 			        <th>Producator</th>
-			        <th>Cod reper</th>
+			        <th>Cod</th>
 			        <th>Reper</th>
 			        <th>Link</th>
 			        <th>Furnizor</th>
@@ -40,6 +41,7 @@
 			<tr>         
 				<td><input type="checkbox" aria-label="select"></td>  
 			    <td>{{ subcomanda.pk }}</td>
+			    <td>#{{ subcomanda.numar_curent }}</td>
 				<td>{{ subcomanda.comanda_ref.numar_unic }}</td>
 				<td><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></td>
 				<td>{{ subcomanda.producator }}</td>

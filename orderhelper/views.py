@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm
+from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -130,3 +130,22 @@ def subcomanda_all(request):
 	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list).order_by('pk')
 	# subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data_livrare__gte=datetime.now()-timedelta(days=30)).order_by('pk')
 	return render(request,'orderhelper/subcomanda_all.html', {'subcomenzi':subcomenzi})
+
+@login_required
+def comanda_new(request):
+	status_deschis = Status.objects.all().filter(text='Deschis')[0]
+
+	if request.method == "POST":
+		form = ComandaForm(request.POST)
+		if form.is_valid():
+			comanda = form.save(commit=False)
+			comanda.status = status_deschis
+			comanda.data = datetime.now()
+			comanda.preluat = request.user
+			comanda.save()
+			form.save_m2m()
+			return redirect('comanda_all')
+	else:
+		form = ComandaForm()
+
+	return render(request,'orderhelper/comanda_new.html', {'form': form})

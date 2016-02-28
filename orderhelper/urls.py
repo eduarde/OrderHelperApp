@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^logout/$', views.logout_page, name='logout_page'),
     url(r'^comanda/all/$', views.comanda_all, name='comanda_all'),
     url(r'^subcomanda/all/$', views.subcomanda_all, name='subcomanda_all'),
+    url(r'^comanda/new/$', views.comanda_new, name='comanda_new'),
 ]

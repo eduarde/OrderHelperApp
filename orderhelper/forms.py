@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Persoana, Proiect, Furnizor, Producator, Reper
+from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda
 
 class PersoanaForm(forms.ModelForm):
 
@@ -16,7 +16,7 @@ class ProiectForm(forms.ModelForm):
 		widgets = {
 			'titlu': forms.TextInput(attrs={'class': 'form-control'}),
 			'descriere': forms.TextInput(attrs={'class': 'form-control'}),
-            'group': forms.CheckboxSelectMultiple(),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 class FurnizorForm(forms.ModelForm):
@@ -28,7 +28,7 @@ class FurnizorForm(forms.ModelForm):
 			'nume': forms.TextInput(attrs={'class': 'form-control'}),
 			'descriere': forms.TextInput(attrs={'class': 'form-control'}),
 			'telefon': forms.TextInput(attrs={'class': 'form-control'}),
-            'group': forms.CheckboxSelectMultiple(),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 class ProducatorForm(forms.ModelForm):
@@ -40,7 +40,7 @@ class ProducatorForm(forms.ModelForm):
 			'nume': forms.TextInput(attrs={'class': 'form-control'}),
 			'descriere': forms.TextInput(attrs={'class': 'form-control'}),
 			'telefon': forms.TextInput(attrs={'class': 'form-control'}),
-            'group': forms.CheckboxSelectMultiple(),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 class ReperForm(forms.ModelForm):
@@ -52,5 +52,18 @@ class ReperForm(forms.ModelForm):
 			'cod_reper': forms.TextInput(attrs={'class': 'form-control'}),
 			'reper': forms.TextInput(attrs={'class': 'form-control'}),
 			'link': forms.TextInput(attrs={'class': 'form-control'}),
-            'group': forms.CheckboxSelectMultiple(),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
+
+class ComandaForm(forms.ModelForm):
+
+	class Meta:
+		model = Comanda
+		fields = ('numar_unic','obiect_succint','solicitant','proiect','group',)
+		widgets = {
+			'numar_unic': forms.TextInput(attrs={'class': 'form-control'}),
+			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
+			'solicitant': forms.Select(attrs={'class': 'form-control'}),
+			'proiect': forms.Select(attrs={'class': 'form-control'}),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
+		}
