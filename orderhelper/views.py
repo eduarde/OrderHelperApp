@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -169,3 +169,49 @@ def comanda_new(request):
 		solicitantform = PersoanaForm()
 
 	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})
+
+
+@login_required
+def subcomanda_new(request):
+	status_deschis = Status.objects.all().filter(text='Deschis')[0]
+
+	if request.method == "POST":
+		if 'newsubcomanda' in request.POST:
+			subcomandaform = SubcomandaForm(request.POST)
+			if subcomandaform.is_valid():
+				subcomanda = subcomandaform.save(commit=False)
+				subcomanda.status = status_deschis
+				subcomanda.save()
+				subcomandaform.save_m2m()
+				return redirect('subcomanda_all')
+		elif 'newproducator' in request.POST:
+			producatorform = ProducatorForm(request.POST)
+			if producatorform.is_valid():
+				producator = producatorform.save(commit=True)
+				producator.save()
+			subcomandaform = SubcomandaForm()
+			furnizorform = FurnizorForm()
+			reperform = ReperForm()
+		elif 'newfurnizor' in request.POST:
+			furnizorform = FurnizorForm(request.POST)
+			if furnizorform.is_valid():
+				furnizor = furnizorform.save(commit=True)
+				furnizor.save()
+			subcomandaform = SubcomandaForm()
+			producatorform = ProducatorForm()
+			reperform = ReperForm()
+		elif 'newreper' in request.POST:
+			reperform = ReperForm(request.POST)
+			if reperform.is_valid():
+				reper = reperform.save(commit=True)
+				reper.save()
+			subcomandaform = SubcomandaForm()
+			producatorform = ProducatorForm()
+			furnizorform = FurnizorForm()
+	else:
+		subcomandaform = SubcomandaForm()
+		producatorform = ProducatorForm()
+		furnizorform = FurnizorForm()
+		reperform = ReperForm()
+
+	return render(request,'orderhelper/subcomanda_new.html', {'subcomandaform':subcomandaform, 'producatorform':producatorform, 'furnizorform':furnizorform, 'reperform':reperform})

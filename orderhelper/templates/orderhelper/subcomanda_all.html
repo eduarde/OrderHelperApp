@@ -4,9 +4,11 @@
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard - <em> Subcomanda </em> </h1>
 
+
+
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add</button>
+ 		<a href="{% url 'subcomanda_new' %}" type="button" class="btn btn-primary">Add</a>
   		<button type="button" class="btn btn-default disabled">Update</button>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
@@ -60,32 +62,6 @@
 			</tbody>
 		</table>     	
 	</div>
-
-<!-- modal to add proiect -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <form method="POST" class="proiect-form">{% csrf_token %}
-	    	<div class="modal-header">
-
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Adauga furnizor</h4>
-	      	</div>
-	      	<div class="modal-body">
-	      		<div class="row">
-          			<div class="col-md-6">
-	        			{{ form.as_p }}
-	        		</div>
-	        	</div>		
-	      	</div>
-	      	<div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" class="btn btn-primary">Save changes</button>
-	      	</div>
-	    </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
   {% endif %}
 {% endblock %}

@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^comanda/all/$', views.comanda_all, name='comanda_all'),
     url(r'^subcomanda/all/$', views.subcomanda_all, name='subcomanda_all'),
     url(r'^comanda/new/$', views.comanda_new, name='comanda_new'),
+    url(r'^subcomanda/new/$', views.subcomanda_new, name='subcomanda_new'),
 ]

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda
+from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda, Subcomanda
 
 class PersoanaForm(forms.ModelForm):
 
@@ -71,5 +71,24 @@ class ComandaForm(forms.ModelForm):
 			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
 			'solicitant': forms.Select(attrs={'class': 'form-control'}),
 			'proiect': forms.Select(attrs={'class': 'form-control'}),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
+		}
+
+class SubcomandaForm(forms.ModelForm):
+
+	class Meta:
+		model = Subcomanda
+		fields = ('comanda_ref','numar_curent','producator','reper','furnizor','cantitate','pret','termen_plata','mod_plata','data_livrare','group',)
+		widgets = {
+			'comanda_ref': forms.Select(attrs={'class': 'form-control'}),
+			'numar_curent': forms.NumberInput(attrs={'class': 'form-control'}),
+			'producator': forms.Select(attrs={'class': 'form-control'}),
+			'reper': forms.Select(attrs={'class': 'form-control'}),
+			'furnizor': forms.Select(attrs={'class': 'form-control'}),
+			'cantitate': forms.NumberInput(attrs={'class': 'form-control'}),
+			'pret': forms.NumberInput(attrs={'class': 'form-control'}),
+			'termen_plata': forms.Select(attrs={'class': 'form-control'}),
+			'mod_plata': forms.Select(attrs={'class': 'form-control'}),
+			'data_livrare': forms.DateInput(attrs={'class':'datepicker'}),
             'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
