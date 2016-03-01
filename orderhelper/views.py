@@ -182,8 +182,11 @@ def subcomanda_new(request):
 			if subcomandaform.is_valid():
 				subcomanda = subcomandaform.save(commit=False)
 				subcomanda.status = status_deschis
-				last_subcomanda = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk')
-				subcomanda.numar_curent = last_subcomanda.numar_curent + 1
+				numar_curent = 0
+				if Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).exists(): 
+					numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk')
+					
+				subcomanda.numar_curent = numar_curent + 1
 				subcomanda.save()
 				subcomandaform.save_m2m()
 				return redirect('subcomanda_all')
