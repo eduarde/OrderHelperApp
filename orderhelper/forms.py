@@ -68,7 +68,7 @@ class ComandaForm(forms.ModelForm):
 		model = Comanda
 		fields = ('numar_unic','obiect_succint','solicitant','proiect','group',)
 		widgets = {
-			'numar_unic': forms.TextInput(attrs={'class': 'form-control'}),
+			'numar_unic': forms.NumberInput(attrs={'class': 'form-control'}),
 			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
 			'solicitant': forms.Select(attrs={'class': 'form-control'}),
 			'proiect': forms.Select(attrs={'class': 'form-control'}),
@@ -79,14 +79,13 @@ class SubcomandaForm(forms.ModelForm):
 
 	class Meta:
 		model = Subcomanda
-		fields = ('comanda_ref','numar_curent','producator','reper','furnizor','cantitate','pret','termen_plata','mod_plata','data_livrare','group',)
+		fields = ('comanda_ref','producator','reper','furnizor','cantitate','pret','termen_plata','mod_plata','data_livrare','group',)
 		dateOptions = {
 			'format': 'mm/dd/yyyy',
 			'autoclose': True
 		}
 		widgets = {
 			'comanda_ref': forms.Select(attrs={'class': 'form-control'}),
-			'numar_curent': forms.NumberInput(attrs={'class': 'form-control'}),
 			'producator': forms.Select(attrs={'class': 'form-control'}),
 			'reper': forms.Select(attrs={'class': 'form-control'}),
 			'furnizor': forms.Select(attrs={'class': 'form-control'}),
