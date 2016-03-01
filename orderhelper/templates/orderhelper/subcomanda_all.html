@@ -42,7 +42,7 @@
 		              
 			{% for subcomanda in subcomenzi %}			
 			<tr>         
-				<td><input type="checkbox" id="{{ subcomanda.pk }}" aria-label="select"></td>  
+				<td><input type="checkbox" id="{{ subcomanda.pk }}" link="{%  url 'comanda_subcomenzi' pk=subcomanda.pk  %}" aria-label="select"></td>  
 			    <td>{{ subcomanda.pk }}</td>
 			    <td>#{{ subcomanda.numar_curent }}</td>
 				<td>{{ subcomanda.comanda_ref.numar_unic }}</td>
@@ -69,19 +69,23 @@
 <script>
 		$(document).ready(function(){
 
-			var pk;
+			var link;
 
 			// Make call to edit 
 	        $("#update").click(function(){
-
-	        	/*if(pk)
-					$(location).attr('href', "{% url 'comanda_subcomenzi'  pk=post." + pk + " %}");*/
-			})
+	        if(pk) {
+	        	
+	    
+				$(location).attr('href', link );
+	        }
+	       
+			});
 
 	        // Get the checkboxes
 	        $( "input" ).on( "click", function() {
 
-	        	pk = $( "input:checked" ).attr('id');
+	        	
+	        	link = $( "input:checked" ).attr('link');
 
 	        	$("#update").removeClass('disabled')
 	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {

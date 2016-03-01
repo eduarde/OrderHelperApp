@@ -36,7 +36,7 @@ def dashboard(request):
 def order_history(request):
 	groups_list = request.user.groups.all()
 	comenda_list = Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
-	paginator = Paginator(comenda_list, 1)
+	paginator = Paginator(comenda_list, 5)
 	page = request.GET.get('page')
 	try:
 		comenzi = paginator.page(page)
