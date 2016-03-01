@@ -103,6 +103,7 @@ class Subcomanda(models.Model):
 	data_primire = models.DateField('Data primire',blank=True, null=True)
 	pret = models.DecimalField('Pret', default=0, max_digits=9, decimal_places=2, null=True)
 	valuta = models.ForeignKey('Valuta', null=True, verbose_name='Valuta')
+	data = models.DateField('Data',default=now())
 
 	def set_pret_total(self):
 		return self.pret * self.cantitate

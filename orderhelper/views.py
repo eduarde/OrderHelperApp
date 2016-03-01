@@ -127,8 +127,7 @@ def comanda_all(request):
 @login_required
 def subcomanda_all(request):
 	groups_list = request.user.groups.all()
-	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list).order_by('pk')
-	# subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data_livrare__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
 	return render(request,'orderhelper/subcomanda_all.html', {'subcomenzi':subcomenzi})
 
 @login_required
@@ -185,8 +184,9 @@ def subcomanda_new(request):
 				numar_curent = 0
 				if Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).exists(): 
 					numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk')
-					
+
 				subcomanda.numar_curent = numar_curent + 1
+				subcomanda.data = datetime.now()
 				subcomanda.save()
 				subcomandaform.save_m2m()
 				return redirect('subcomanda_all')
