@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Status, Persoana, Proiect, Producator, Furnizor, TermenPlata, ModPlata, Subcomanda, Reper, Comanda
+from .models import Status, Persoana, Proiect, Producator, Furnizor, TermenPlata, ModPlata, Subcomanda, Reper, Comanda, Valuta
 
+admin.site.register(Valuta)
 admin.site.register(Status)
 admin.site.register(Persoana)
 admin.site.register(Proiect)

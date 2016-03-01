@@ -1,6 +1,6 @@
 from django import forms
 from datetimewidget.widgets import DateWidget
-from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda, Subcomanda
+from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda, Subcomanda, Valuta
 
 
 class PersoanaForm(forms.ModelForm):
@@ -79,7 +79,7 @@ class SubcomandaForm(forms.ModelForm):
 
 	class Meta:
 		model = Subcomanda
-		fields = ('comanda_ref','producator','reper','furnizor','cantitate','pret','termen_plata','mod_plata','data_livrare','group',)
+		fields = ('comanda_ref','producator','reper','furnizor','cantitate','pret','valuta','termen_plata','mod_plata','data_livrare','group',)
 		dateOptions = {
 			'format': 'mm/dd/yyyy',
 			'autoclose': True
@@ -91,6 +91,7 @@ class SubcomandaForm(forms.ModelForm):
 			'furnizor': forms.Select(attrs={'class': 'form-control'}),
 			'cantitate': forms.NumberInput(attrs={'class': 'form-control'}),
 			'pret': forms.NumberInput(attrs={'class': 'form-control'}),
+			'valuta': forms.Select(attrs={'class': 'form-control'}),
 			'termen_plata': forms.Select(attrs={'class': 'form-control'}),
 			'mod_plata': forms.Select(attrs={'class': 'form-control'}),
 			'data_livrare': DateWidget(attrs={'id':"idlivrare"}, bootstrap_version=3, options = dateOptions),

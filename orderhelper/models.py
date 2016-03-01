@@ -4,8 +4,33 @@ from django.utils.timezone import now
 from datetime import date, timedelta
 from django.contrib.auth.models import Group
 
+class Valuta(models.Model):
+	DOLLARS = '$'
+	EURO = 'E'
+	RON = 'RON'
+
+	VALUTA_CHOICES = (
+		(DOLLARS, '$'),
+		(EURO, 'E'),
+		(RON, 'RON'),
+	)
+	text = models.CharField(max_length=5, choices=VALUTA_CHOICES, default=RON)
+
+	def __str__(self):
+		return self.text 
+
 class Status(models.Model):
-	text = models.CharField(max_length=200)
+	DESCHIS = 'Deschis'
+	INCHIS = 'Inchis'
+	ANULAT = 'Anulat'
+
+	STATUS_CHOICES = (
+		(DESCHIS, 'Deschis'),
+		(INCHIS, 'Inchis'),
+		(ANULAT, 'Anulat'),
+	)
+
+	text = models.CharField(max_length=20, choices=STATUS_CHOICES, default=DESCHIS)
 
 	def __str__(self):
 		return self.text
@@ -77,6 +102,7 @@ class Subcomanda(models.Model):
 	data_livrare = models.DateField('Data livrare',null=True)
 	data_primire = models.DateField('Data primire',blank=True, null=True)
 	pret = models.DecimalField('Pret', default=0, max_digits=9, decimal_places=2, null=True)
+	valuta = models.ForeignKey('Valuta', null=True, verbose_name='Valuta')
 
 	def set_pret_total(self):
 		return self.pret * self.cantitate
@@ -148,6 +174,9 @@ class Comanda(models.Model):
 
 	def show_subcomenzi(self):
 		return Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic)
+
+	def show_valuta(self):
+		return	Subcomanda.objects.filter(comanda_ref__numar_unic=self.numar_unic).latest('pk').valuta
 		
 	def __str__(self):
 		return 'Comanda #' + str(self.numar_unic)
