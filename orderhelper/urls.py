@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^subcomanda/all/$', views.subcomanda_all, name='subcomanda_all'),
     url(r'^comanda/new/$', views.comanda_new, name='comanda_new'),
     url(r'^subcomanda/new/$', views.subcomanda_new, name='subcomanda_new'),
+    url(r'^subcomanda/(?P<pk>\d+)/edit/$', views.subcomanda_edit, name='subcomanda_edit'),
 ]

@@ -1,0 +1,135 @@
+{% extends 'orderhelper/base.html' %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+  {% if user.is_authenticated %}
+	<h1 class="sub-header">Dashboard  </h1>
+	 <br />
+	<h2><em> Editeaza subcomanda </em></h2>
+	
+	<br />
+	 <form method="POST" class="proiect-form">{% csrf_token %}
+	     {{ form.media }}
+	    <div class="row">
+          	<div class="col-md-6">
+
+	        	{{ subcomandaform.as_p }}
+	        </div>
+	        <div class="col-md-2"></div>
+	         <div id="bubble" class="col-md-2 placeholder">
+              <img src="{% static 'img/producator.jpg' %}"  data-toggle="modal" data-target="#producatorModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+              <h4><span class="glyphicon glyphicon-plus"> producator</span></h4>
+             <!--  <span class="text-muted">adauga subcomanda noua</span> -->
+            </div>
+            <div id="bubble" class="col-md-2 placeholder">
+              <img src="{% static 'img/furnizor.jpg' %}" data-toggle="modal" data-target="#furnizorModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4><span class="glyphicon glyphicon-plus"> furnizor</span></h4>
+             <!--  <span class="text-muted">adauga subcomanda noua</span> -->
+            </div>
+             <div class="col-md-2"></div>
+            <div id="bubble" class="col-md-2 placeholder">
+              <img src="{% static 'img/reper.jpg' %}" data-toggle="modal" data-target="#reperModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4><span class="glyphicon glyphicon-plus"> reper</span></h4>
+             <!--  <span class="text-muted">adauga subcomanda noua</span> -->
+            </div>
+	    </div>		
+	     
+	    <div class="row"> 
+	      	<div class="col-md-6">
+	      		<button type="button" class="btn btn-default">Cancel</button>
+		        <button type="submit" name="newsubcomanda" class="btn btn-primary">Save changes</button>
+		    </div>
+		</div>
+	      	
+	    </form>
+
+
+<!-- modal to add proiect -->
+  <div class="modal fade" id="producatorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	    <form method="POST" class="proiect-form">{% csrf_token %}
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Adauga producator</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div class="row">
+          			<div class="col-md-6">
+	        			{{ producatorform.as_p }}
+	        		</div>
+	        	</div>		
+	      	</div>
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" name="newproducator" class="btn btn-primary">Save changes</button>
+	      	</div>
+	    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- modal to add proiect -->
+  <div class="modal fade" id="furnizorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	    <form method="POST" class="proiect-form">{% csrf_token %}
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Adauga furnizor</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div class="row">
+          			<div class="col-md-6">
+	        			{{ furnizorform.as_p }}
+	        		</div>
+	        	</div>		
+	      	</div>
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" name="newfurnizor" class="btn btn-primary">Save changes</button>
+	      	</div>
+	    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- modal to add proiect -->
+  <div class="modal fade" id="reperModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	    <form method="POST" class="proiect-form">{% csrf_token %}
+	    	<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Adauga reper</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div class="row">
+          			<div class="col-md-6">
+	        			{{ reperform.as_p }}
+	        		</div>
+	        	</div>		
+	      	</div>
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" name="newreper" class="btn btn-primary">Save changes</button>
+	      	</div>
+	    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+		$(document).ready(function(){
+	        $("#idlivrare").datetimepicker({
+				format: 'mm/dd/yyyy'})
+
+	        $("#id_cantitate").val(1);
+	    });
+    
+	</script>
+
+  {% endif %}
+{% endblock %}
