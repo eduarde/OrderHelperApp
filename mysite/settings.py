@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'orderhelper',
     'widget_tweaks',
+    'datetimewidget',
 ]
 
 MIDDLEWARE_CLASSES = [

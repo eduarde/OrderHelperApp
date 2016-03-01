@@ -1,6 +1,8 @@
 {% extends 'orderhelper/base.html' %}
 {% load staticfiles %}
 
+
+
 {% block content %}
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard  </h1>
@@ -9,9 +11,10 @@
 	
 	<br />
 	 <form method="POST" class="proiect-form">{% csrf_token %}
-	    
+	     {{ form.media }}
 	    <div class="row">
           	<div class="col-md-6">
+
 	        	{{ subcomandaform.as_p }}
 	        </div>
 	        <div class="col-md-2"></div>
@@ -41,9 +44,6 @@
 		</div>
 	      	
 	    </form>
-
-
-
 
 
 <!-- modal to add proiect -->
@@ -121,18 +121,13 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
-   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	 <script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-  });
-  </script>
-
+<script>
+		$(document).ready(function(){
+	        $("#idlivrare").datetimepicker({
+				format: 'mm/dd/yyyy'})
+	    });
+    
+	</script>
 
   {% endif %}
 {% endblock %}
