@@ -266,3 +266,38 @@ def subcomanda_edit(request,pk):
 		reperform = ReperForm()
 
 	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform':subcomandaform, 'producatorform':producatorform, 'furnizorform':furnizorform, 'reperform':reperform})
+
+@login_required
+def comanda_edit(request, pk):
+	comanda = get_object_or_404(Comanda, pk=pk)
+	
+	if request.method == "POST":
+		if 'newcomanda' in request.POST:
+			comandaform = ComandaForm(request.POST, instance=comanda)
+			if comandaform.is_valid():
+				comanda = comandaform.save(commit=True)
+				comanda.save()
+				return redirect('comanda_all')
+			proiectform = ProiectForm()
+			solicitantform = PersoanaForm()
+		elif 'newproiect' in request.POST:
+			proiectform = ProiectForm(request.POST)
+			if proiectform.is_valid():
+				proiect = proiectform.save(commit=True)
+				proiect.save()
+			comandaform = ComandaForm()
+			solicitantform = PersoanaForm()
+		elif 'newsolicitant' in request.POST:
+			solicitantform = PersoanaForm(request.POST)
+			if solicitantform.is_valid():
+				solicitant = solicitantform.save(commit=True)
+				solicitant.save()
+			comandaform = ComandaForm()
+			proiectform = ProiectForm()
+
+	else:
+		comandaform = ComandaForm(instance=comanda)
+		proiectform = ProiectForm()
+		solicitantform = PersoanaForm()
+
+	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})	

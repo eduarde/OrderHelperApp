@@ -5,11 +5,10 @@
 	<h1 class="sub-header">Dashboard - <em> Subcomanda </em> </h1>
 
 
-
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
  		<a href="{% url 'subcomanda_new' %}" type="button" class="btn btn-primary">Add</a>
-  		<button type="button" id="update" class="btn btn-default disabled">Update</button>
+  		<button type="button" id="edit" class="btn btn-default disabled">Edit</button>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
 	<br /> <br />
@@ -72,7 +71,7 @@
 			var url;
 
 			// Make call to edit 
-	        $("#update").click(function(){
+	        $("#edit").click(function(){
 	        
 	    
 				$(location).attr('href', url );
@@ -86,9 +85,9 @@
 	        	
 	        	url = $( "input:checked" ).attr('url');
 
-	        	$("#update").removeClass('disabled')
+	        	$("#edit").removeClass('disabled')
 	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
-	        		$("#update").addClass('disabled')	
+	        		$("#edit").addClass('disabled')	
 	        	}
 	        		
 			});

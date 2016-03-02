@@ -1,6 +1,13 @@
-/*body{
-  background-color: #252830;
+
+@font-face {
+    font-family: subheaderFont;
+    src: url(../fonts/fertigo.otf);
+}
+
+/*h1.sub-header{
+  font-family: subheaderFont;
 }*/
+
 body{
   top: 0;
 }
