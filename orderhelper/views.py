@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from datetime import date, datetime, timedelta
 
+
 @login_required
 def pending_comanda(request):
 	groups_list = request.user.groups.all()
@@ -102,16 +103,7 @@ def reper_all(request):
 	groups_list = request.user.groups.all()
 	reperi = Reper.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	if request.method == "POST":
-		form = ReperForm(request.POST)
-		if form.is_valid():
-			reper = form.save(commit=True)
-			reper.save()
-			return redirect('reper_all')
-	else:
-		form = ReperForm()
-
-	return render(request,'orderhelper/reper_all.html', {'reperi':reperi, 'form': form})
+	return render(request,'orderhelper/reper_all.html', {'reperi':reperi})
 
 @login_required
 def logout_page(request):
@@ -300,4 +292,20 @@ def comanda_edit(request, pk):
 		proiectform = ProiectForm()
 		solicitantform = PersoanaForm()
 
-	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})	
+	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})
+
+
+@login_required
+def reper_new(request):
+
+	if request.method == "POST":
+		form = ReperForm(request.POST)
+		if form.is_valid():
+			reper = form.save(commit=True)
+			reper.save()
+			return redirect('reper_all')
+	else:
+		form = ReperForm()
+
+	return render(request,'orderhelper/reper_new.html', {'form': form})
+

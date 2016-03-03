@@ -8,7 +8,7 @@
 	<div class="btn-group" role="group" aria-label="...">
  		<a href="{% url 'comanda_new' %}" type="button" class="btn btn-primary">Add</a>
   		<button type="button" id="edit" class="btn btn-default disabled">Edit</button>
-  		<button type="button" class="btn btn-default disabled">Delete</button>
+  		<button  type="button" class="btn btn-default disabled">Delete</button>
 	</div>
 	<br /> <br />
 	<hr class="featurette-divider">
@@ -52,30 +52,21 @@
 
 			// Make call to edit 
 	        $("#edit").click(function(){
-	        
-	    
 				$(location).attr('href', url );
-	       
-	       
 			});
 
 	        // Get the checkboxes
 	        $( "input" ).on( "click", function() {
-
-	        	
 	        	url = $( "input:checked" ).attr('url');
 
 	        	$("#edit").removeClass('disabled')
 	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
 	        		$("#edit").addClass('disabled')	
-	        	}
-	        		
+	        	}	
 			});
-
-
 	    });
     
-</script>	
+	</script>	
 
 
   {% endif %}

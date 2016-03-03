@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from . import views
 
+
 urlpatterns = [
 	url(r'^$', 'django.contrib.auth.views.login'),
     url(r'^pending_comanda/$', views.pending_comanda, name='pending_comanda'),
@@ -19,4 +20,5 @@ urlpatterns = [
     url(r'^subcomanda/new/$', views.subcomanda_new, name='subcomanda_new'),
     url(r'^subcomanda/(?P<pk>\d+)/edit/$', views.subcomanda_edit, name='subcomanda_edit'),
     url(r'^comanda/(?P<pk>\d+)/edit/$', views.comanda_edit, name='comanda_edit'),
+    url(r'^reper/new/$', views.reper_new, name='reper_new'),
 ]
