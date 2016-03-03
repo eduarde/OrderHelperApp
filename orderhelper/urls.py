@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^reper/new/$', views.reper_new, name='reper_new'),
     url(r'^producator/new/$', views.producator_new, name='producator_new'),
     url(r'^furnizor/new/$', views.furnizor_new, name='furnizor_new'),
+    url(r'^proiect/new/$', views.proiect_new, name='proiect_new'),
 ]

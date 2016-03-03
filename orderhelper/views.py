@@ -54,16 +54,7 @@ def proiect_all(request):
 	groups_list = request.user.groups.all()
 	proiecte = Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	if request.method == "POST":
-		form = ProiectForm(request.POST)
-		if form.is_valid():
-			proiect = form.save(commit=True)
-			proiect.save()
-			return redirect('proiect_all')
-	else:
-		form = ProiectForm()
-
-	return render(request,'orderhelper/proiect_all.html', {'proiecte':proiecte, 'form': form})
+	return render(request,'orderhelper/proiect_all.html', {'proiecte':proiecte})
 
 @login_required
 def furnizor_all(request):
@@ -318,4 +309,18 @@ def furnizor_new(request):
 		form = FurnizorForm()
 
 	return render(request,'orderhelper/furnizor_new.html', {'form': form})
+
+@login_required
+def proiect_new(request):
+
+	if request.method == "POST":
+		form = ProiectForm(request.POST)
+		if form.is_valid():
+			proiect = form.save(commit=True)
+			proiect.save()
+			return redirect('proiect_all')
+	else:
+		form = ProiectForm()
+
+	return render(request,'orderhelper/proiect_new.html', {'form': form})
 
