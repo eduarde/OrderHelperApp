@@ -70,16 +70,7 @@ def furnizor_all(request):
 	groups_list = request.user.groups.all()
 	furnizori = Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	if request.method == "POST":
-		form = FurnizorForm(request.POST)
-		if form.is_valid():
-			furnizor = form.save(commit=True)
-			furnizor.save()
-			return redirect('furnizor_all')
-	else:
-		form = FurnizorForm()
-
-	return render(request,'orderhelper/furnizor_all.html', {'furnizori':furnizori, 'form': form})
+	return render(request,'orderhelper/furnizor_all.html', {'furnizori':furnizori})
 
 
 @login_required
@@ -313,4 +304,18 @@ def producator_new(request):
 		form = ProducatorForm()
 
 	return render(request,'orderhelper/producator_new.html', {'form': form})
+
+@login_required
+def furnizor_new(request):
+
+	if request.method == "POST":
+		form = FurnizorForm(request.POST)
+		if form.is_valid():
+			furnizor = form.save(commit=True)
+			furnizor.save()
+			return redirect('furnizor_all')
+	else:
+		form = FurnizorForm()
+
+	return render(request,'orderhelper/furnizor_new.html', {'form': form})
 
