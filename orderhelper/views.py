@@ -87,16 +87,7 @@ def producator_all(request):
 	groups_list = request.user.groups.all()
 	producatori = Producator.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	if request.method == "POST":
-		form = ProducatorForm(request.POST)
-		if form.is_valid():
-			producator = form.save(commit=True)
-			producator.save()
-			return redirect('producator_all')
-	else:
-		form = ProducatorForm()
-
-	return render(request,'orderhelper/producator_all.html', {'producatori':producatori, 'form': form})
+	return render(request,'orderhelper/producator_all.html', {'producatori':producatori})
 
 @login_required
 def reper_all(request):
@@ -308,4 +299,18 @@ def reper_new(request):
 		form = ReperForm()
 
 	return render(request,'orderhelper/reper_new.html', {'form': form})
+
+@login_required
+def producator_new(request):
+
+	if request.method == "POST":
+		form = ProducatorForm(request.POST)
+		if form.is_valid():
+			producator = form.save(commit=True)
+			producator.save()
+			return redirect('producator_all')
+	else:
+		form = ProducatorForm()
+
+	return render(request,'orderhelper/producator_new.html', {'form': form})
 
