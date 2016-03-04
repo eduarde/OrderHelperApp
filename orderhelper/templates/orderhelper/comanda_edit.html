@@ -1,6 +1,11 @@
 {% extends 'orderhelper/base.html' %}
 {% load staticfiles %}
 
+{% block extra_js%}
+<script src="http://malsup.github.com/jquery.form.js"></script>
+{% endblock %}
+
+
 {% block content %}
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard  </h1>
@@ -16,12 +21,12 @@
 	        </div>
 	        <div class="col-md-2"></div>
 	         <div id="bubble" class="col-md-2 placeholder">
-              <img src="{% static 'img/subcomanda.jpg' %}"  data-toggle="modal" data-target="#solicitantModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+               <a type="button" data-toggle="modal" data-target="#modalPersoana" href="{% url 'persoana_new' %}"> <img src="{% static 'img/subcomanda.jpg' %}"  data-toggle="modal" data-target="#solicitantModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4><span class="glyphicon glyphicon-plus-sign"> Solicitant</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
             <div id="bubble" class="col-md-2 placeholder">
-              <img src="{% static 'img/proiect.jpg' %}" data-toggle="modal" data-target="#proiectModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail">
+             <a type="button" data-toggle="modal" data-target="#modalProiect" href="{% url 'proiect_new' %}"> <img src="{% static 'img/proiect.jpg' %}" data-toggle="modal" data-target="#proiectModal" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
                 <h4><span class="glyphicon glyphicon-plus-sign"> Proiect</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
@@ -30,63 +35,39 @@
 	    <div class="row"> 
 	      	<div class="col-md-6">
 	      		<button type="button" class="btn btn-default">Cancel</button>
-		        <button type="submit" name="newcomanda" class="btn btn-primary">Save changes</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
 		    </div>
 		</div>
 	      	
 	    </form>
 
 
+<div class="modal fade" id="modalProiect"></div>
+<div class="modal fade" id="modalPersoana"></div>
 
-<!-- modal to add proiect -->
-  <div class="modal fade" id="proiectModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <form method="POST" class="proiect-form">{% csrf_token %}
-	    	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Adauga proiect</h4>
-	      	</div>
-	      	<div class="modal-body">
-	      		<div class="row">
-          			<div class="col-md-6">
-	        			{{ proiectform.as_p }}
-	        		</div>
-	        	</div>		
-	      	</div>
-	      	<div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" name="newproiect" class="btn btn-primary">Save changes</button>
-	      	</div>
-	    </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<script>
+		$('#modalProiect').on('show.bs.modal', function (event) {
+			var modal = $(this)
+			$.ajax({
+				url: "{% url 'proiect_new' %}",
+				context: document.body
+			}).done(function(response) {
+				modal.html(response);
+			});
+		});
 
-<!-- modal to add proiect -->
-  <div class="modal fade" id="solicitantModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <form method="POST" class="proiect-form">{% csrf_token %}
-	    	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Adauga solicitant</h4>
-	      	</div>
-	      	<div class="modal-body">
-	      		<div class="row">
-          			<div class="col-md-6">
-	        			{{ solicitantform.as_p }}
-	        		</div>
-	        	</div>		
-	      	</div>
-	      	<div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" name="newsolicitant" class="btn btn-primary">Save changes</button>
-	      	</div>
-	    </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+		$('#modalPersoana').on('show.bs.modal', function (event) {
+			var modal = $(this)
+			$.ajax({
+				url: "{% url 'persoana_new' %}",
+				context: document.body
+			}).done(function(response) {
+				modal.html(response);
+			});
+		})
+
+	</script>
+
 
   {% endif %}
 {% endblock %}

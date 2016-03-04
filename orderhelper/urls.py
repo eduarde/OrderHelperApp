@@ -6,7 +6,6 @@ urlpatterns = [
 	url(r'^$', 'django.contrib.auth.views.login'),
     url(r'^pending_comanda/$', views.pending_comanda, name='pending_comanda'),
     url(r'^comanda/(?P<pk>[0-9]+)/$', views.comanda_subcomenzi, name='comanda_subcomenzi'),
-    url(r'^persoana/new/$', views.persoana_new, name='persoana_new'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^order_history$', views.order_history, name='order_history'),
     url(r'^proiect/all/$', views.proiect_all, name='proiect_all'),
@@ -24,4 +23,5 @@ urlpatterns = [
     url(r'^producator/new/$', views.producator_new, name='producator_new'),
     url(r'^furnizor/new/$', views.furnizor_new, name='furnizor_new'),
     url(r'^proiect/new/$', views.proiect_new, name='proiect_new'),
+    url(r'^persoana/new/$', views.persoana_new, name='persoana_new'),
 ]

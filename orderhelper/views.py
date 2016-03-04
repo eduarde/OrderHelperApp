@@ -25,11 +25,6 @@ def comanda_subcomenzi(request, pk):
 	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
 
 @login_required
-def persoana_new(request):
-	form = PersoanaForm()
-	return render(request,'orderhelper/persoana_new.html', {'form': form})
-
-@login_required
 def dashboard(request):
 	return render(request,'orderhelper/dashboard.html', {})
 
@@ -100,172 +95,71 @@ def comanda_new(request):
 	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
 	if request.method == "POST":
-		if 'newcomanda' in request.POST:
-			comandaform = ComandaForm(request.POST)
-			if comandaform.is_valid():
-				comanda = comandaform.save(commit=False)
-				comanda.status = status_deschis
-				comanda.data = datetime.now()
-				comanda.preluat = request.user
-				comanda.save()
-				comandaform.save_m2m()
-				return redirect('comanda_all')
-			proiectform = ProiectForm()
-			solicitantform = PersoanaForm()
-		elif 'newproiect' in request.POST:
-			proiectform = ProiectForm(request.POST)
-			if proiectform.is_valid():
-				proiect = proiectform.save(commit=True)
-				proiect.save()
-			comandaform = ComandaForm()
-			solicitantform = PersoanaForm()
-		elif 'newsolicitant' in request.POST:
-			solicitantform = PersoanaForm(request.POST)
-			if solicitantform.is_valid():
-				solicitant = solicitantform.save(commit=True)
-				solicitant.save()
-			comandaform = ComandaForm()
-			proiectform = ProiectForm()
-
-	else:
-		comandaform = ComandaForm()
-		proiectform = ProiectForm()
-		solicitantform = PersoanaForm()
-
-	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})
+		comandaform = ComandaForm(request.POST)
+		if comandaform.is_valid():
+			comanda = comandaform.save(commit=False)
+			comanda.status = status_deschis
+			comanda.data = datetime.now()
+			comanda.preluat = request.user
+			comanda.save()
+			comandaform.save_m2m()
+			return redirect('comanda_all')
+	
+	comandaform = ComandaForm()
+	
+	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform})
 
 
 @login_required
 def subcomanda_new(request):
 	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
-
 	if request.method == "POST":
-		if 'newsubcomanda' in request.POST:
-			subcomandaform = SubcomandaForm(request.POST)
-			if subcomandaform.is_valid():
-				subcomanda = subcomandaform.save(commit=False)
-				subcomanda.status = status_deschis
-				numar_curent = 0
-				if Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).exists(): 
-					numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk')
+		subcomandaform = SubcomandaForm(request.POST)
+		if subcomandaform.is_valid():
+			subcomanda = subcomandaform.save(commit=False)
+			subcomanda.status = status_deschis
+			numar_curent = 0
+			if Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).exists(): 
+				numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk').numar_curent
 
-				subcomanda.numar_curent = numar_curent + 1
-				subcomanda.data = datetime.now()
-				subcomanda.save()
-				subcomandaform.save_m2m()
-				return redirect('subcomanda_all')
-		elif 'newproducator' in request.POST:
-			producatorform = ProducatorForm(request.POST)
-			if producatorform.is_valid():
-				producator = producatorform.save(commit=True)
-				producator.save()
-			subcomandaform = SubcomandaForm()
-			furnizorform = FurnizorForm()
-			reperform = ReperForm()
-		elif 'newfurnizor' in request.POST:
-			furnizorform = FurnizorForm(request.POST)
-			if furnizorform.is_valid():
-				furnizor = furnizorform.save(commit=True)
-				furnizor.save()
-			subcomandaform = SubcomandaForm()
-			producatorform = ProducatorForm()
-			reperform = ReperForm()
-		elif 'newreper' in request.POST:
-			reperform = ReperForm(request.POST)
-			if reperform.is_valid():
-				reper = reperform.save(commit=True)
-				reper.save()
-			subcomandaform = SubcomandaForm()
-			producatorform = ProducatorForm()
-			furnizorform = FurnizorForm()
-	else:
-		subcomandaform = SubcomandaForm()
-		producatorform = ProducatorForm()
-		furnizorform = FurnizorForm()
-		reperform = ReperForm()
-
-	return render(request,'orderhelper/subcomanda_new.html', {'subcomandaform':subcomandaform, 'producatorform':producatorform, 'furnizorform':furnizorform, 'reperform':reperform})
+			subcomanda.numar_curent = numar_curent + 1
+			subcomanda.data = datetime.now()
+			subcomanda.save()
+			subcomandaform.save_m2m()
+			return redirect('subcomanda_all')
+		
+	subcomandaform = SubcomandaForm()
+	return render(request,'orderhelper/subcomanda_new.html', {'subcomandaform':subcomandaform})
 
 @login_required
 def subcomanda_edit(request,pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	if request.method == "POST":
-		if 'newsubcomanda' in request.POST:
-			subcomandaform = SubcomandaForm(request.POST, instance=subcomanda)
-			if subcomandaform.is_valid():
-				subcomanda = subcomandaform.save(commit=False)
-				subcomanda.save()		
-				return redirect('subcomanda_all')
-			producatorform = ProducatorForm()
-			furnizorform = FurnizorForm()
-			reperform = ReperForm()
-		elif 'newproducator' in request.POST:
-			producatorform = ProducatorForm(request.POST)
-			if producatorform.is_valid():
-				producator = producatorform.save(commit=True)
-				producator.save()
-			subcomandaform = SubcomandaForm()
-			furnizorform = FurnizorForm()
-			reperform = ReperForm()
-		elif 'newfurnizor' in request.POST:
-			furnizorform = FurnizorForm(request.POST)
-			if furnizorform.is_valid():
-				furnizor = furnizorform.save(commit=True)
-				furnizor.save()
-			subcomandaform = SubcomandaForm()
-			producatorform = ProducatorForm()
-			reperform = ReperForm()
-		elif 'newreper' in request.POST:
-			reperform = ReperForm(request.POST)
-			if reperform.is_valid():
-				reper = reperform.save(commit=True)
-				reper.save()
-			subcomandaform = SubcomandaForm()
-			producatorform = ProducatorForm()
-			furnizorform = FurnizorForm()
-	else:
-		subcomandaform = SubcomandaForm(instance=subcomanda)
-		producatorform = ProducatorForm()
-		furnizorform = FurnizorForm()
-		reperform = ReperForm()
-
-	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform':subcomandaform, 'producatorform':producatorform, 'furnizorform':furnizorform, 'reperform':reperform})
+		subcomandaform = SubcomandaForm(request.POST, instance=subcomanda)
+		if subcomandaform.is_valid():
+			subcomanda = subcomandaform.save(commit=False)
+			subcomanda.save()		
+			return redirect('subcomanda_all')
+		
+	subcomandaform = SubcomandaForm(instance=subcomanda)
+		
+	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform' : subcomandaform})
 
 @login_required
 def comanda_edit(request, pk):
 	comanda = get_object_or_404(Comanda, pk=pk)
 	
 	if request.method == "POST":
-		if 'newcomanda' in request.POST:
-			comandaform = ComandaForm(request.POST, instance=comanda)
-			if comandaform.is_valid():
-				comanda = comandaform.save(commit=True)
-				comanda.save()
-				return redirect('comanda_all')
-			proiectform = ProiectForm()
-			solicitantform = PersoanaForm()
-		elif 'newproiect' in request.POST:
-			proiectform = ProiectForm(request.POST)
-			if proiectform.is_valid():
-				proiect = proiectform.save(commit=True)
-				proiect.save()
-			comandaform = ComandaForm()
-			solicitantform = PersoanaForm()
-		elif 'newsolicitant' in request.POST:
-			solicitantform = PersoanaForm(request.POST)
-			if solicitantform.is_valid():
-				solicitant = solicitantform.save(commit=True)
-				solicitant.save()
-			comandaform = ComandaForm()
-			proiectform = ProiectForm()
+		comandaform = ComandaForm(request.POST, instance=comanda)
+		if comandaform.is_valid():
+			comanda = comandaform.save(commit=True)
+			comanda.save()
+			return redirect('comanda_all')
+			
 
-	else:
-		comandaform = ComandaForm(instance=comanda)
-		proiectform = ProiectForm()
-		solicitantform = PersoanaForm()
-
-	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform, 'proiectform':proiectform, 'solicitantform':solicitantform})
+	comandaform = ComandaForm(instance=comanda)
+	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform})
 
 
 @login_required
@@ -276,7 +170,7 @@ def reper_new(request):
 		if form.is_valid():
 			reper = form.save(commit=True)
 			reper.save()
-			return redirect('reper_all')
+			return redirect(request.META['HTTP_REFERER'])
 	else:
 		form = ReperForm()
 
@@ -290,7 +184,7 @@ def producator_new(request):
 		if form.is_valid():
 			producator = form.save(commit=True)
 			producator.save()
-			return redirect('producator_all')
+			return redirect(request.META['HTTP_REFERER'])
 	else:
 		form = ProducatorForm()
 
@@ -304,7 +198,7 @@ def furnizor_new(request):
 		if form.is_valid():
 			furnizor = form.save(commit=True)
 			furnizor.save()
-			return redirect('furnizor_all')
+			return redirect(request.META['HTTP_REFERER'])
 	else:
 		form = FurnizorForm()
 
@@ -318,9 +212,24 @@ def proiect_new(request):
 		if form.is_valid():
 			proiect = form.save(commit=True)
 			proiect.save()
-			return redirect('proiect_all')
+			return redirect(request.META['HTTP_REFERER'])
 	else:
 		form = ProiectForm()
 
 	return render(request,'orderhelper/proiect_new.html', {'form': form})
+
+@login_required
+def persoana_new(request):
+	
+	if request.method == "POST":
+		form = PersoanaForm(request.POST)
+		if form.is_valid():
+			persoana = form.save(commit=True)
+			persoana.save()
+			return redirect(request.META['HTTP_REFERER'])
+	else:
+		form = PersoanaForm()
+
+	return render(request,'orderhelper/persoana_new.html', {'form': form})
+
 
