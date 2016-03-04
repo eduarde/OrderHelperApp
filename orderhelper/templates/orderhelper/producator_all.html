@@ -11,7 +11,7 @@
 
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<a type="button" data-toggle="modal" data-target="#modal" href="{% url 'producator_new' %}" class="btn btn-primary">Add</a>
+ 		<a type="button" data-toggle="modal" data-target="#modalProducator" href="{% url 'producator_new' %}" class="btn btn-primary">Add</a>
   		<button type="button" class="btn btn-default disabled">Edit</button>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
@@ -45,10 +45,10 @@
 		</table>     	
 	</div>
 
-	<div class="modal fade" id="modal"></div>
+	<div class="modal fade" id="modalProducator"></div>
 
 	<script>
-		$('#modal').on('show.bs.modal', function (event) {
+		$('#modalProducator').on('show.bs.modal', function (event) {
 			var modal = $(this)
 			$.ajax({
 				url: "{% url 'producator_new' %}",

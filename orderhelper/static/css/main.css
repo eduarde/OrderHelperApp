@@ -3,11 +3,12 @@
     font-family: subheaderFont;
     src: url(../fonts/fertigo.otf);
 }
-
-/*h1.sub-header{
+/*
+h1.sub-header{
   font-family: subheaderFont;
-}*/
-
+  font-family: 'Poppins', sans-serif;
+}
+*/
 body{
   top: 0;
 }
