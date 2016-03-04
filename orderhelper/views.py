@@ -14,14 +14,15 @@ from datetime import date, datetime, timedelta
 def pending_comanda(request):
 	groups_list = request.user.groups.all()
 	comenzi = Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('data')
+
 	return render(request,'orderhelper/pending_comanda.html', {'comenzi':comenzi})
 
 @login_required
 def comanda_subcomenzi(request, pk):
 	comanda = get_object_or_404(Comanda, pk=pk)
-	# subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=476)
 	subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
 	comanda = Comanda.objects.get(pk=pk)
+
 	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
 
 @login_required
@@ -42,6 +43,7 @@ def order_history(request):
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		comenzi = paginator.page(paginator.num_pages)
+
 	return render(request,'orderhelper/order_history.html', {'comenzi' : comenzi})
 
 @login_required
@@ -82,12 +84,14 @@ def logout_page(request):
 def comanda_all(request):
 	groups_list = request.user.groups.all()
 	comenzi = Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+
 	return render(request,'orderhelper/comanda_all.html', {'comenzi':comenzi})
 
 @login_required
 def subcomanda_all(request):
 	groups_list = request.user.groups.all()
 	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+
 	return render(request,'orderhelper/subcomanda_all.html', {'subcomenzi':subcomenzi})
 
 @login_required
@@ -104,9 +108,8 @@ def comanda_new(request):
 			comanda.save()
 			comandaform.save_m2m()
 			return redirect('comanda_all')
-	
+
 	comandaform = ComandaForm()
-	
 	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform})
 
 
@@ -142,8 +145,7 @@ def subcomanda_edit(request,pk):
 			subcomanda.save()		
 			return redirect('subcomanda_all')
 		
-	subcomandaform = SubcomandaForm(instance=subcomanda)
-		
+	subcomandaform = SubcomandaForm(instance=subcomanda)	
 	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform' : subcomandaform})
 
 @login_required
@@ -171,9 +173,8 @@ def reper_new(request):
 			reper = form.save(commit=True)
 			reper.save()
 			return redirect(request.META['HTTP_REFERER'])
-	else:
-		form = ReperForm()
-
+	
+	form = ReperForm()
 	return render(request,'orderhelper/reper_new.html', {'form': form})
 
 @login_required
@@ -185,9 +186,8 @@ def producator_new(request):
 			producator = form.save(commit=True)
 			producator.save()
 			return redirect(request.META['HTTP_REFERER'])
-	else:
-		form = ProducatorForm()
 
+	form = ProducatorForm()
 	return render(request,'orderhelper/producator_new.html', {'form': form})
 
 @login_required
@@ -199,9 +199,8 @@ def furnizor_new(request):
 			furnizor = form.save(commit=True)
 			furnizor.save()
 			return redirect(request.META['HTTP_REFERER'])
-	else:
-		form = FurnizorForm()
-
+	
+	form = FurnizorForm()
 	return render(request,'orderhelper/furnizor_new.html', {'form': form})
 
 @login_required
@@ -213,9 +212,8 @@ def proiect_new(request):
 			proiect = form.save(commit=True)
 			proiect.save()
 			return redirect(request.META['HTTP_REFERER'])
-	else:
-		form = ProiectForm()
-
+	
+	form = ProiectForm()
 	return render(request,'orderhelper/proiect_new.html', {'form': form})
 
 @login_required
@@ -227,9 +225,8 @@ def persoana_new(request):
 			persoana = form.save(commit=True)
 			persoana.save()
 			return redirect(request.META['HTTP_REFERER'])
-	else:
-		form = PersoanaForm()
-
+	
+	form = PersoanaForm()
 	return render(request,'orderhelper/persoana_new.html', {'form': form})
 
 
