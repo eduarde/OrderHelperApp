@@ -113,9 +113,6 @@ class Subcomanda(models.Model):
 	mod_plata = models.ForeignKey('ModPlata', null=True)
 	group = models.ManyToManyField(Group, related_name='subcomandas')
 
-	def calculate_late(self):
-		self.data_primire - self.data_livrare 	
-
 	def is_late(self):
 		if self.status.text != 'Deschis':
 			return False
@@ -181,6 +178,3 @@ class Comanda(models.Model):
 		
 	def __str__(self):
 		return 'Comanda #' + str(self.numar_unic)
-
-
-
