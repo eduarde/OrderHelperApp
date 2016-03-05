@@ -97,3 +97,16 @@ class SubcomandaForm(forms.ModelForm):
 			'data_livrare': DateWidget(attrs={'id':"idlivrare"}, bootstrap_version=3, options = dateOptions),
             'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
+
+class SubcomandaCloseForm(forms.ModelForm):
+
+	class Meta:
+		model = Subcomanda
+		fields = ('data_primire',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		widgets = {
+			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
+		}

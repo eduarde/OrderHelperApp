@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaCloseForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -228,5 +228,35 @@ def persoana_new(request):
 	
 	form = PersoanaForm()
 	return render(request,'orderhelper/persoana_new.html', {'form': form})
+
+@login_required
+def producator_edit(request, pk):
+	producator = get_object_or_404(Producator, pk=pk)
+	if request.method == "POST":
+		form = ProducatorForm(request.POST,instance=producator)
+		if form.is_valid():
+			producator = form.save(commit=True)
+			producator.save()
+			return redirect(request.META['HTTP_REFERER'])
+
+	form = ProducatorForm(instance=producator)
+	return render(request,'orderhelper/producator_edit.html', {'form': form})
+
+@login_required
+def subcomanda_close(request, pk):
+	subcomanda = get_object_or_404(Subcomanda, pk=pk)
+	status_inchis = Status.objects.filter(text='Inchis')[0]
+
+	if request.method == "POST":
+		form = SubcomandaCloseForm(request.POST,instance=subcomanda)
+		if form.is_valid():
+				subcomanda = form.save(commit=False)
+				subcomanda.status = status_inchis
+				subcomanda.save()
+				subcomandaform.save_m2m()
+				return redirect(request.META['HTTP_REFERER'])
+
+	form = SubcomandaCloseForm(instance=subcomanda)
+	return render(request,'orderhelper/subcomanda_close.html', {'form': form})
 
 
