@@ -5,6 +5,9 @@
 	<h1 class="sub-header">Pending orders</h1>
 	<br /><br />
 
+{% block extra_js%}
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+{% endblock %}
 
 	<div class="list-group">
 	{% for comanda in comenzi %}	
@@ -12,7 +15,19 @@
 		    <div class="panel-heading" role="tab" id="headingOne">
 		      <h4 class="panel-title">
 		        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ comanda.pk }}" aria-expanded="false" aria-controls="{{ comanda.pk }}">
-		        	<h4>Comanda: {{ comanda.numar_unic }}</h4>
+		        	<div class="row" style="padding-bottom: 7px">
+		        	<div class="col-md-7"> <h4>Comanda: {{ comanda.numar_unic }}</h4> </div>
+		        	<div class="col-md-3"></div>
+		        	<div class="col-md-2">
+						
+						<button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
+		   			 	
+		   			 	<button  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actions" href="#"><span class="glyphicon glyphicon-check"></span></button>
+
+		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default"  href="#"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		        	</div>
+		        </div>
+
 		        	<div class="progress">
   						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: {{ comanda.calculate_progress }}%">
     						<span class="sr-only">60% Complete (warning)</span>
@@ -25,8 +40,8 @@
 				   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Preluare">{{ comanda.preluat }}</div>
-				   		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} {{ comanda.show_valuta }}</div>
-				   		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Actions"><span class="glyphicon glyphicon-eye-open"></span></div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} {{ comanda.show_valuta }}</div>
+				   
 				   		
 		   			</div>	
 		        </a>
@@ -52,19 +67,18 @@
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} </div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret Total">{{ subcomanda.pret_total }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Actions">
-		   			 			<span class="glyphicon glyphicon-eye-open"></span>
-		   			 			<span style="padding-right: 10px;"></span>
-		   			 			<a data-toggle="modal" data-target="#modalClose" href="#"><span class="glyphicon glyphicon-check"></span></a>
-		   			 			<!-- <span style="padding-right: 10px;"></span>
-		   			 			<span class="glyphicon glyphicon-remove-circle"></span> -->
+		   			 		<div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
+		   			 			<a class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+		   			 	
+		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actions" data-toggle="modal" id="close" data-target="#modalClose" href="{% url 'subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
+
+		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default"  href="#"><span class="glyphicon glyphicon-remove-circle"></span></a>
+		   			 			
 		   			 		</div>
-		   			 		<!-- <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div> -->
+		   			 	
 		   			 	</div>	
 
 		   			 </button>
-		        
 		        {% endfor %}
 		        </div>
 		      </div>
@@ -73,7 +87,28 @@
 		   {% endfor %}  
 		</div>
 
+<div class="modal fade" id="modalClose"></div>
+    
+<script>
+	var urlEdit;
+	$(".actions").click(function () {
+        		urlEdit = $(this).attr("href");
+    });
 
+	$('#modalClose').on('show.bs.modal', function (event) {
+		var modal = $(this);	
+		$.ajax({
+			url: urlEdit,
+			context: document.body
+		}).done(function(response) {
+			modal.html(response);
+		});
+	})
 
-    {% endif %}
-    {% endblock %}
+	$('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+
+	{% endif %}
+{% endblock %}

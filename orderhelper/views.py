@@ -246,17 +246,18 @@ def producator_edit(request, pk):
 def subcomanda_close(request, pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	status_inchis = Status.objects.filter(text='Inchis')[0]
-
+	print('subcomanda_close')
 	if request.method == "POST":
+		print('POST')
 		form = SubcomandaCloseForm(request.POST,instance=subcomanda)
 		if form.is_valid():
-				subcomanda = form.save(commit=False)
-				subcomanda.status = status_inchis
-				subcomanda.save()
-				subcomandaform.save_m2m()
-				return redirect(request.META['HTTP_REFERER'])
+			print('Post is valid')
+			subcomanda = form.save(commit=False)
+			subcomanda.status = status_inchis
+			subcomanda.save()
+			return redirect(request.META['HTTP_REFERER'])
 
 	form = SubcomandaCloseForm(instance=subcomanda)
-	return render(request,'orderhelper/subcomanda_close.html', {'form': form})
+	return render(request,'orderhelper/subcomanda_close.html', {'form': form, 'subcomanda':subcomanda})
 
 

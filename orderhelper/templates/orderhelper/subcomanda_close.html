@@ -1,6 +1,8 @@
+{% load staticfiles %}
+
 <div class="modal-dialog">
     <div class="modal-content">
-	    <form method="POST" id="subcomanda_close" class="producator-form">{% csrf_token %}
+	    <form method="POST" action="{% url 'subcomanda_close' pk=subcomanda.pk %}" id="subcomanda_close" class="producator-form" >{% csrf_token %}
 	    	  {{ form.media }}
 	    	<div class="modal-header">
 
@@ -24,12 +26,16 @@
 
 <script>
 
-		$(document).ready(function(){
-	        $("#idprimire").datetimepicker({
-				format: 'mm/dd/yyyy'})
-	    });
-
+	$(document).ready(function(){
+	    $("#idprimire").datetimepicker({
+			format: 'mm/dd/yyyy'})
+	});
 
     var form_options = { target: '#modalClose', success: function(response) {} };
     $('#subcomanda_close').ajaxForm(form_options);
 </script>
+<script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="{% static 'js/moment.js' %}"></script> 
+<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>  
