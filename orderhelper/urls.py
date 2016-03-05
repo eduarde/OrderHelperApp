@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^persoana/new/$', views.persoana_new, name='persoana_new'),
     url(r'^producator/edit/(?P<pk>\d+)$', views.producator_edit, name='producator_edit'),
     url(r'^subcomanda/close/(?P<pk>\d+)$', views.subcomanda_close, name='subcomanda_close'),
+    url(r'^comanda/close/(?P<pk>\d+)$', views.comanda_close, name='comanda_close'),
 ]

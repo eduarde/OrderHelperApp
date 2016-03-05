@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaCloseForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaCloseForm, ComandaCloseForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -246,12 +246,10 @@ def producator_edit(request, pk):
 def subcomanda_close(request, pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	status_inchis = Status.objects.filter(text='Inchis')[0]
-	print('subcomanda_close')
+
 	if request.method == "POST":
-		print('POST')
 		form = SubcomandaCloseForm(request.POST,instance=subcomanda)
 		if form.is_valid():
-			print('Post is valid')
 			subcomanda = form.save(commit=False)
 			subcomanda.status = status_inchis
 			subcomanda.save()
@@ -259,5 +257,21 @@ def subcomanda_close(request, pk):
 
 	form = SubcomandaCloseForm(instance=subcomanda)
 	return render(request,'orderhelper/subcomanda_close.html', {'form': form, 'subcomanda':subcomanda})
+
+@login_required
+def comanda_close(request, pk):
+	comanda = get_object_or_404(Comanda, pk=pk)
+	status_inchis = Status.objects.filter(text='Inchis')[0]
+
+	if request.method == "POST":
+		form = ComandaCloseForm(request.POST,instance=comanda)
+		if form.is_valid():
+			comanda = form.save(commit=False)
+			comanda.status = status_inchis
+			comanda.save()
+			return redirect(request.META['HTTP_REFERER'])
+
+	form = ComandaCloseForm(instance=comanda)
+	return render(request,'orderhelper/comanda_close.html', {'form': form, 'comanda':comanda})
 
 

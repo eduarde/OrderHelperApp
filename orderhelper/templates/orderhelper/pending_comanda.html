@@ -22,7 +22,7 @@
 						
 						<button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
 		   			 	
-		   			 	<button  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actions" href="#"><span class="glyphicon glyphicon-check"></span></button>
+		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" data-toggle="modal" id="close" data-target="#modalClose" href="{% url 'comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
 
 		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default"  href="#"><span class="glyphicon glyphicon-remove-circle"></span></button>
 		        	</div>
@@ -70,7 +70,7 @@
 		   			 		<div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
 		   			 			<a class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
 		   			 	
-		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actions" data-toggle="modal" id="close" data-target="#modalClose" href="{% url 'subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
+		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" id="close" data-target="#modalClose" href="{% url 'subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
 
 		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default"  href="#"><span class="glyphicon glyphicon-remove-circle"></span></a>
 		   			 			
@@ -90,15 +90,19 @@
 <div class="modal fade" id="modalClose"></div>
     
 <script>
-	var urlEdit;
-	$(".actions").click(function () {
-        		urlEdit = $(this).attr("href");
+	var urlView;
+	$(".actionCloseSubcomanda").click(function () {
+        		urlView = $(this).attr("href");
+    });
+
+    $(".actionCloseComanda").click(function () {
+        		urlView = $(this).attr("href");
     });
 
 	$('#modalClose').on('show.bs.modal', function (event) {
 		var modal = $(this);	
 		$.ajax({
-			url: urlEdit,
+			url: urlView,
 			context: document.body
 		}).done(function(response) {
 			modal.html(response);

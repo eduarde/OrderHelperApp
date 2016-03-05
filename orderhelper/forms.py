@@ -110,3 +110,16 @@ class SubcomandaCloseForm(forms.ModelForm):
 		widgets = {
 			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
 		}
+
+class ComandaCloseForm(forms.ModelForm):
+
+	class Meta:
+		model = Comanda
+		fields = ('data_primire',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		widgets = {
+			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
+		}
