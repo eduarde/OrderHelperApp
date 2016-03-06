@@ -166,6 +166,8 @@ def comanda_edit(request, pk):
 
 @login_required
 def reper_new(request):
+	dialog_title = 'Adauga reper'
+	url = '/reper/new/'
 
 	if request.method == "POST":
 		form = ReperForm(request.POST)
@@ -175,7 +177,23 @@ def reper_new(request):
 			return redirect(request.META['HTTP_REFERER'])
 	
 	form = ReperForm()
-	return render(request,'orderhelper/reper_new.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
+
+@login_required
+def reper_edit(request, pk):
+	reper = get_object_or_404(Reper, pk=pk)
+	dialog_title = "Editeaza reper"
+	url = '/reper/edit/' + pk
+
+	if request.method == "POST":
+		form = ReperForm(request.POST,instance=reper)
+		if form.is_valid():
+			reper = form.save(commit=True)
+			reper.save()
+			return redirect(request.META['HTTP_REFERER'])
+	
+	form = ReperForm(instance=reper)
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
 def producator_new(request):
@@ -194,6 +212,8 @@ def producator_new(request):
 
 @login_required
 def furnizor_new(request):
+	dialog_title = "Adauga furnizor"
+	url = '/furnizor/new/'
 
 	if request.method == "POST":
 		form = FurnizorForm(request.POST)
@@ -203,10 +223,28 @@ def furnizor_new(request):
 			return redirect(request.META['HTTP_REFERER'])
 	
 	form = FurnizorForm()
-	return render(request,'orderhelper/furnizor_new.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
+
+@login_required
+def furnizor_edit(request,pk):
+	furnizor = get_object_or_404(Furnizor, pk=pk)
+	dialog_title = "Editeaza furnizor"
+	url = '/furnizor/new/'
+
+	if request.method == "POST":
+		form = FurnizorForm(request.POST, instance=furnizor)
+		if form.is_valid():
+			furnizor = form.save(commit=True)
+			furnizor.save()
+			return redirect(request.META['HTTP_REFERER'])
+	
+	form = FurnizorForm(instance=furnizor)
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
 
 @login_required
 def proiect_new(request):
+	dialog_title = 'Adauga proiect'
+	url = '/proiect/new/'
 
 	if request.method == "POST":
 		form = ProiectForm(request.POST)
@@ -216,7 +254,23 @@ def proiect_new(request):
 			return redirect(request.META['HTTP_REFERER'])
 	
 	form = ProiectForm()
-	return render(request,'orderhelper/proiect_new.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
+
+@login_required
+def proiect_edit(request, pk):
+	proiect = get_object_or_404(Proiect, pk=pk)
+	dialog_title = 'Editeaza proiect'
+	url = '/proiect/edit/' + pk
+
+	if request.method == "POST":
+		form = ProiectForm(request.POST,instance=proiect)
+		if form.is_valid():
+			proiect = form.save(commit=True)
+			proiect.save()
+			return redirect(request.META['HTTP_REFERER'])
+	
+	form = ProiectForm(instance=proiect)
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
 def persoana_new(request):

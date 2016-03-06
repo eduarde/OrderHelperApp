@@ -10,8 +10,8 @@
 
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<a type="button" data-toggle="modal" data-target="#modalProiect" href="{% url 'proiect_new' %}" class="btn btn-primary">Add</a>
-  		<button type="button" class="btn btn-default disabled">Edit</button>
+		<a type="button" data-toggle="modal" data-target="#modalEdit" href="{% url 'proiect_new' %}" class="btn btn-primary actionAdd">Add</a>
+  		<a id="edit" data-toggle="modal" data-target="#modalEdit" type="button" href="#" class="btn btn-default disabled actionEdit">Edit</a>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
 	<br /> <br />
@@ -31,7 +31,7 @@
 		              
 			{% for proiect in proiecte %}			
 			<tr>         
-				<td><input type="checkbox" aria-label="select"></td>  
+				<td><input type="checkbox" url="{% url 'proiect_edit' pk=proiect.pk %}" aria-label="select"></td>  
 			    <td>{{ proiect.pk }}</td>
 				<td>{{ proiect.titlu }}</td>
 				<td>{{ proiect.descriere }}</td>
@@ -41,19 +41,37 @@
 		</table>     	
 	</div>
 
-	<div class="modal fade" id="modalProiect"></div>
+	<div class="modal fade" id="modalEdit"></div>
 
-	<script>
-		$('#modalProiect').on('show.bs.modal', function (event) {
+<script>
+		var urlEdit;
+		 $(".actionAdd").click(function () {
+        		urlEdit = $(this).attr("href");
+    	});
+
+		$(document).ready(function(){
+			
+	        // Get the checkboxes
+	        $( "input" ).on( "click", function() {
+	        	urlEdit = $( "input:checked" ).attr('url');
+	        	$("#edit").removeClass('disabled')
+	       
+	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
+	        		$("#edit").addClass('disabled')	
+	        	}	
+			});
+	    });
+
+		$('#modalEdit').on('show.bs.modal', function (event) {
 			var modal = $(this)
 			$.ajax({
-				url: "{% url 'proiect_new' %}",
+				url: urlEdit,
 				context: document.body
 			}).done(function(response) {
 				modal.html(response);
 			});
 		})
-	</script>
+</script>
 	
 
   {% endif %}
