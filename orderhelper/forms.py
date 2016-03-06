@@ -77,6 +77,20 @@ class ComandaForm(forms.ModelForm):
             'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
 
+class ComandaEditForm(forms.ModelForm):
+
+	class Meta:
+		model = Comanda
+		fields = ('numar_unic','status','obiect_succint','solicitant','proiect','group',)
+		widgets = {
+			'numar_unic': forms.NumberInput(attrs={'class': 'form-control'}),
+			'status': forms.Select(attrs={'class': 'form-control'}),
+			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
+			'solicitant': forms.Select(attrs={'class': 'form-control'}),
+			'proiect': forms.Select(attrs={'class': 'form-control'}),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
+		}
+
 class SubcomandaForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
@@ -181,3 +195,16 @@ class SubcomandaCancelForm(forms.ModelForm):
 			'numar_curent': HiddenInput(),
 		}
 		
+class ComandaCancelForm(forms.ModelForm):
+
+	class Meta:
+		model = Comanda
+		fields = ('data_primire','numar_unic',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		widgets = {
+			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
+			'numar_unic': HiddenInput(),
+		}

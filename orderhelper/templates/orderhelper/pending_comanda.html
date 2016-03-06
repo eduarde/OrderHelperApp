@@ -24,7 +24,7 @@
 		   			 	
 		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
 
-		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default"  href="#"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
 		        	</div>
 		        </div>
 
@@ -101,6 +101,10 @@
     });
 
     $(".actionCloseComanda").click(function () {
+        		urlView = $(this).attr("href");
+    });
+
+     $(".actionCancelComanda").click(function () {
         		urlView = $(this).attr("href");
     });
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaEditForm, SubcomandaCloseForm, ComandaCloseForm, SubcomandaCancelForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, ComandaEditForm, SubcomandaForm, SubcomandaEditForm, SubcomandaCloseForm, ComandaCloseForm, SubcomandaCancelForm, ComandaCancelForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -153,14 +153,14 @@ def comanda_edit(request, pk):
 	comanda = get_object_or_404(Comanda, pk=pk)
 	
 	if request.method == "POST":
-		comandaform = ComandaForm(request.POST, instance=comanda)
+		comandaform = ComandaEditForm(request.POST, instance=comanda)
 		if comandaform.is_valid():
 			comanda = comandaform.save(commit=True)
 			comanda.save()
 			return redirect('comanda_all')
 			
 
-	comandaform = ComandaForm(instance=comanda)
+	comandaform = ComandaEditForm(instance=comanda)
 	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform})
 
 
@@ -294,5 +294,27 @@ def pending_subcomanda_cancel(request, pk):
 
 	form = SubcomandaCancelForm(instance=subcomanda)
 	return render(request,'orderhelper/pending_subcomanda_cancel.html', {'form': form, 'subcomanda':subcomanda, 'dialog_title':dialog_title, 'url':url})
+
+@login_required
+def pending_comanda_cancel(request, pk):
+	comanda = get_object_or_404(Comanda, pk=pk)
+	status_anulat = Status.objects.filter(text='Anulat')[0]
+	dialog_title = "Anuleaza comanda"
+	url = '/comanda/cancel/' + pk
+
+	if request.method == "POST":
+		form = ComandaCancelForm(request.POST,instance=comanda)
+		if form.is_valid():
+			comanda = form.save(commit=False)
+			comanda.status = status_anulat
+			comanda.save()
+			subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
+			for subcomanda in subcomenzi:
+				subcomanda.status = status_anulat
+				subcomanda.save()
+			return redirect(request.META['HTTP_REFERER'])
+
+	form = ComandaCancelForm(instance=comanda)
+	return render(request,'orderhelper/pending_comanda_cancel.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url':url})
 
 
