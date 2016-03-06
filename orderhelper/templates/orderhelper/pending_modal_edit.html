@@ -29,6 +29,8 @@
 	$(document).ready(function(){
 	    $("#idprimire").datetimepicker({
 			format: 'mm/dd/yyyy'})
+
+	    $("#idprimire").datetimepicker('setDate', new Date());
 	});
 
     var form_options = { target: '#modalEdit', success: function(response) {} };

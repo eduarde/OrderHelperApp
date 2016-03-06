@@ -2,7 +2,8 @@ from django import forms
 from django.forms import HiddenInput
 from datetimewidget.widgets import DateWidget
 from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda, Subcomanda, Valuta
-
+from datetime import date, datetime, timedelta
+from django.utils.timezone import now
 
 class PersoanaForm(forms.ModelForm):
 
@@ -78,6 +79,10 @@ class ComandaForm(forms.ModelForm):
 
 class SubcomandaForm(forms.ModelForm):
 
+	def __init__(self, *args, **kwargs):
+		super(SubcomandaForm, self).__init__(*args, **kwargs)
+		self.fields['comanda_ref'].queryset = Comanda.objects.filter(status__text='Deschis')
+
 	class Meta:
 		model = Subcomanda
 		fields = ('comanda_ref','producator','reper','furnizor','cantitate','pret','valuta','termen_plata','mod_plata','data_livrare','group',)
@@ -100,6 +105,10 @@ class SubcomandaForm(forms.ModelForm):
 		}
 
 class SubcomandaEditForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super(SubcomandaEditForm, self).__init__(*args, **kwargs)
+		self.fields['comanda_ref'].queryset = Comanda.objects.filter(status__text='Deschis')
 
 	class Meta:
 		model = Subcomanda
@@ -124,6 +133,10 @@ class SubcomandaEditForm(forms.ModelForm):
 		}
 
 class SubcomandaCloseForm(forms.ModelForm):
+	
+	def __init__(self, *args, **kwargs):
+		super(SubcomandaCloseForm, self).__init__(*args, **kwargs)
+		self.fields['data_primire'].initial = datetime.now()
 
 	class Meta:
 		model = Subcomanda
@@ -137,6 +150,10 @@ class SubcomandaCloseForm(forms.ModelForm):
 		}
 
 class ComandaCloseForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super(ComandaCloseForm, self).__init__(*args, **kwargs)
+		self.fields['data_primire'].initial = datetime.now()
 
 	class Meta:
 		model = Comanda
@@ -154,5 +171,13 @@ class SubcomandaCancelForm(forms.ModelForm):
 
 	class Meta:
 		model = Subcomanda
-		fields = ('numar_curent',)
-		widgets = {'numar_curent': HiddenInput(),}
+		fields = ('data_primire','numar_curent',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		widgets = {
+			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
+			'numar_curent': HiddenInput(),
+		}
+		
