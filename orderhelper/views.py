@@ -274,7 +274,9 @@ def proiect_edit(request, pk):
 
 @login_required
 def persoana_new(request):
-	
+	dialog_title = 'Adauga solicitant'
+	url = '/persoana/new/'
+
 	if request.method == "POST":
 		form = PersoanaForm(request.POST)
 		if form.is_valid():
@@ -283,7 +285,7 @@ def persoana_new(request):
 			return redirect(request.META['HTTP_REFERER'])
 	
 	form = PersoanaForm()
-	return render(request,'orderhelper/persoana_new.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
 def producator_edit(request, pk):
