@@ -18,9 +18,9 @@
   {% endif %}
   <div class="container">
      
-
+      
       <form method="post" class="form-signin">{% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h1 class="form-signin-heading"><span class="glyphicon glyphicon-leaf"  aria-hidden="true"></span>   OrderHelper</h1> <br />
         <label for="id_username" class="sr-only">Username</label>
         <td>{{ form.username|add_class:"form-control"|attr:"placeholder:Username" }}</td>
         <label for="inputPassword" class="sr-only">Password</label>
