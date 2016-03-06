@@ -20,11 +20,11 @@
 		        	<div class="col-md-3"></div>
 		        	<div class="col-md-2">
 						
-						<button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
+						<button class="btn btn-primary actionViewComanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
 		   			 	
-		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
+		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
 
-		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
 		        	</div>
 		        </div>
 
@@ -39,7 +39,7 @@
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Data">{{ comanda.data }}</div>
 				   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Preluare">{{ comanda.preluat }}</div>
+				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Proiect">{{ comanda.proiect }}</div>
 				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} {{ comanda.show_valuta }}</div>
 				   
 				   		
@@ -68,11 +68,11 @@
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret Total">{{ subcomanda.pret_total }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
 		   			 		<div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
-		   			 			<a class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+		   			 			<a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
 		   			 	
-		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
+		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'pending_subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
 
-		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'pending_subcomanda_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'pending_subcomanda_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
 		   			 			
 		   			 		</div>
 		   			 	
@@ -100,11 +100,19 @@
         		console.log(urlView);
     });
 
+    $(".actionViewSubcomanda").click(function () {
+        		urlView = $(this).attr("href");
+    });
+
     $(".actionCloseComanda").click(function () {
         		urlView = $(this).attr("href");
     });
 
-     $(".actionCancelComanda").click(function () {
+    $(".actionCancelComanda").click(function () {
+        		urlView = $(this).attr("href");
+    });
+
+    $(".actionViewComanda").click(function () {
         		urlView = $(this).attr("href");
     });
 

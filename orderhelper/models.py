@@ -5,13 +5,13 @@ from datetime import date, timedelta
 from django.contrib.auth.models import Group
 
 class Valuta(models.Model):
-	DOLLARS = '$'
-	EURO = 'E'
+	DOLLARS = 'USD'
+	EURO = 'EURO'
 	RON = 'RON'
 
 	VALUTA_CHOICES = (
-		(DOLLARS, '$'),
-		(EURO, 'E'),
+		(DOLLARS, 'USD'),
+		(EURO, 'EURO'),
 		(RON, 'RON'),
 	)
 	text = models.CharField(max_length=5, choices=VALUTA_CHOICES, default=RON)

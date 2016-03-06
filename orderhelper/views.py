@@ -317,4 +317,16 @@ def pending_comanda_cancel(request, pk):
 	form = ComandaCancelForm(instance=comanda)
 	return render(request,'orderhelper/pending_comanda_cancel.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url':url})
 
+@login_required
+def comanda_detail(request, pk):
+	comanda = get_object_or_404(Comanda, pk=pk)
+
+	return render(request,'orderhelper/comanda_detail.html', {'comanda':comanda})
+
+@login_required
+def subcomanda_detail(request, pk):
+	subcomanda = get_object_or_404(Subcomanda, pk=pk)
+
+	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
+
 

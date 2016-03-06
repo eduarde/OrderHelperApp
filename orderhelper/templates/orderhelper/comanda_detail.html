@@ -1,0 +1,51 @@
+
+<div class="modal-dialog">
+    <div class="modal-content">
+	    <form method="POST" action="{{ url }}" id="modal_detail" class="subcomanda-form" >{% csrf_token %}
+	    	
+	    	<div class="modal-header">
+
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class="modal-title"><b>{{ comanda }}</b></h3>
+	      	</div>
+	      	<div class="modal-body">
+	      	
+	      		<div class="row">
+          			<div class="col-md-4"> <p><b>Numar unic:</b> {{ comanda.numar_unic}}<p></div>
+	        		<div class="col-md-8"><p><b>Status:</b>  <span class="btn {% if comanda.status.text == 'Deschis' %}btn-success{% endif %} {% if comanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if comanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span><p></div>
+	        	</div>	
+	        		
+	        	<div class="row">
+	        		<div class="col-md-4"><p><b>Data:</b> {{ comanda.data }}</p></div>
+	        		<div class="col-md-8"><p><b>Obiect succint:</b> {{ comanda.obiect_succint}}</p></div>
+	        		
+	        	</div>	
+
+	        	<div class="row">
+	
+	        		<div class="col-md-4"><p><b>Solicitant:</b> {{ comanda.solicitant}}</p></div>
+	        		<div class="col-md-8"><p><b>Telefon:</b> {{ comanda.solicitant.telefon }} </p></div>
+	        		
+	        	</div>
+
+	        	<div class="row">
+	        		
+	        		<div class="col-md-4"><p><b>Preluat:</b> {{ comanda.preluat }} </p></div>
+	        		<div class="col-md-8"><p><b>Proiect:</b> {{ comanda.proiect }}</p></div>
+	        	</div>	
+
+	        	<div class="row">
+	        		<div class="col-md-4"><p><b>Pret total:</b> {{ comanda.pret_total}} <span class="glyphicon {% if comanda.show_valuta == 'EURO' %} glyphicon-euro {% endif %}  {% if comanda.show_valuta == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %}"></span> </p></div>
+	        		<div class="col-md-4"><p><b>Data primire:</b> {{ comanda.data_primire }}</p></div>
+	        	</div>
+	      	</div>
+	      
+	    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+
+<script>
+
+    var form_options = { target: '#modalEdit', success: function(response) {} };
+    $('#modal_detail').ajaxForm(form_options);
+</script>

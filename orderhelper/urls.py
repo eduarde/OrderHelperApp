@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^comanda/close/(?P<pk>\d+)$', views.pending_comanda_close, name='pending_comanda_close'),
     url(r'^subcomanda/cancel/(?P<pk>\d+)$', views.pending_subcomanda_cancel, name='pending_subcomanda_cancel'),
     url(r'^comanda/cancel/(?P<pk>\d+)$', views.pending_comanda_cancel, name='pending_comanda_cancel'),
+    url(r'^comanda/detail/(?P<pk>\d+)$', views.comanda_detail, name='comanda_detail'),
+    url(r'^subcomanda/detail/(?P<pk>\d+)$', views.subcomanda_detail, name='subcomanda_detail'),
 ]
