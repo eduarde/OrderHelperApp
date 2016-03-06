@@ -179,6 +179,8 @@ def reper_new(request):
 
 @login_required
 def producator_new(request):
+	dialog_title = "Adauga producator"
+	url = '/producator/new/'
 
 	if request.method == "POST":
 		form = ProducatorForm(request.POST)
@@ -188,7 +190,7 @@ def producator_new(request):
 			return redirect(request.META['HTTP_REFERER'])
 
 	form = ProducatorForm()
-	return render(request,'orderhelper/producator_new.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
 def furnizor_new(request):
@@ -232,6 +234,8 @@ def persoana_new(request):
 @login_required
 def producator_edit(request, pk):
 	producator = get_object_or_404(Producator, pk=pk)
+	dialog_title = 'Editeaza producator'
+	url = '/producator/edit/' + pk
 	if request.method == "POST":
 		form = ProducatorForm(request.POST,instance=producator)
 		if form.is_valid():
@@ -240,7 +244,7 @@ def producator_edit(request, pk):
 			return redirect(request.META['HTTP_REFERER'])
 
 	form = ProducatorForm(instance=producator)
-	return render(request,'orderhelper/producator_edit.html', {'form': form})
+	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
 def pending_subcomanda_close(request, pk):

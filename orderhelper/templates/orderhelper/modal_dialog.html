@@ -1,11 +1,11 @@
 
   <div class="modal-dialog">
     <div class="modal-content">
-	    <form action="{% url 'producator_new' %}" method="POST" id="producator_new" class="producator-form">{% csrf_token %}
+	    <form action="{{ url }}" method="POST" id="modal_edit" class="producator-form">{% csrf_token %}
 	    	<div class="modal-header">
 
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Adauga producator</h4>
+		        <h4 class="modal-title">{{ dialog_title }}</h4>
 	      	</div>
 	      	<div class="modal-body">
 	      		<div class="row">
@@ -24,5 +24,5 @@
 
 <script>
     var form_options = { target: '#modalProducator', success: function(response) {} };
-    $('#producator_new').ajaxForm(form_options);
+    $('#modal_edit').ajaxForm(form_options);
 </script>

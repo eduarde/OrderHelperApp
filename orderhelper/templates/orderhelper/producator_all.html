@@ -11,8 +11,8 @@
 
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<a type="button" data-toggle="modal" data-target="#modalProducator" href="{% url 'producator_new' %}" class="btn btn-primary">Add</a>
-  		<a id="edit" data-toggle="modal" data-target="#modalProducatorEdit" type="button"  href="#" class="btn btn-default disabled">Edit</a>
+ 		<a  type="button" data-toggle="modal" data-target="#modalEdit" href="{% url 'producator_new' %}" class="btn btn-primary actionAdd">Add</a>
+  		<a id="edit" data-toggle="modal" data-target="#modalEdit" type="button" href="#" class="btn btn-default disabled actionEdit">Edit</a>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
 
@@ -45,45 +45,28 @@
 		</table>     	
 	</div>
 
-	<div class="modal fade" id="modalProducator"></div>
-	<div class="modal fade" id="modalProducatorEdit"></div>
+	<div class="modal fade" id="modalEdit"></div>
 
 	<script>
+		var urlEdit;
+		 $(".actionAdd").click(function () {
+        		urlEdit = $(this).attr("href");
+    	});
 
 		$(document).ready(function(){
-
-			var urlEdit;
-
-
-			// Make call to edit 
-	        $("#edit").click(function(){
-				$(location).attr('href', urlEdit );
-			});
-
+			
 	        // Get the checkboxes
 	        $( "input" ).on( "click", function() {
 	        	urlEdit = $( "input:checked" ).attr('url');
-
-
 	        	$("#edit").removeClass('disabled')
-	        	
+	       
 	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
 	        		$("#edit").addClass('disabled')	
 	        	}	
 			});
 	    });
 
-		$('#modalProducator').on('show.bs.modal', function (event) {
-			var modal = $(this)
-			$.ajax({
-				url: "{% url 'producator_new' %}",
-				context: document.body
-			}).done(function(response) {
-				modal.html(response);
-			});
-		})
-
-		$('#modalProducatorEdit').on('show.bs.modal', function (event) {
+		$('#modalEdit').on('show.bs.modal', function (event) {
 			var modal = $(this)
 			$.ajax({
 				url: urlEdit,
