@@ -10,6 +10,9 @@ from datetime import date, datetime, timedelta
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
+# def handler404(request):
+# 	return render(request,'orderhelper/error404.html');
+
 @login_required
 def pending(request):
 	groups_list = request.user.groups.all()

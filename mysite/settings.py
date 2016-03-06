@@ -137,4 +137,5 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
+# handler404 = 'orderhelper.views.handler404'
 
