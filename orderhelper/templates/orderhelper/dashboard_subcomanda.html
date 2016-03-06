@@ -7,7 +7,7 @@
 
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<a href="{% url 'subcomanda_new' %}" type="button" class="btn btn-primary">Add</a>
+ 		<a href="{% url 'dashboard_subcomanda_new' %}" type="button" class="btn btn-primary">Add</a>
   		<button type="button" id="edit" class="btn btn-default disabled">Edit</button>
   		<button type="button" class="btn btn-default disabled">Delete</button>
 	</div>
@@ -41,7 +41,7 @@
 		              
 			{% for subcomanda in subcomenzi %}			
 			<tr>         
-				<td><input type="checkbox" id="{{ subcomanda.pk }}" url="{%  url 'subcomanda_edit' pk=subcomanda.pk  %}" aria-label="select"></td>  
+				<td><input type="checkbox" id="{{ subcomanda.pk }}" url="{%  url 'dashboard_subcomanda_edit' pk=subcomanda.pk  %}" aria-label="select"></td>  
 			    <td>{{ subcomanda.pk }}</td>
 			    <td>#{{ subcomanda.numar_curent }}</td>
 				<td>{{ subcomanda.comanda_ref.numar_unic }}</td>
@@ -69,30 +69,19 @@
 		$(document).ready(function(){
 
 			var url;
-
 			// Make call to edit 
 	        $("#edit").click(function(){
-	        
-	    
 				$(location).attr('href', url );
-	       
-	       
 			});
 
 	        // Get the checkboxes
 	        $( "input" ).on( "click", function() {
-
-	        	
 	        	url = $( "input:checked" ).attr('url');
-
 	        	$("#edit").removeClass('disabled')
 	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
 	        		$("#edit").addClass('disabled')	
-	        	}
-	        		
+	        	}		
 			});
-
-
 	    });
     
 </script>	

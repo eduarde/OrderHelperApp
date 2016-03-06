@@ -6,7 +6,7 @@
 
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
- 		<a href="{% url 'comanda_new' %}" type="button" class="btn btn-primary">Add</a>
+ 		<a href="{% url 'dashboard_comanda_new' %}" type="button" class="btn btn-primary">Add</a>
   		<button type="button" id="edit" class="btn btn-default disabled">Edit</button>
   		<button  type="button" class="btn btn-default disabled">Delete</button>
 	</div>
@@ -31,7 +31,7 @@
 		              
 			{% for comanda in comenzi %}			
 			<tr>         
-				<td><input type="checkbox" url="{%  url 'comanda_edit' pk=comanda.pk  %}" aria-label="select"></td> 
+				<td><input type="checkbox" url="{%  url 'dashboard_comanda_edit' pk=comanda.pk  %}" aria-label="select"></td> 
 			    <td>{{ comanda.pk }}</td>
 				<td>{{ comanda.numar_unic }}</td>
 				<td>{{ comanda.data }}</td>

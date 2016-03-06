@@ -47,33 +47,33 @@ def order_history(request):
 	return render(request,'orderhelper/order_history.html', {'comenzi' : comenzi})
 
 @login_required
-def proiect_all(request):
+def dashboard_proiect(request):
 	groups_list = request.user.groups.all()
 	proiecte = Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	return render(request,'orderhelper/proiect_all.html', {'proiecte':proiecte})
+	return render(request,'orderhelper/dashboard_proiect.html', {'proiecte':proiecte})
 
 @login_required
-def furnizor_all(request):
+def dashboard_furnizor(request):
 	groups_list = request.user.groups.all()
 	furnizori = Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	return render(request,'orderhelper/furnizor_all.html', {'furnizori':furnizori})
+	return render(request,'orderhelper/dashboard_furnizor.html', {'furnizori':furnizori})
 
 
 @login_required
-def producator_all(request):
+def dashboard_producator(request):
 	groups_list = request.user.groups.all()
 	producatori = Producator.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	return render(request,'orderhelper/producator_all.html', {'producatori':producatori})
+	return render(request,'orderhelper/dashboard_producator.html', {'producatori':producatori})
 
 @login_required
-def reper_all(request):
+def dashboard_reper(request):
 	groups_list = request.user.groups.all()
 	reperi = Reper.objects.all().filter(group__in=groups_list).order_by('pk')
 
-	return render(request,'orderhelper/reper_all.html', {'reperi':reperi})
+	return render(request,'orderhelper/dashboard_reper.html', {'reperi':reperi})
 
 @login_required
 def logout_page(request):
@@ -81,21 +81,21 @@ def logout_page(request):
     return HttpResponseRedirect('/')
 
 @login_required
-def comanda_all(request):
+def dashboard_comanda(request):
 	groups_list = request.user.groups.all()
 	comenzi = Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
 
-	return render(request,'orderhelper/comanda_all.html', {'comenzi':comenzi})
+	return render(request,'orderhelper/dashboard_comanda.html', {'comenzi':comenzi})
 
 @login_required
-def subcomanda_all(request):
+def dashboard_subcomanda(request):
 	groups_list = request.user.groups.all()
 	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
 
-	return render(request,'orderhelper/subcomanda_all.html', {'subcomenzi':subcomenzi})
+	return render(request,'orderhelper/dashboard_subcomanda.html', {'subcomenzi':subcomenzi})
 
 @login_required
-def comanda_new(request):
+def dashboard_comanda_new(request):
 	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
 	if request.method == "POST":
@@ -107,14 +107,28 @@ def comanda_new(request):
 			comanda.preluat = request.user
 			comanda.save()
 			comandaform.save_m2m()
-			return redirect('comanda_all')
+			return redirect('dashboard_comanda')
 
 	comandaform = ComandaForm()
-	return render(request,'orderhelper/comanda_new.html', {'comandaform':comandaform})
+	return render(request,'orderhelper/dashboard_comanda_new.html', {'comandaform':comandaform})
+
+@login_required
+def dashboard_comanda_edit(request, pk):
+	comanda = get_object_or_404(Comanda, pk=pk)
+	
+	if request.method == "POST":
+		comandaform = ComandaEditForm(request.POST, instance=comanda)
+		if comandaform.is_valid():
+			comanda = comandaform.save(commit=True)
+			comanda.save()
+			return redirect('dashboard_comanda')
+			
+	comandaform = ComandaEditForm(instance=comanda)
+	return render(request,'orderhelper/dashboard_comanda_edit.html', {'comandaform':comandaform})
 
 
 @login_required
-def subcomanda_new(request):
+def dashboard_subcomanda_new(request):
 	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
 	if request.method == "POST":
@@ -130,38 +144,25 @@ def subcomanda_new(request):
 			subcomanda.data = datetime.now()
 			subcomanda.save()
 			subcomandaform.save_m2m()
-			return redirect('subcomanda_all')
+			return redirect('dashboard_subcomanda')
 		
 	subcomandaform = SubcomandaForm()
-	return render(request,'orderhelper/subcomanda_new.html', {'subcomandaform':subcomandaform})
+	return render(request,'orderhelper/dashboard_subcomanda_new.html', {'subcomandaform':subcomandaform})
 
 @login_required
-def subcomanda_edit(request,pk):
+def dashboard_subcomanda_edit(request,pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	if request.method == "POST":
 		subcomandaform = SubcomandaEditForm(request.POST, instance=subcomanda)
 		if subcomandaform.is_valid():
 			subcomanda = subcomandaform.save(commit=False)
 			subcomanda.save()		
-			return redirect('subcomanda_all')
+			return redirect('dashboard_subcomanda')
 		
 	subcomandaform = SubcomandaEditForm(instance=subcomanda)	
-	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform' : subcomandaform})
+	return render(request,'orderhelper/dashboard_subcomanda_edit.html', {'subcomandaform' : subcomandaform})
 
-@login_required
-def comanda_edit(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
-	
-	if request.method == "POST":
-		comandaform = ComandaEditForm(request.POST, instance=comanda)
-		if comandaform.is_valid():
-			comanda = comandaform.save(commit=True)
-			comanda.save()
-			return redirect('comanda_all')
-			
 
-	comandaform = ComandaEditForm(instance=comanda)
-	return render(request,'orderhelper/comanda_edit.html', {'comandaform':comandaform})
 
 
 @login_required

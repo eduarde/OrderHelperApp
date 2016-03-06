@@ -10,10 +10,8 @@
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard  </h1>
 	 <br />
-	<h2><em> Editeaza subcomanda </em></h2>
+	<h2><em> Adauga subcomanda </em></h2>
 	
-	<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span> Editeaza cu atentie! Daca asociezi o comanda noua, este posibil ca numarul unic al subcomenzii sa nu mai coincida.</div>
-
 	<br />
 	 <form method="POST" class="proiect-form">{% csrf_token %}
 	     {{ form.media }}
@@ -23,7 +21,7 @@
 	        	{{ subcomandaform.as_p }}
 	        </div>
 	        <div class="col-md-2"></div>
-	            <div id="bubble" class="col-md-2 placeholder">
+	         <div id="bubble" class="col-md-2 placeholder">
              	<a type="button" class="actionAdd" data-toggle="modal" data-target="#modalEdit" href="{% url 'producator_new' %}">  <img src="{% static 'img/producator.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4><span class="glyphicon glyphicon-plus-sign"> Producator</span></h4>
           
@@ -50,11 +48,16 @@
 	      	
 	    </form>
 
-
-
 <div class="modal fade" id="modalEdit"></div>
 	
 	<script>
+		$(document).ready(function(){
+	        $("#idlivrare").datetimepicker({
+				format: 'mm/dd/yyyy'})
+
+	        $("#id_cantitate").val(1);
+	    });
+	    
 		var urlEdit;
 		 $(".actionAdd").click(function () {
         		urlEdit = $(this).attr("href");
