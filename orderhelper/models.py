@@ -164,7 +164,7 @@ class Comanda(models.Model):
 		return False
 
 	def calculate_progress(self):
-		subcomenzi_total = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic).count()
+		subcomenzi_total = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__numar_unic=self.numar_unic).count()
 		subcomenzi_finished = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic,status__text='Inchis').count()
 		if subcomenzi_total == 0:
 			return 0

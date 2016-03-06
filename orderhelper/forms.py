@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import HiddenInput
 from datetimewidget.widgets import DateWidget
 from .models import Persoana, Proiect, Furnizor, Producator, Reper, Comanda, Subcomanda, Valuta
 
@@ -98,6 +99,30 @@ class SubcomandaForm(forms.ModelForm):
             'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
 
+class SubcomandaEditForm(forms.ModelForm):
+
+	class Meta:
+		model = Subcomanda
+		fields = ('comanda_ref','status','producator','reper','furnizor','cantitate','pret','valuta','termen_plata','mod_plata','data_livrare','group',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		widgets = {
+			'comanda_ref': forms.Select(attrs={'class': 'form-control'}),
+			'status': forms.Select(attrs={'class': 'form-control'}),
+			'producator': forms.Select(attrs={'class': 'form-control'}),
+			'reper': forms.Select(attrs={'class': 'form-control'}),
+			'furnizor': forms.Select(attrs={'class': 'form-control'}),
+			'cantitate': forms.NumberInput(attrs={'class': 'form-control'}),
+			'pret': forms.NumberInput(attrs={'class': 'form-control'}),
+			'valuta': forms.Select(attrs={'class': 'form-control'}),
+			'termen_plata': forms.Select(attrs={'class': 'form-control'}),
+			'mod_plata': forms.Select(attrs={'class': 'form-control'}),
+			'data_livrare': DateWidget(attrs={'id':"idlivrare"}, bootstrap_version=3, options = dateOptions),
+            'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
+		}
+
 class SubcomandaCloseForm(forms.ModelForm):
 
 	class Meta:
@@ -123,3 +148,11 @@ class ComandaCloseForm(forms.ModelForm):
 		widgets = {
 			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
 		}
+
+
+class SubcomandaCancelForm(forms.ModelForm):
+
+	class Meta:
+		model = Subcomanda
+		fields = ('numar_curent',)
+		widgets = {'numar_curent': HiddenInput(),}

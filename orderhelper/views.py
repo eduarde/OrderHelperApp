@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaCloseForm, ComandaCloseForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, SubcomandaForm, SubcomandaEditForm, SubcomandaCloseForm, ComandaCloseForm, SubcomandaCancelForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -139,13 +139,13 @@ def subcomanda_new(request):
 def subcomanda_edit(request,pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	if request.method == "POST":
-		subcomandaform = SubcomandaForm(request.POST, instance=subcomanda)
+		subcomandaform = SubcomandaEditForm(request.POST, instance=subcomanda)
 		if subcomandaform.is_valid():
 			subcomanda = subcomandaform.save(commit=False)
 			subcomanda.save()		
 			return redirect('subcomanda_all')
 		
-	subcomandaform = SubcomandaForm(instance=subcomanda)	
+	subcomandaform = SubcomandaEditForm(instance=subcomanda)	
 	return render(request,'orderhelper/subcomanda_edit.html', {'subcomandaform' : subcomandaform})
 
 @login_required
@@ -243,10 +243,11 @@ def producator_edit(request, pk):
 	return render(request,'orderhelper/producator_edit.html', {'form': form})
 
 @login_required
-def subcomanda_close(request, pk):
+def pending_subcomanda_close(request, pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 	status_inchis = Status.objects.filter(text='Inchis')[0]
-
+	dialog_title = "Inchide subcomanda"
+	url = '/subcomanda/close/' + pk
 	if request.method == "POST":
 		form = SubcomandaCloseForm(request.POST,instance=subcomanda)
 		if form.is_valid():
@@ -256,12 +257,14 @@ def subcomanda_close(request, pk):
 			return redirect(request.META['HTTP_REFERER'])
 
 	form = SubcomandaCloseForm(instance=subcomanda)
-	return render(request,'orderhelper/subcomanda_close.html', {'form': form, 'subcomanda':subcomanda})
+	return render(request,'orderhelper/pending_modal_edit.html', {'form': form, 'subcomanda':subcomanda, 'dialog_title':dialog_title, 'url':url})
 
 @login_required
-def comanda_close(request, pk):
+def pending_comanda_close(request, pk):
 	comanda = get_object_or_404(Comanda, pk=pk)
 	status_inchis = Status.objects.filter(text='Inchis')[0]
+	dialog_title = "Inchide comanda"
+	url = '/comanda/close/' + pk
 
 	if request.method == "POST":
 		form = ComandaCloseForm(request.POST,instance=comanda)
@@ -272,6 +275,24 @@ def comanda_close(request, pk):
 			return redirect(request.META['HTTP_REFERER'])
 
 	form = ComandaCloseForm(instance=comanda)
-	return render(request,'orderhelper/comanda_close.html', {'form': form, 'comanda':comanda})
+	return render(request,'orderhelper/pending_modal_edit.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url': url})
+
+@login_required
+def pending_subcomanda_cancel(request, pk):
+	subcomanda = get_object_or_404(Subcomanda, pk=pk)
+	status_anulat = Status.objects.filter(text='Anulat')[0]
+	dialog_title = "Anuleaza subcomanda"
+	url = '/subcomanda/cancel/' + pk
+
+	if request.method == "POST":
+		form = SubcomandaCancelForm(request.POST,instance=subcomanda)
+		if form.is_valid():
+			subcomanda = form.save(commit=False)
+			subcomanda.status = status_anulat
+			subcomanda.save()
+			return redirect(request.META['HTTP_REFERER'])
+
+	form = SubcomandaCancelForm(instance=subcomanda)
+	return render(request,'orderhelper/pending_subcomanda_cancel.html', {'form': form, 'subcomanda':subcomanda, 'dialog_title':dialog_title, 'url':url})
 
 
