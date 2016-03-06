@@ -35,7 +35,7 @@
 	        	</div>	
 
 	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Pret total:</b> {{ comanda.pret_total}} <span class="glyphicon {% if comanda.show_valuta == 'EURO' %} glyphicon-euro {% endif %}  {% if comanda.show_valuta == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %}"></span> </p></div>
+	        		<div class="col-md-4"><p><b>Pret total:</b> {{ comanda.pret_total}}  <span class="glyphicon {% if comanda.show_valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if comanda.show_valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </p></div>
 	        		<div class="col-md-4"><p><b>Data primire:</b> {{ comanda.data_primire }}</p></div>
 	        	</div>
 	      	</div>

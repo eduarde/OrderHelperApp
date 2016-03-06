@@ -47,8 +47,8 @@
 
 	        	<div class="row">
 	        		<div class="col-md-4"><p><b>Cantitate:</b> {{ subcomanda.cantitate }}</p></div>
-	        		<div class="col-md-4"><p><b>Pret:</b> {{ subcomanda.pret }} </p></div>
-	        		<div class="col-md-4"><p><b>Pret Total:</b> {{ subcomanda.pret_total }}  <span class="glyphicon {% if subcomanda.show_valuta == 'EURO' %} glyphicon-euro {% endif %}  {% if subcomanda.show_valuta == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %}"></span> </p></div>
+	        		<div class="col-md-4"><p><b>Pret:</b> {{ subcomanda.pret }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></p></div>
+	        		<div class="col-md-4"><p><b>Pret Total:</b> {{ subcomanda.pret_total }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </p></div>
 	        	</div>
 
 	        	<div class="row">
