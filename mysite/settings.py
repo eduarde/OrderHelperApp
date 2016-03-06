@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'orderhelper',
     'widget_tweaks',
     'datetimewidget',
+    'pure_pagination',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,5 +129,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_URL ='/'
 LOGIN_REDIRECT_URL =  '/pending'
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
 
 

@@ -4,10 +4,10 @@ from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, Repe
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from datetime import date, datetime, timedelta
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required
@@ -32,31 +32,45 @@ def dashboard(request):
 @login_required
 def history(request):
 	groups_list = request.user.groups.all()
-	comenda_list = Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
-	paginator = Paginator(comenda_list, 5)
-	page = request.GET.get('page')
+	comanda_list = Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
+
 	try:
-		comenzi = paginator.page(page)
+		page = request.GET.get('page', 1)
 	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		comenzi = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		comenzi = paginator.page(paginator.num_pages)
+		page = 1
+
+	p = Paginator(comanda_list, 8)
+	comenzi = p.page(page)
 
 	return render(request,'orderhelper/history.html', {'comenzi' : comenzi})
 
 @login_required
 def dashboard_proiect(request):
 	groups_list = request.user.groups.all()
-	proiecte = Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
+	proiect_list = Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(proiect_list, 8)
+	proiecte = p.page(page)
 
 	return render(request,'orderhelper/dashboard_proiect.html', {'proiecte':proiecte})
 
 @login_required
 def dashboard_furnizor(request):
 	groups_list = request.user.groups.all()
-	furnizori = Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
+	furnizor_list = Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(furnizor_list, 8)
+	furnizori = p.page(page)
 
 	return render(request,'orderhelper/dashboard_furnizor.html', {'furnizori':furnizori})
 
@@ -64,14 +78,30 @@ def dashboard_furnizor(request):
 @login_required
 def dashboard_producator(request):
 	groups_list = request.user.groups.all()
-	producatori = Producator.objects.all().filter(group__in=groups_list).order_by('pk')
+	producator_list = Producator.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(producator_list, 8)
+	producatori = p.page(page)
 
 	return render(request,'orderhelper/dashboard_producator.html', {'producatori':producatori})
 
 @login_required
 def dashboard_reper(request):
 	groups_list = request.user.groups.all()
-	reperi = Reper.objects.all().filter(group__in=groups_list).order_by('pk')
+	reper_list = Reper.objects.all().filter(group__in=groups_list).order_by('pk')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(reper_list, 5)
+	reperi = p.page(page)
 
 	return render(request,'orderhelper/dashboard_reper.html', {'reperi':reperi})
 
@@ -83,14 +113,30 @@ def logout_page(request):
 @login_required
 def dashboard_comanda(request):
 	groups_list = request.user.groups.all()
-	comenzi = Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+	comanda_list = Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(comanda_list, 8)
+	comenzi = p.page(page)
 
 	return render(request,'orderhelper/dashboard_comanda.html', {'comenzi':comenzi})
 
 @login_required
 def dashboard_subcomanda(request):
 	groups_list = request.user.groups.all()
-	subcomenzi = Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('pk')
+	subcomanda_list = Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
+
+	try:
+		page = request.GET.get('page', 1)
+	except PageNotAnInteger:
+		page = 1
+
+	p = Paginator(subcomanda_list, 6)
+	subcomenzi = p.page(page)
 
 	return render(request,'orderhelper/dashboard_subcomanda.html', {'subcomenzi':subcomenzi})
 

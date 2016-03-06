@@ -29,7 +29,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for comanda in comenzi %}			
+			{% for comanda in comenzi.object_list %}			
 			<tr>         
 				<td><input type="checkbox" url="{%  url 'dashboard_comanda_edit' pk=comanda.pk  %}" aria-label="select"></td> 
 			    <td>{{ comanda.pk }}</td>
@@ -43,6 +43,10 @@
 			{% endfor %}
 			</tbody>
 		</table>     	
+	</div>
+
+	<div id="pagination">
+   	 {{ comenzi.render }}
 	</div>
 
 	<script>

@@ -32,7 +32,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for producator in producatori %}			
+			{% for producator in producatori.object_list %}			
 			<tr>         
 				<td><input type="checkbox" url="{% url 'producator_edit' pk=producator.pk %}" aria-label="select"></td>  
 			    <td>{{ producator.pk }}</td>
@@ -43,6 +43,10 @@
 			{% endfor %}
 			</tbody>
 		</table>     	
+	</div>
+
+	<div id="pagination">
+   	 {{ producatori.render }}
 	</div>
 
 	<div class="modal fade" id="modalEdit"></div>

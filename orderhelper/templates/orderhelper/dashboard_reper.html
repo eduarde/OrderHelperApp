@@ -7,7 +7,6 @@
 {% block content %}
 
 
-
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard - <em> Reper </em> </h1>
 
@@ -34,7 +33,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for reper in reperi %}			
+			{% for reper in reperi.object_list %}			
 			<tr>         
 				<td><input type="checkbox" url="{% url 'reper_edit' pk=reper.pk %}"  aria-label="select"></td>  
 			    <td>{{ reper.pk }}</td>
@@ -48,6 +47,10 @@
 	</div>
 
 	<div class="modal fade" id="modalEdit"></div>
+
+	<div id="pagination">
+   	 {{ reperi.render }}
+	</div>
 
 	<script>
 		var urlEdit;
