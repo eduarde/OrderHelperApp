@@ -11,26 +11,26 @@ from datetime import date, datetime, timedelta
 
 
 @login_required
-def pending_comanda(request):
+def pending(request):
 	groups_list = request.user.groups.all()
 	comenzi = Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('data')
 
-	return render(request,'orderhelper/pending_comanda.html', {'comenzi':comenzi})
+	return render(request,'orderhelper/pending.html', {'comenzi':comenzi})
 
-@login_required
-def comanda_subcomenzi(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
-	subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
-	comanda = Comanda.objects.get(pk=pk)
+# @login_required
+# def comanda_subcomenzi(request, pk):
+# 	comanda = get_object_or_404(Comanda, pk=pk)
+# 	subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
+# 	comanda = Comanda.objects.get(pk=pk)
 
-	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
+# 	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
 
 @login_required
 def dashboard(request):
 	return render(request,'orderhelper/dashboard.html', {})
 
 @login_required
-def order_history(request):
+def history(request):
 	groups_list = request.user.groups.all()
 	comenda_list = Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
 	paginator = Paginator(comenda_list, 5)
@@ -44,7 +44,7 @@ def order_history(request):
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		comenzi = paginator.page(paginator.num_pages)
 
-	return render(request,'orderhelper/order_history.html', {'comenzi' : comenzi})
+	return render(request,'orderhelper/history.html', {'comenzi' : comenzi})
 
 @login_required
 def dashboard_proiect(request):
