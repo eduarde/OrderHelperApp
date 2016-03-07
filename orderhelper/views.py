@@ -8,14 +8,11 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from datetime import date, datetime, timedelta
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import View
 from django.http import HttpResponse
 from django.views.generic import View, ListView
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from pure_pagination.mixins import PaginationMixin
-
-from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper 
 
 # def handler404(request):
 # 	return render(request,'orderhelper/error404.html');
@@ -25,6 +22,7 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+# Dashboard view 
 class DashboardView(View):
 	template_name = 'orderhelper/dashboard.html'
 
@@ -32,6 +30,7 @@ class DashboardView(View):
 	def get(self, request):
 		return render(request, self.template_name)
 
+# Pending view 
 class PendingView(ListView):
 	model = Comanda
 	template_name = 'orderhelper/pending.html'
@@ -45,7 +44,7 @@ class PendingView(ListView):
 		groups_list = self.request.user.groups.all()
 		return Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('data')
 
-
+# History view 
 class HistoryView(PaginationMixin, ListView):
 	model = Comanda
 	template_name = 'orderhelper/history.html'
@@ -60,75 +59,7 @@ class HistoryView(PaginationMixin, ListView):
 		groups_list = self.request.user.groups.all()
 		return Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
 
-# @login_required
-# def comanda_subcomenzi(request, pk):
-# 	comanda = get_object_or_404(Comanda, pk=pk)
-# 	subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
-# 	comanda = Comanda.objects.get(pk=pk)
-
-# 	return render(request,'orderhelper/comanda_subcomenzi.html', {'subcomenzi':subcomenzi, 'comanda':comanda})
-
-class DashboardProiectView(PaginationMixin, ListView):
-	model = Proiect
-	template_name = 'orderhelper/dashboard_proiect.html'
-	context_object_name = 'proiecte'
-	paginate_by = 8
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(DashboardProiectView, self).dispatch(*args, **kwargs)
-
-	def get_queryset(self):
-		groups_list = self.request.user.groups.all()
-		return Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
-
-
-class DashboardFurnizorView(PaginationMixin, ListView):
-	model = Furnizor
-	template_name = 'orderhelper/dashboard_furnizor.html'
-	context_object_name = 'furnizori'
-	paginate_by = 8
-
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(DashboardFurnizorView, self).dispatch(*args, **kwargs)
-
-	def get_queryset(self):
-		groups_list = self.request.user.groups.all()
-		return Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
-
-
-class DashboardProducatorView(PaginationMixin, ListView):
-	model = Producator
-	template_name = 'orderhelper/dashboard_producator.html'
-	context_object_name = 'producatori'
-	paginate_by = 8
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(DashboardProducatorView, self).dispatch(*args, **kwargs)
-
-	def get_queryset(self):
-		groups_list = self.request.user.groups.all()
-		return  Producator.objects.all().filter(group__in=groups_list).order_by('pk')
-
-
-class DashboardReperView(PaginationMixin, ListView):
-	model = Reper
-	template_name = 'orderhelper/dashboard_reper.html'
-	context_object_name = 'reperi'
-	paginate_by = 5
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(DashboardReperView, self).dispatch(*args, **kwargs)
-
-	def get_queryset(self):
-		groups_list = self.request.user.groups.all()
-		return Reper.objects.all().filter(group__in=groups_list).order_by('pk')	
-
-
+# Comanda view in Dashboard 
 class DashboardComandaView(PaginationMixin, ListView):
 	model = Comanda
 	template_name = 'orderhelper/dashboard_comanda.html'
@@ -143,7 +74,7 @@ class DashboardComandaView(PaginationMixin, ListView):
 		groups_list = self.request.user.groups.all()
 		return Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
 
-
+# Subcomanda view in Dashboard 
 class DashboardSubcomandaView(PaginationMixin, ListView):
 	model = Subcomanda
 	template_name = 'orderhelper/dashboard_subcomanda.html'
@@ -159,40 +90,94 @@ class DashboardSubcomandaView(PaginationMixin, ListView):
 		return Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
 
 
-# class DashboardComandaCreateView(FormView):
-# 	template_name = 'orderhelper/dashboard_comanda_new.html'
-# 	success_url = DashboardComandaView.as_view()
-# 	form_class = ComandaForm
+# Proiect view in Dashboard 
+class DashboardProiectView(PaginationMixin, ListView):
+	model = Proiect
+	template_name = 'orderhelper/dashboard_proiect.html'
+	context_object_name = 'proiecte'
+	paginate_by = 8
 
-# 	def form_valid(self, form):
-# 		self.object = form.save(commit=False)
-# 		self.object.status = Status.objects.all().filter(text='Deschis')[0]
-# 		self.object.data - datetime.now()
-# 		self.object.preluat = self.request.user
-# 		self.object.save()
-# 		form.save_m2m()
-# 		return redirect(success_url)
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(DashboardProiectView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
+
+# Furnizor view in Dashboard 
+class DashboardFurnizorView(PaginationMixin, ListView):
+	model = Furnizor
+	template_name = 'orderhelper/dashboard_furnizor.html'
+	context_object_name = 'furnizori'
+	paginate_by = 8
 
 
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(DashboardFurnizorView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
+
+# Producator view in Dashboard 
+class DashboardProducatorView(PaginationMixin, ListView):
+	model = Producator
+	template_name = 'orderhelper/dashboard_producator.html'
+	context_object_name = 'producatori'
+	paginate_by = 8
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(DashboardProducatorView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return  Producator.objects.all().filter(group__in=groups_list).order_by('pk')
+
+# Reper view in Dashboard 
+class DashboardReperView(PaginationMixin, ListView):
+	model = Reper
+	template_name = 'orderhelper/dashboard_reper.html'
+	context_object_name = 'reperi'
+	paginate_by = 5
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(DashboardReperView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return Reper.objects.all().filter(group__in=groups_list).order_by('pk')	
 
 
-@login_required
-def dashboard_comanda_new(request):
-	status_deschis = Status.objects.all().filter(text='Deschis')[0]
+# Comanda create view
+class DashboardComandaCreateView(FormView):
 
-	if request.method == "POST":
-		comandaform = ComandaForm(request.POST)
-		if comandaform.is_valid():
-			comanda = comandaform.save(commit=False)
-			comanda.status = status_deschis
-			comanda.data = datetime.now()
-			comanda.preluat = request.user
-			comanda.save()
-			comandaform.save_m2m()
-			return redirect('dashboard_comanda')
+	template_name = 'orderhelper/dashboard_comanda_new.html'
+	success_url = 'dashboard_comanda';
+	form_class = ComandaForm
 
-	comandaform = ComandaForm()
-	return render(request,'orderhelper/dashboard_comanda_new.html', {'comandaform':comandaform})
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'comandaform': form})
+	
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			self.object = form.save(commit=False)
+			self.object.status = Status.objects.all().filter(text='Deschis')[0]
+			self.object.data = datetime.now()
+			self.object.preluat = self.request.user
+			self.object.save()
+			form.save_m2m()
+			return redirect(self.success_url)
+	
+		return render(request, self.template_name, {'comandaform': form})
+
 
 @login_required
 def dashboard_comanda_edit(request, pk):
@@ -209,27 +194,40 @@ def dashboard_comanda_edit(request, pk):
 	return render(request,'orderhelper/dashboard_comanda_edit.html', {'comandaform':comandaform})
 
 
-@login_required
-def dashboard_subcomanda_new(request):
-	status_deschis = Status.objects.all().filter(text='Deschis')[0]
 
-	if request.method == "POST":
-		subcomandaform = SubcomandaForm(request.POST)
-		if subcomandaform.is_valid():
-			subcomanda = subcomandaform.save(commit=False)
-			subcomanda.status = status_deschis
-			numar_curent = 0
-			if Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).exists(): 
-				numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=subcomanda.comanda_ref.numar_unic).latest('pk').numar_curent
+# Subcomanda create view
+class DashboardSubcomandaCreateView(FormView):
 
-			subcomanda.numar_curent = numar_curent + 1
-			subcomanda.data = datetime.now()
-			subcomanda.save()
-			subcomandaform.save_m2m()
-			return redirect('dashboard_subcomanda')
-		
-	subcomandaform = SubcomandaForm()
-	return render(request,'orderhelper/dashboard_subcomanda_new.html', {'subcomandaform':subcomandaform})
+	template_name = 'orderhelper/dashboard_subcomanda_new.html'
+	success_url = 'dashboard_subcomanda';
+	form_class = SubcomandaForm
+
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'subcomandaform': form})
+	
+	def calculate_numar_curent(self):
+		numar_curent = 0
+		if Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.object.comanda_ref.numar_unic).exists(): 
+				numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.object.comanda_ref.numar_unic).latest('pk').numar_curent
+		numar_curent = numar_curent + 1
+		return numar_curent
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			self.object = form.save(commit=False)
+			self.object.status = Status.objects.all().filter(text='Deschis')[0]
+			self.object.numar_curent = self.calculate_numar_curent()
+			self.object.data = datetime.now()
+			self.object.save()
+			form.save_m2m()
+			return redirect(self.success_url)
+	
+		return render(request, self.template_name, {'subcomandaform': form})
+
 
 @login_required
 def dashboard_subcomanda_edit(request,pk):
@@ -245,22 +243,29 @@ def dashboard_subcomanda_edit(request,pk):
 	return render(request,'orderhelper/dashboard_subcomanda_edit.html', {'subcomandaform' : subcomandaform})
 
 
+# Reper create view
+class DashboardReperCreateView(FormView):
 
-
-@login_required
-def reper_new(request):
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ReperForm
 	dialog_title = 'Adauga reper'
 	url = '/reper/new/'
 
-	if request.method == "POST":
-		form = ReperForm(request.POST)
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
 		if form.is_valid():
-			reper = form.save(commit=True)
-			reper.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = ReperForm()
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
 
 @login_required
 def reper_edit(request, pk):
@@ -278,35 +283,54 @@ def reper_edit(request, pk):
 	form = ReperForm(instance=reper)
 	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
-@login_required
-def producator_new(request):
-	dialog_title = "Adauga producator"
+
+# Producator create view
+class DashboardProducatorCreateView(FormView):
+
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ProducatorForm
+	dialog_title = 'Adauga producator'
 	url = '/producator/new/'
 
-	if request.method == "POST":
-		form = ProducatorForm(request.POST)
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
 		if form.is_valid():
-			producator = form.save(commit=True)
-			producator.save()
-			return redirect(request.META['HTTP_REFERER'])
-
-	form = ProducatorForm()
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
-
-@login_required
-def furnizor_new(request):
-	dialog_title = "Adauga furnizor"
-	url = '/furnizor/new/'
-
-	if request.method == "POST":
-		form = FurnizorForm(request.POST)
-		if form.is_valid():
-			furnizor = form.save(commit=True)
-			furnizor.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = FurnizorForm()
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+
+#Furnizor create view
+class DashboardFurnizorCreateView(FormView):
+
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = FurnizorForm
+	dialog_title = 'Adauga furnizor'
+	url = '/furnizor/new/'
+
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			self.object = form.save(commit=True)
+			self.object.save()
+			return redirect(request.META['HTTP_REFERER'])
+	
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
 
 @login_required
 def furnizor_edit(request,pk):
@@ -324,20 +348,29 @@ def furnizor_edit(request,pk):
 	form = FurnizorForm(instance=furnizor)
 	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
 
-@login_required
-def proiect_new(request):
+
+# Proiect create view
+class DashboardProiectCreateView(FormView):
+
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ProiectForm
 	dialog_title = 'Adauga proiect'
 	url = '/proiect/new/'
 
-	if request.method == "POST":
-		form = ProiectForm(request.POST)
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
 		if form.is_valid():
-			proiect = form.save(commit=True)
-			proiect.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = ProiectForm()
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
 
 @login_required
 def proiect_edit(request, pk):
@@ -355,20 +388,30 @@ def proiect_edit(request, pk):
 	form = ProiectForm(instance=proiect)
 	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
 
-@login_required
-def persoana_new(request):
+
+# Persoana create view
+class DashboardPersoanaCreateView(FormView):
+
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = PersoanaForm
 	dialog_title = 'Adauga solicitant'
 	url = '/persoana/new/'
 
-	if request.method == "POST":
-		form = PersoanaForm(request.POST)
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
 		if form.is_valid():
-			persoana = form.save(commit=True)
-			persoana.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = PersoanaForm()
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
+
 
 @login_required
 def producator_edit(request, pk):
