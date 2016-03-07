@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
+from .views import PendingView, DashboardView, HistoryView, DashboardProiectView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -10,7 +11,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout_page, name='logout_page'), 
 
     # Pending 
-    url(r'^pending/$', views.pending, name='pending'),
+    url(r'^pending/$', PendingView.as_view(), name='pending'),
     url(r'^subcomanda/close/(?P<pk>\d+)$', views.pending_subcomanda_close, name='pending_subcomanda_close'),
     url(r'^comanda/close/(?P<pk>\d+)$', views.pending_comanda_close, name='pending_comanda_close'),
     url(r'^subcomanda/cancel/(?P<pk>\d+)$', views.pending_subcomanda_cancel, name='pending_subcomanda_cancel'),
@@ -19,13 +20,13 @@ urlpatterns = [
     url(r'^subcomanda/detail/(?P<pk>\d+)$', views.subcomanda_detail, name='subcomanda_detail'),
 
     # Dashboard
-    url(r'^dashboard/$', views.dashboard, name='dashboard'),
-    url(r'^dashboard/comanda/$', views.dashboard_comanda, name='dashboard_comanda'),
-    url(r'^dashboard/subcomanda/$', views.dashboard_subcomanda, name='dashboard_subcomanda'),
-    url(r'^dashboard/proiect/$', views.dashboard_proiect, name='dashboard_proiect'),
-    url(r'^dashboard/furnizor/$', views.dashboard_furnizor, name='dashboard_furnizor'),
-    url(r'^dashboard/producator/$', views.dashboard_producator, name='dashboard_producator'),
-    url(r'^dashboard/reper/$', views.dashboard_reper, name='dashboard_reper'),
+    url(r'^dashboard/$', DashboardView.as_view(), name='dashboard'),
+    url(r'^dashboard/comanda/$', DashboardComandaView.as_view(), name='dashboard_comanda'),
+    url(r'^dashboard/subcomanda/$', DashboardSubcomandaView.as_view(), name='dashboard_subcomanda'),
+    url(r'^dashboard/proiect/$', DashboardProiectView.as_view() , name='dashboard_proiect'),
+    url(r'^dashboard/furnizor/$', DashboardFurnizorView.as_view() , name='dashboard_furnizor'),
+    url(r'^dashboard/producator/$', DashboardProducatorView.as_view() , name='dashboard_producator'),
+    url(r'^dashboard/reper/$', DashboardReperView.as_view(), name='dashboard_reper'),
     url(r'^dashboard/comanda/new/$', views.dashboard_comanda_new, name='dashboard_comanda_new'),
     url(r'^dashboard/comanda/edit/(?P<pk>\d+)$', views.dashboard_comanda_edit, name='dashboard_comanda_edit'),
     url(r'^dashboard/subcomanda/new/$', views.dashboard_subcomanda_new, name='dashboard_subcomanda_new'),
@@ -42,7 +43,8 @@ urlpatterns = [
     url(r'^proiect/edit/(?P<pk>\d+)$', views.proiect_edit, name='proiect_edit'),
     url(r'^persoana/new/$', views.persoana_new, name='persoana_new'),
    
-    url(r'^history$', views.history, name='history'),    
+    # History 
+    url(r'^history$', HistoryView.as_view(), name='history'),    
      
    
    
