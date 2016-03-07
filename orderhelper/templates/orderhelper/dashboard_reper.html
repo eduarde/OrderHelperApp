@@ -33,7 +33,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for reper in reperi.object_list %}			
+			{% for reper in reperi %}			
 			<tr>         
 				<td><input type="checkbox" url="{% url 'reper_edit' pk=reper.pk %}"  aria-label="select"></td>  
 			    <td>{{ reper.pk }}</td>
@@ -48,9 +48,7 @@
 
 	<div class="modal fade" id="modalEdit"></div>
 
-	<div id="pagination">
-   	 {{ reperi.render }}
-	</div>
+	{% include "orderhelper/_pagination.html" %}
 
 	<script>
 		var urlEdit;

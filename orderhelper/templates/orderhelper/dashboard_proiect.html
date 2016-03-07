@@ -29,7 +29,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for proiect in proiecte.object_list %}			
+			{% for proiect in proiecte %}			
 			<tr>         
 				<td><input type="checkbox" url="{% url 'proiect_edit' pk=proiect.pk %}" aria-label="select"></td>  
 			    <td>{{ proiect.pk }}</td>
@@ -41,10 +41,7 @@
 		</table>     	
 	</div>
 
-	<div id="pagination">
-   	 {{ proiecte.render }}
-	</div>
-
+	{% include "orderhelper/_pagination.html" %}
 
 	<div class="modal fade" id="modalEdit"></div>
 

@@ -10,7 +10,7 @@
 {% endblock %}
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  {% for comanda in comenzi.object_list %}	
+  {% for comanda in comenzi %}	
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
@@ -64,9 +64,7 @@
    {% endfor %}  
 </div>
 
-<div id="pagination">
-    {{ comenzi.render }}
-</div>
+{% include "orderhelper/_pagination.html" %}
 
 <div class="modal fade" id="modalEdit"></div>
     

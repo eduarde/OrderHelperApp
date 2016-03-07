@@ -39,7 +39,7 @@
 		    </thead>
 		    <tbody>
 		              
-			{% for subcomanda in subcomenzi.object_list %}			
+			{% for subcomanda in subcomenzi %}			
 			<tr>         
 				<td><input type="checkbox" id="{{ subcomanda.pk }}" url="{%  url 'dashboard_subcomanda_edit' pk=subcomanda.pk  %}" aria-label="select"></td>  
 			    <td>{{ subcomanda.pk }}</td>
@@ -64,9 +64,7 @@
 		</table>     	
 	</div>
 
-	<div id="pagination">
-   	 {{ subcomenzi.render }}
-	</div>
+	{% include "orderhelper/_pagination.html" %}
 
 <script>
 		$(document).ready(function(){
