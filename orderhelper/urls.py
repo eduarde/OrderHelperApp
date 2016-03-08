@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
-from .views import PendingView, DashboardView, HistoryView, DashboardProiectView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
+from .views import PendingView, DashboardView, HistoryView,SearchView, DashboardProiectView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -46,7 +46,10 @@ urlpatterns = [
     url(r'^persoana/new/$', DashboardPersoanaCreateView.as_view() , name='persoana_new'),
    
     # History 
-    url(r'^history$', HistoryView.as_view(), name='history'),    
+    url(r'^history$', HistoryView.as_view(), name='history'),   
+
+    # Search
+    url(r'^search$', SearchView.as_view(), name='search'),  
      
    
    

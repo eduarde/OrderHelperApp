@@ -58,8 +58,7 @@
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cod reper">{{ subcomanda.reper.cod_reper }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Reper">{{ subcomanda.reper.reper }}</div>
+		   			 		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
 		   			 		</div>
 		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>

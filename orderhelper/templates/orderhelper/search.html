@@ -1,0 +1,116 @@
+{% extends 'orderhelper/base.html' %}
+
+	{% block content %}
+	{% if user.is_authenticated %}
+	<h1 class="sub-header">Search</h1>
+	<br /><br />
+
+{% block extra_js%}
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+{% endblock %}
+<div class="well">
+<div class="row">
+  <div class="col-md-8">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="reper">
+      </span>
+      <input type="text" placeholder='Reper' class="form-control" aria-label="...">
+      <span class="input-group-addon" id="basic-addon2">Reper</span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div>
+
+  <div class="row">
+  <div class="col-md-8">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+      <input type="text" placeholder='Furnizor' class="form-control" aria-label="...">
+      <span class="input-group-addon" id="basic-addon2">Furnizor</span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+  </div>
+
+<div class="row"> 
+  <div class="col-md-8">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+      <input type="text" placeholder='Producator' class="form-control" aria-label="...">
+      <span class="input-group-addon" id="basic-addon2">Producator</span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+
+  </div> 
+  <br />
+  <div class="row"> 
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Clear</button>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div><!-- /.col-lg-6 -->
+
+  </div> 
+</div>
+  <br /><br />
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  {% for subcomanda in subcomenzi %}	
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        	<div class="row">
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Comanda">{{ subcomanda.comanda_ref.numar_unic }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
+            <div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">{{ subcomanda.cantitate }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data primire">{{ subcomanda.data_primire }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }}</div>
+          
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
+            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div>
+            <div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
+                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
+            </div>
+          </div>  
+        </a>
+      </h4>
+    </div>
+  </div>
+   {% endfor %}  
+</div>
+
+{% include "orderhelper/_pagination.html" %}
+
+<div class="modal fade" id="modalEdit"></div>
+    
+<script>
+    var urlView;
+
+    $(".actionViewSubcomanda").click(function () {
+            urlView = $(this).attr("href");
+    });
+
+  $('#modalEdit').on('show.bs.modal', function (event) {
+    var modal = $(this);  
+    $.ajax({
+      url: urlView,
+      context: document.body
+    }).done(function(response) {
+      modal.html(response);
+    });
+  })
+
+  $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+
+{% endif %} 
+{% endblock %}

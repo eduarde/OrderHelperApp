@@ -515,4 +515,19 @@ def subcomanda_detail(request, pk):
 
 	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
 
+class SearchView(PaginationMixin, ListView):
+	model = Subcomanda
+	template_name = 'orderhelper/search.html'
+	context_object_name = 'subcomenzi'
+	paginate_by = 8
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(SearchView, self).dispatch(*args, **kwargs)
+	
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return Subcomanda.objects.all().filter(group__in=groups_list).order_by('data')
+
+
 
