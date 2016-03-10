@@ -18,9 +18,9 @@
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon">
-        <input type="checkbox" aria-label="reper">
+        <input type="checkbox" name="filter" ref='reper_text'>
       </span>
-      <input type="text" placeholder='Reper' class="form-control" aria-label="...">
+      <input type="text" id='reper_text' placeholder='Reper' class="form-control">
       <span class="input-group-addon" id="basic-addon2">Reper</span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
@@ -31,9 +31,9 @@
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
+        <input type="checkbox" name="filter" ref='furnizor_text'>
       </span>
-      <input type="text" placeholder='Furnizor' class="form-control" aria-label="...">
+      <input type="text" id='furnizor_text' placeholder='Furnizor' class="form-control">
       <span class="input-group-addon" id="basic-addon2">Furnizor</span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
@@ -44,9 +44,9 @@
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
+        <input type="checkbox" name="filter" ref='producator_text'>
       </span>
-      <input type="text" placeholder='Producator' class="form-control" aria-label="...">
+      <input type="text" id='producator_text' placeholder='Producator' class="form-control" aria-label="...">
       <span class="input-group-addon" id="basic-addon2">Producator</span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
@@ -57,7 +57,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <button type="button" class="btn btn-default" data-dismiss="modal">Clear</button>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" id='search' class="btn btn-primary">Search</button>
     </div><!-- /.col-lg-6 -->
 
   </div> 
@@ -117,7 +117,28 @@
   $('body').on('hidden.bs.modal', '.modal', function () {
         $(this).removeData('bs.modal');
     });
-</script>
 
+  $("#search").click(function(){
+   var filterMap = new Map();
+   filterMap.set('reper_text',"qnz");
+   filterMap.set('furnizor_text',"qnz");
+   filterMap.set('producator_text',"qnz");
+
+    $.each($("input[name='filter']:checked"), function(){  
+      var ref = $(this).attr('ref');
+      var refId = '#'+ref;  
+      if ($(refId).val().length > 0) {
+              filterMap.set(ref,$(refId).val())
+      } 
+    });
+
+    var url = '/search/' + filterMap.get('reper_text') + '/' + filterMap.get('furnizor_text') + '/' + filterMap.get('producator_text');
+   
+      $(location).attr('href', url );
+    })
+
+
+
+</script>
 {% endif %} 
 {% endblock %}

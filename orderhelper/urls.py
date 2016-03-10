@@ -48,10 +48,10 @@ urlpatterns = [
     # History 
     url(r'^history$', HistoryView.as_view(), name='history'),   
 
-    # Search
-    url(r'^search$', SearchView.as_view(), name='search'),  
+    # # Search
+    # url(r'^search$', SearchView.as_view(), name='search'),  
      
-   
+    url(r'^search/(?P<reper_text>[ \w ]+)/(?P<furnizor_text>[ \w ]+)/(?P<producator_text>[ \w ]+)$', views.search_view, name='search'),
    
     
 ]

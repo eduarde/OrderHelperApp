@@ -13,6 +13,9 @@ from django.views.generic import View, ListView
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from pure_pagination.mixins import PaginationMixin
+from django.db.models import Q
+from operator import __and__ as AND
+from functools import reduce
 
 # def handler404(request):
 # 	return render(request,'orderhelper/error404.html');
@@ -514,6 +517,23 @@ def subcomanda_detail(request, pk):
 	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 
 	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
+
+@login_required
+def search_view(request, reper_text, furnizor_text, producator_text):
+
+	qlist = []
+	if reper_text != 'qnz':
+		qlist.append(Q(reper__reper__icontains=reper_text) | Q(reper__cod_reper__icontains=reper_text))
+	if furnizor_text != 'qnz':	
+		qlist.append(Q(furnizor__nume__icontains=furnizor_text))
+	if producator_text != 'qnz':	
+		qlist.append(Q(producator__nume__icontains=producator_text))
+
+	if qlist:
+		subcomenzi = Subcomanda.objects.filter(reduce(AND, qlist))
+	else:
+		subcomenzi = Subcomanda.objects.all()
+	return render(request,'orderhelper/search.html',{'subcomenzi':subcomenzi, 'reper_text':reper_text})
 
 class SearchView(PaginationMixin, ListView):
 	model = Subcomanda
