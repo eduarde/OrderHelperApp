@@ -23,9 +23,9 @@
 						
 						<button class="btn btn-primary actionViewComanda" rel="tooltip" data-placement="top"  title="Details" data-toggle="modal" id="close" data-target="#modal" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
 		   			 	
-		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" rel="tooltip" data-placement="top"  title="Close" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
+		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-danger disabled {% endif %} btn btn-danger actionCloseComanda" rel="tooltip" data-placement="top"  title="Close" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
 
-		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" rel="tooltip" data-placement="top"  title="Cancel" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-warning disabled {% endif %} btn btn-warning actionCancelSubcomanda" rel="tooltip" data-placement="top"  title="Cancel" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
 		        	</div>
 		        </div>
 
