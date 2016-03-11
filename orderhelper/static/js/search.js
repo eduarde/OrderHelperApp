@@ -1,5 +1,5 @@
 // List with inputs from Filter section
-var filterList = ['cod_reper_text', 'reper_text', 'furnizor_text', 'proiect_text']
+var filterList = ['cod_reper_text', 'reper_text', 'furnizor_text', 'proiect_text', 'obiect_text']
 
 var urlExtract;
 
@@ -8,7 +8,7 @@ $("#clear").click(function(){
 
   console.log('OrderHelper-Search: Clear action - refresh page');
 
-  var url = '/search/none/none/none/none';
+  var url = '/search/none/none/none/none/none';
   $(location).attr('href', url );
 });
 
@@ -31,7 +31,7 @@ $("#search").click(function(){
     } 
   });
 
-  var url = '/search/' + filterMap.get('cod_reper_text') + '/' + filterMap.get('reper_text') + '/' + filterMap.get('furnizor_text') + '/' + filterMap.get('proiect_text');
+  var url = '/search/' + filterMap.get('cod_reper_text') + '/' + filterMap.get('reper_text') + '/' + filterMap.get('furnizor_text') + '/' + filterMap.get('proiect_text') + '/' + filterMap.get('obiect_text');
     $(location).attr('href', url );
 });
 

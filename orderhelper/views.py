@@ -519,7 +519,7 @@ def subcomanda_detail(request, pk):
 	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
 
 @login_required
-def search_view(request, cod_reper_text, reper_text, furnizor_text, proiect_text):
+def search_view(request, cod_reper_text, reper_text, furnizor_text, proiect_text, obiect_text):
 
 	qlist = []
 	if cod_reper_text != 'none':
@@ -530,6 +530,8 @@ def search_view(request, cod_reper_text, reper_text, furnizor_text, proiect_text
 		qlist.append(Q(furnizor__nume__icontains=furnizor_text))
 	if proiect_text != 'none':	
 		qlist.append(Q(comanda_ref__proiect__titlu__icontains=proiect_text))
+	if obiect_text != 'none':	
+		qlist.append(Q(comanda_ref__obiect_succint__icontains=obiect_text))
 
 	if qlist:
 		subcomenzi = Subcomanda.objects.filter(reduce(AND, qlist))
