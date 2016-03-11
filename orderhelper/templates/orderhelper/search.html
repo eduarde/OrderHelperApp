@@ -83,18 +83,18 @@
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         	<div class="row">
-            <div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Comanda">Comanda: {{ subcomanda.comanda_ref.numar_unic }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Proiect">{{ subcomanda.comanda_ref.proiect }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
-            <div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
-            <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data primire">{{ subcomanda.data_primire }}</div>
+            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Comanda">Comanda: {{ subcomanda.comanda_ref.numar_unic }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Proiect">{{ subcomanda.comanda_ref.proiect }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
+            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data primire">{{ subcomanda.data_primire }}</div>
             
-            <div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
-                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
+            <div class="col-md-1" id="actions">
+                <a class="btn btn-primary actionViewSubcomanda" rel="tooltip" data-placement="right" title="Details"  data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
             </div>
           </div>  
         </a>

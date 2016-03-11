@@ -21,11 +21,11 @@
 		        	<div class="col-md-3"></div>
 		        	<div class="col-md-2">
 						
-						<button class="btn btn-primary actionViewComanda" data-toggle="modal" id="close" data-target="#modal" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
+						<button class="btn btn-primary actionViewComanda" rel="tooltip" data-placement="top"  title="Details" data-toggle="modal" id="close" data-target="#modal" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
 		   			 	
-		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
+		   			 	<button  class="{% if comanda.calculate_progress != 100 %} btn btn-default disabled {% endif %} btn btn-default actionCloseComanda" rel="tooltip" data-placement="top"  title="Close" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_close' pk=comanda.pk %}"><span class="glyphicon glyphicon-check"></span></button>
 
-		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		   			 	<button class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" rel="tooltip" data-placement="top"  title="Cancel" data-toggle="modal" data-target="#modal" href="{% url 'pending_comanda_cancel' pk=comanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></button>
 		        	</div>
 		        </div>
 
@@ -37,11 +37,11 @@
 
 		        	<div class="row">
 				   		
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Data">{{ comanda.data }}</div>
-				   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Proiect">{{ comanda.proiect }}</div>
-				   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} <span class="glyphicon {% if comanda.show_valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if comanda.show_valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </div>
+				   		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data">{{ comanda.data }}</div>
+				   		<div class="col-md-4" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
+				   		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
+				   		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Proiect">{{ comanda.proiect }}</div>
+				   		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret total">{{ comanda.pret_total }} <span class="glyphicon {% if comanda.show_valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if comanda.show_valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </div>
 				   
 				   		
 		   			</div>	
@@ -56,23 +56,23 @@
 
 		   			 <button type="button" class="list-group-item {%if subcomanda.is_late %}list-group-item-danger{% endif %} {%if subcomanda.is_today %}list-group-item-warning{% endif %} ">
 		   			 	<div class="row">
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
-		   			 		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
+		   			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
 		   			 		</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} </div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Pret Total">{{ subcomanda.pret_total }}</div>
-		   			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
-		   			 		<div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
-		   			 			<a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} </div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret Total">{{ subcomanda.pret_total }}</div>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
+		   			 		<div class="col-md-1" id="actions">
+		   			 			<a class="btn btn-primary actionViewSubcomanda" rel="tooltip" data-placement="right"  title="Details" data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
 		   			 	
-		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'pending_subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
+		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" rel="tooltip" data-placement="right"  title="Close" data-target="#modal" href="{% url 'pending_subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
 
-		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'pending_subcomanda_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" rel="tooltip" data-placement="right"  title="Cancel" data-target="#modal" href="{% url 'pending_subcomanda_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
 		   			 			
 		   			 		</div>
 		   			 	

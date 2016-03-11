@@ -15,6 +15,7 @@
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
   <script src="{% static 'js/moment.js' %}"></script>
+  <script src="{% static 'js/tooltip.js' %}"></script>
 
   <!-- TODO: add js only when required --> 
   <script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script> 
@@ -82,4 +83,10 @@
 </body>
   <!-- Place this tag right after the last button or just before your close body tag. -->
   <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+</script>
 </html>
