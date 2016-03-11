@@ -22,18 +22,18 @@
 	        </div>
 	        <div class="col-md-2"></div>
 	         <div id="bubble" class="col-md-2 placeholder">
-             	<a type="button" class="actionAdd" data-toggle="modal" data-target="#modalEdit" href="{% url 'producator_new' %}">  <img src="{% static 'img/producator.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+             	<a type="button" class="actionAdd" data-toggle="modal" data-target="#modal" href="{% url 'producator_new' %}">  <img src="{% static 'img/producator.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4><span class="glyphicon glyphicon-plus-sign"> Producator</span></h4>
           
             </div>
             <div id="bubble" class="col-md-2 placeholder">
-              <a type="button" class="actionAdd" data-toggle="modal" data-target="#modalEdit" href="{% url 'furnizor_new' %}"> <img src="{% static 'img/furnizor.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+              <a type="button" class="actionAdd" data-toggle="modal" data-target="#modal" href="{% url 'furnizor_new' %}"> <img src="{% static 'img/furnizor.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
                 <h4><span class="glyphicon glyphicon-plus-sign"> Furnizor</span></h4>
              
             </div>
              <div class="col-md-2"></div>
             <div id="bubble" class="col-md-2 placeholder">
-              <a type="button" class="actionAdd" data-toggle="modal" data-target="#modalEdit" href="{% url 'reper_new' %}"> <img src="{% static 'img/reper.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+              <a type="button" class="actionAdd" data-toggle="modal" data-target="#modal" href="{% url 'reper_new' %}"> <img src="{% static 'img/reper.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
                 <h4><span class="glyphicon glyphicon-plus-sign"> Reper</span></h4>
              
             </div>
@@ -48,31 +48,20 @@
 	      	
 	    </form>
 
-<div class="modal fade" id="modalEdit"></div>
+<div class="modal fade" id="modal"></div>
 	
-	<script>
-		$(document).ready(function(){
-	        $("#idlivrare").datetimepicker({
-				format: 'mm/dd/yyyy'})
+<script>
+	$(document).ready(function(){
+		$("#idlivrare").datetimepicker({
+			format: 'mm/dd/yyyy'});
 
-	        $("#id_cantitate").val(1);
-	    });
-	    
-		var urlEdit;
-		 $(".actionAdd").click(function () {
-        		urlEdit = $(this).attr("href");
-    	});
-		$('#modalEdit').on('show.bs.modal', function (event) {
-			var modal = $(this)
-			$.ajax({
-				url: urlEdit,
-				context: document.body
-			}).done(function(response) {
-				modal.html(response);
-			});
-		});
+	    $("#id_cantitate").val(1);
+	});
+</script>
 
-	</script>
+<!-- Keep scripts in this order 1. dashboard.js / 2. ajaxModal.js --> 
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/ajaxModal.js' %}"></script>
 
   {% endif %}
 {% endblock %}

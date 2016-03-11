@@ -1,4 +1,5 @@
 {% extends 'orderhelper/base.html' %}
+{% load staticfiles %}
 
 	{% block content %}
 	{% if user.is_authenticated %}
@@ -22,7 +23,7 @@
 		   		<div class="col-md-4" data-toggle="tooltip" data-placement="top" title="Obiect succint">{{ comanda.obiect_succint }}</div>
 		   		<div class="col-md-2" data-toggle="tooltip" data-placement="top" title="Solicitant">{{ comanda.solicitant }}</div>
 	        <div class="col-md-2">
-              <button class="btn btn-primary actionViewComanda" data-toggle="modal" id="close" data-target="#modalEdit" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
+              <button class="btn btn-primary actionViewComanda" data-toggle="modal" id="close" data-target="#modal" href="{% url 'comanda_detail' pk=comanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></button>
           </div> 
    			</div>	
         </a>
@@ -49,7 +50,7 @@
    			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
    			 		<div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div>
             <div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
-                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
             </div>
    			 	</div>	
 
@@ -65,34 +66,11 @@
 
 {% include "orderhelper/_pagination.html" %}
 
-<div class="modal fade" id="modalEdit"></div>
+<div class="modal fade" id="modal"></div>
     
-<script>
-    var urlView;
- 
-
-    $(".actionViewSubcomanda").click(function () {
-            urlView = $(this).attr("href");
-    });
-
-    $(".actionViewComanda").click(function () {
-            urlView = $(this).attr("href");
-    });
-
-  $('#modalEdit').on('show.bs.modal', function (event) {
-    var modal = $(this);  
-    $.ajax({
-      url: urlView,
-      context: document.body
-    }).done(function(response) {
-      modal.html(response);
-    });
-  })
-
-  $('body').on('hidden.bs.modal', '.modal', function () {
-        $(this).removeData('bs.modal');
-    });
-</script>
+<!-- Keep scripts in this order 1. details_trigger.js / 2. ajaxModal.js --> 
+<script src="{% static 'js/details_trigger.js' %}"></script>
+<script src="{% static 'js/ajaxModal.js' %}"></script>
 
 {% endif %} 
 {% endblock %}
