@@ -5,7 +5,6 @@ $(".actionAdd").click(function () {
 	urlExtract = $(this).attr("href");
 });
 
-
 $(document).ready(function(){
 
 	// Make call to edit 
