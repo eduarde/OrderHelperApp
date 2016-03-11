@@ -1,4 +1,5 @@
 {% extends 'orderhelper/base.html' %}
+{% load staticfiles %}
 
 	{% block content %}
 	{% if user.is_authenticated %}
@@ -9,10 +10,21 @@
     <script src="http://malsup.github.com/jquery.form.js"></script>
 {% endblock %}
 
-
-
 <br />
 <div class="well">
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" name="filter" ref='cod_reper_text'>
+      </span>
+      <input type="text" id='cod_reper_text' placeholder='Cod reper' class="form-control">
+      <span class="input-group-addon" id="basic-addon2"><strong>Cod reper</strong></span>
+    </div><!-- /input-group -->
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
@@ -21,9 +33,9 @@
         <input type="checkbox" name="filter" ref='reper_text'>
       </span>
       <input type="text" id='reper_text' placeholder='Reper' class="form-control">
-      <span class="input-group-addon" id="basic-addon2">Reper</span>
+      <span class="input-group-addon" style="padding-left: 39px;" id="basic-addon2"><strong>Reper</strong></span>
     </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
+  </div>
 </div>
 
   <div class="row">
@@ -34,9 +46,9 @@
         <input type="checkbox" name="filter" ref='furnizor_text'>
       </span>
       <input type="text" id='furnizor_text' placeholder='Furnizor' class="form-control">
-      <span class="input-group-addon" id="basic-addon2">Furnizor</span>
+      <span class="input-group-addon" style="padding-left: 22px;" id="basic-addon2"><strong>Furnizor</strong></span>
     </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
+  </div>
   </div>
 
 <div class="row">
@@ -44,21 +56,21 @@
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon">
-        <input type="checkbox" name="filter" ref='producator_text'>
+        <input type="checkbox" name="filter" ref='proiect_text'>
       </span>
-      <input type="text" id='producator_text' placeholder='Producator' class="form-control" aria-label="...">
-      <span class="input-group-addon" id="basic-addon2">Producator</span>
+      <input type="text" id='proiect_text' placeholder='Proiect' class="form-control" aria-label="...">
+      <span class="input-group-addon" style="padding-left: 31px;" id="basic-addon2"><strong>Proiect</strong></span>
     </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-
+  </div>
   </div> 
+
   <br />
   <div class="row"> 
     <div class="col-md-2"></div>
     <div class="col-md-8">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Clear</button>
+      <button type="button" id='clear' class="btn btn-default">Clear</button>
       <button type="submit" id='search' class="btn btn-primary">Search</button>
-    </div><!-- /.col-lg-6 -->
+    </div>
 
   </div> 
 </div>
@@ -97,47 +109,9 @@
 
 <div class="modal fade" id="modalEdit"></div>
     
-<script>
-    var urlView;
-
-    $(".actionViewSubcomanda").click(function () {
-            urlView = $(this).attr("href");
-    });
-
-  $('#modalEdit').on('show.bs.modal', function (event) {
-    var modal = $(this);  
-    $.ajax({
-      url: urlView,
-      context: document.body
-    }).done(function(response) {
-      modal.html(response);
-    });
-  })
-
-  $('body').on('hidden.bs.modal', '.modal', function () {
-        $(this).removeData('bs.modal');
-    });
-
-  $("#search").click(function(){
-   var filterMap = new Map();
-   filterMap.set('reper_text',"qnz");
-   filterMap.set('furnizor_text',"qnz");
-   filterMap.set('producator_text',"qnz");
-
-    $.each($("input[name='filter']:checked"), function(){  
-      var ref = $(this).attr('ref');
-      var refId = '#'+ref;  
-      if ($(refId).val().length > 0) {
-              filterMap.set(ref,$(refId).val())
-      } 
-    });
-
-    var url = '/search/' + filterMap.get('reper_text') + '/' + filterMap.get('furnizor_text') + '/' + filterMap.get('producator_text');
-   
-      $(location).attr('href', url );
-    })
-
-
+<!-- Keep scripts in this order 1. search.js / 2. ajaxModal.js -->    
+<script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/ajaxModal.js' %}"></script>
 
 </script>
 {% endif %} 

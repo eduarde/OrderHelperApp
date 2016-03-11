@@ -51,7 +51,7 @@ urlpatterns = [
     # # Search
     # url(r'^search$', SearchView.as_view(), name='search'),  
      
-    url(r'^search/(?P<reper_text>[ \w ]+)/(?P<furnizor_text>[ \w ]+)/(?P<producator_text>[ \w ]+)$', views.search_view, name='search'),
+    url(r'^search/(?P<cod_reper_text>[ \w ]+)/(?P<reper_text>[ \w ]+)/(?P<furnizor_text>[ \w ]+)/(?P<proiect_text>[ \w ]+)$', views.search_view, name='search'),
    
     
 ]

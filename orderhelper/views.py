@@ -519,21 +519,23 @@ def subcomanda_detail(request, pk):
 	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
 
 @login_required
-def search_view(request, reper_text, furnizor_text, producator_text):
+def search_view(request, cod_reper_text, reper_text, furnizor_text, proiect_text):
 
 	qlist = []
-	if reper_text != 'qnz':
-		qlist.append(Q(reper__reper__icontains=reper_text) | Q(reper__cod_reper__icontains=reper_text))
-	if furnizor_text != 'qnz':	
+	if cod_reper_text != 'none':
+		qlist.append(Q(reper__cod_reper__icontains=cod_reper_text))
+	if reper_text != 'none':
+		qlist.append(Q(reper__reper__icontains=reper_text))
+	if furnizor_text != 'none':	
 		qlist.append(Q(furnizor__nume__icontains=furnizor_text))
-	if producator_text != 'qnz':	
-		qlist.append(Q(producator__nume__icontains=producator_text))
+	if proiect_text != 'none':	
+		qlist.append(Q(comanda_ref__proiect__titlu__icontains=proiect_text))
 
 	if qlist:
 		subcomenzi = Subcomanda.objects.filter(reduce(AND, qlist))
 	else:
 		subcomenzi = Subcomanda.objects.all()
-	return render(request,'orderhelper/search.html',{'subcomenzi':subcomenzi, 'reper_text':reper_text})
+	return render(request,'orderhelper/search.html',{'subcomenzi':subcomenzi})
 
 class SearchView(PaginationMixin, ListView):
 	model = Subcomanda
