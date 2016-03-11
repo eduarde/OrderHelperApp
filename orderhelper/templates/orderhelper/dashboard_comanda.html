@@ -1,4 +1,5 @@
 {% extends 'orderhelper/base.html' %}
+{% load staticfiles %}
 
 {% block content %}
   {% if user.is_authenticated %}
@@ -47,28 +48,7 @@
 
 	{% include "orderhelper/_pagination.html" %}
 
-	<script>
-		$(document).ready(function(){
-
-			var url;
-
-			// Make call to edit 
-	        $("#edit").click(function(){
-				$(location).attr('href', url );
-			});
-
-	        // Get the checkboxes
-	        $( "input" ).on( "click", function() {
-	        	url = $( "input:checked" ).attr('url');
-
-	        	$("#edit").removeClass('disabled')
-	        	if ( $( "input:checked" ).length > 1 || $( "input:checked" ).length == 0 ) {
-	        		$("#edit").addClass('disabled')	
-	        	}	
-			});
-	    });
-    
-	</script>	
+<script src="{% static 'js/dashboard.js' %}"></script>
 
 
   {% endif %}

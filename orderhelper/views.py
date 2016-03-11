@@ -339,7 +339,7 @@ class DashboardFurnizorCreateView(FormView):
 def furnizor_edit(request,pk):
 	furnizor = get_object_or_404(Furnizor, pk=pk)
 	dialog_title = "Editeaza furnizor"
-	url = '/furnizor/new/'
+	url = '/furnizor/edit/' + pk
 
 	if request.method == "POST":
 		form = FurnizorForm(request.POST, instance=furnizor)

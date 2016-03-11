@@ -95,7 +95,7 @@
             <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Termen plata">{{ subcomanda.termen_plata }}</div>
             <div class="col-md-1" data-toggle="tooltip" data-placement="top" title="Mod plata">{{ subcomanda.mod_plata }}</div>
             <div class="col-md-1" id="actions" data-toggle="tooltip" data-placement="top" title="Actions">
-                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modalEdit" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a class="btn btn-primary actionViewSubcomanda" data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
             </div>
           </div>  
         </a>
@@ -107,7 +107,7 @@
 
 {% include "orderhelper/_pagination.html" %}
 
-<div class="modal fade" id="modalEdit"></div>
+<div class="modal fade" id="modal"></div>
     
 <!-- Keep scripts in this order 1. search.js / 2. ajaxModal.js -->    
 <script src="{% static 'js/search.js' %}"></script>

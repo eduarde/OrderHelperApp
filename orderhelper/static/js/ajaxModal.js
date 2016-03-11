@@ -1,12 +1,12 @@
 
 // Used to launch the modal dialog via ajax
-$('#modalEdit').on('show.bs.modal', function (event) {
+$('#modal').on('show.bs.modal', function (event) {
 
   console.log('OrderHelper: Launching modal dialog.')
 
   var modal = $(this);  
   $.ajax({
-    url: urlView,
+    url: urlExtract,
     context: document.body
   }).done(function(response) {
     modal.html(response);

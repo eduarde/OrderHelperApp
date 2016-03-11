@@ -21,12 +21,12 @@
 	        </div>
 	        <div class="col-md-2"></div>
 	         <div id="bubble" class="col-md-2 placeholder">
-               <a type="button" class="actionAdd" data-toggle="modal" data-target="#modalPersoana" href="{% url 'persoana_new' %}"> <img src="{% static 'img/subcomanda.jpg' %}"  data-toggle="modal" data-target="#modalEdit" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+               <a type="button" class="actionAdd" data-toggle="modal" data-target="#modal" href="{% url 'persoana_new' %}"> <img src="{% static 'img/subcomanda.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
               <h4><span class="glyphicon glyphicon-plus-sign"> Solicitant</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
             <div id="bubble" class="col-md-2 placeholder">
-             <a type="button" class="actionAdd" data-toggle="modal" data-target="#modalProiect" href="{% url 'proiect_new' %}"> <img src="{% static 'img/proiect.jpg' %}" data-toggle="modal" data-target="#modalEdit" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+             <a type="button" class="actionAdd" data-toggle="modal" data-target="#modal" href="{% url 'proiect_new' %}"> <img src="{% static 'img/proiect.jpg' %}" width="130" height="130" class="img-responsive" alt="Generic placeholder thumbnail"></a>
                 <h4><span class="glyphicon glyphicon-plus-sign"> Proiect</span></h4>
              <!--  <span class="text-muted">adauga subcomanda noua</span> -->
             </div>
@@ -42,24 +42,11 @@
 	    </form>
 
 
-<div class="modal fade" id="modalEdit"></div>
-	
-	<script>
-		var urlEdit;
-		 $(".actionAdd").click(function () {
-        		urlEdit = $(this).attr("href");
-    	});
-		$('#modalEdit').on('show.bs.modal', function (event) {
-			var modal = $(this)
-			$.ajax({
-				url: urlEdit,
-				context: document.body
-			}).done(function(response) {
-				modal.html(response);
-			});
-		});
+<div class="modal fade" id="modal"></div>
 
-	</script>
+<!-- Keep scripts in this order 1. dashboard.js / 2. ajaxModal.js --> 
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/ajaxModal.js' %}"></script>
 
 
   {% endif %}

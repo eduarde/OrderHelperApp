@@ -1,7 +1,7 @@
 // List with inputs from Filter section
 var filterList = ['cod_reper_text', 'reper_text', 'furnizor_text', 'proiect_text']
 
-var urlView;
+var urlExtract;
 
 // Clear button action
 $("#clear").click(function(){
@@ -61,5 +61,5 @@ $(document).ready(function(){
 
 // Get the url to trigger the modal
 $(".actionViewSubcomanda").click(function () {
-  urlView = $(this).attr("href");
+  urlExtract = $(this).attr("href");
 });
