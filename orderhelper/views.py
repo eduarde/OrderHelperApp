@@ -152,7 +152,22 @@ class DashboardReperView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Reper.objects.all().filter(group__in=groups_list).order_by('-pk')	
+		return Reper.objects.all().filter(group__in=groups_list).order_by('-pk')
+
+# Reper view in Dashboard 
+class DashboardReperModalView(PaginationMixin, ListView):
+	model = Reper
+	template_name = 'orderhelper/dashboard_reper_view.html'
+	context_object_name = 'reperi'
+	paginate_by = 1000
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(DashboardReperModalView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		groups_list = self.request.user.groups.all()
+		return Reper.objects.all().filter(group__in=groups_list).order_by('-pk')
 
 
 # Comanda create view

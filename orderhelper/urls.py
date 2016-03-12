@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
-from .views import PendingView, DashboardView, HistoryView,SearchView, DashboardProiectView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
+from .views import PendingView, DashboardView, HistoryView,SearchView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^dashboard/comanda/edit/(?P<pk>\d+)$', views.dashboard_comanda_edit, name='dashboard_comanda_edit'),
     url(r'^dashboard/subcomanda/new/$', DashboardSubcomandaCreateView.as_view(), name='dashboard_subcomanda_new'),
     url(r'^dashboard/subcomanda/edit/(?P<pk>\d+)$', views.dashboard_subcomanda_edit, name='dashboard_subcomanda_edit'),
+   
 
     # Modal dialogs for dashboard
     url(r'^reper/new/$', DashboardReperCreateView.as_view() , name='reper_new'),
@@ -44,6 +45,7 @@ urlpatterns = [
     url(r'^proiect/new/$', DashboardProiectCreateView.as_view() , name='proiect_new'),
     url(r'^proiect/edit/(?P<pk>\d+)$', views.proiect_edit, name='proiect_edit'),
     url(r'^persoana/new/$', DashboardPersoanaCreateView.as_view() , name='persoana_new'),
+    url(r'^reper/view/$', DashboardReperModalView.as_view(), name='reper_view'),
    
     # History 
     url(r'^history$', HistoryView.as_view(), name='history'),   

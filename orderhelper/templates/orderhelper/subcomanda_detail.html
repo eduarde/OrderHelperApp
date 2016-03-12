@@ -1,69 +1,55 @@
 
-<div class="modal-dialog">
-    <div class="modal-content">
-	    <form method="POST" action="{{ url }}" id="modal_detail" class="subcomanda-form" >{% csrf_token %}
-	    	
-	    	<div class="modal-header">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">    	
+	    <div class="modal-header">
 
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h3 class="modal-title"><b>{{ subcomanda }}</b></h3>
-	      	</div>
-	      	<div class="modal-body">
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    <h3 class="modal-title"><b>{{ subcomanda }}</b></h3>
+	    </div>
+	    <div class="modal-body">
 	      	
-	      		<div class="row">
-          			<div class="col-md-4"> <p><b>Nr curent:</b> {{ subcomanda.numar_curent }}<p></div>
-          			<div class="col-md-8"> <p><b>Referinta comanda:</b> {{ subcomanda.comanda_ref.numar_unic }}<p></div>
-	        	</div>	
+	     	<div class="row">
+          		<div class="col-md-4"> <p><b>Referinta comanda:</b> {{ subcomanda.comanda_ref.numar_unic }}<p></div>
+          		<div class="col-md-4"><p><b>Status:</b> <span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></p></div>
+          		<div class="col-md-4"><p><b>Data:</b> {{ subcomanda.data}} <p></div>
+	        </div>	
+
+	        <div class="row">
+				
+	        	<div class="col-md-4"><p><b>Producator:</b> {{ subcomanda.producator }}</p></div>
+	        	<div class="col-md-8"><p><b>Telefon:</b> {{ subcomanda.producator.telefon }} </p></div>
 	        		
-	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Data:</b> {{ subcomanda.data}} <p></div>
-	        		<div class="col-md-8"><p><b>Status:</b> <span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></p></div>
+	        </div>
+
+	        <div class="row">
 	        		
-	        	</div>	
+	        	<div class="col-md-4"><p><b>Cod:</b> {{ subcomanda.reper.cod_reper }} </p></div>
+	        	<div class="col-md-7"><p><b>Reper:</b> {{ subcomanda.reper.reper }}</p></div>
+	        	<div class="col-md-1"><p>{% if subcomanda.reper.link %} <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</p></div>
+	        </div>	
 
-	        	<div class="row">
-	
-	        		<div class="col-md-4"><p><b>Producator:</b> {{ subcomanda.producator }}</p></div>
-	        		<div class="col-md-8"><p><b>Telefon:</b> {{ subcomanda.producator.telefon }} </p></div>
-	        		
-	        	</div>
+	        <div class="row">
+	        	<div class="col-md-4"><p><b>Furnizor:</b> {{ subcomanda.furnizor }}</p></div>
+	        	<div class="col-md-8"><p><b>Telefon:</b> {{ subcomanda.furnizor.telefon }} </p></div>
+	        </div>	
 
-	        	<div class="row">
-	        		
-	        		<div class="col-md-4"><p><b>Cod reper:</b> {{ subcomanda.reper.cod_reper }} </p></div>
-	        		<div class="col-md-4"><p><b>Reper:</b> {{ subcomanda.reper.reper }}</p></div>
-	        		<div class="col-md-4"><p><b>Link:</b> {% if subcomanda.reper.link %} <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</p></div>
-	        	</div>	
+	        <div class="row">
+	        	<div class="col-md-4"><p><b>Data livrare:</b> {{ subcomanda.data_livrare }}</p></div>
+	        	<div class="col-md-8"><p><b>Data primire:</b> {{ subcomanda.data_primire }} </p></div>
+	        </div>	
 
-	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Furnizor:</b> {{ subcomanda.furnizor }}</p></div>
-	        		<div class="col-md-8"><p><b>Telefon:</b> {{ subcomanda.furnizor.telefon }} </p></div>
-	        	</div>	
+	        <div class="row">
+	        	<div class="col-md-4"><p><b>Cantitate:</b> {{ subcomanda.cantitate }}</p></div>
+	        	<div class="col-md-4"><p><b>Pret:</b> {{ subcomanda.pret }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></p></div>
+	        	<div class="col-md-4"><p><b>Pret Total:</b> {{ subcomanda.pret_total }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </p></div>
+	        </div>
 
-	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Data livrare:</b> {{ subcomanda.data_livrare }}</p></div>
-	        		<div class="col-md-8"><p><b>Data primire:</b> {{ subcomanda.data_primire }} </p></div>
-	        	</div>	
-
-	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Cantitate:</b> {{ subcomanda.cantitate }}</p></div>
-	        		<div class="col-md-4"><p><b>Pret:</b> {{ subcomanda.pret }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></p></div>
-	        		<div class="col-md-4"><p><b>Pret Total:</b> {{ subcomanda.pret_total }}  <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span> </p></div>
-	        	</div>
-
-	        	<div class="row">
-	        		<div class="col-md-4"><p><b>Termen plata:</b> {{ subcomanda.termen_plata }}</p></div>
-	        		<div class="col-md-8"><p><b>Mod plata:</b> {{ subcomanda.mod_plata }} </p></div>
-	        	</div>	
+	        <div class="row">
+	        	<div class="col-md-4"><p><b>Termen plata:</b> {{ subcomanda.termen_plata }}</p></div>
+	        	<div class="col-md-8"><p><b>Mod plata:</b> {{ subcomanda.mod_plata }} </p></div>
+	        </div>	
 	        	
-	      	</div>
+	    </div>
 	      
-	    </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-
-<script>
-
-    var form_options = { target: '#modal', success: function(response) {} };
-    $('#modal_detail').ajaxForm(form_options);
-</script>
