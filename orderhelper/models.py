@@ -100,7 +100,7 @@ class Subcomanda(models.Model):
 	furnizor = models.ForeignKey('Furnizor', null=True)
 	cantitate = models.DecimalField('Cantitate', default=0, max_digits=9, decimal_places=0, null=True)
 	data_livrare = models.DateField('Data livrare',null=True)
-	data_primire = models.DateField('Data primire',blank=True, null=True)
+	data_primire = models.DateField('Data primire',blank=False, null=True)
 	pret = models.DecimalField('Pret', default=0, max_digits=9, decimal_places=2, null=True)
 	valuta = models.ForeignKey('Valuta', null=True, verbose_name='Valuta')
 	data = models.DateField('Data',default=now())
@@ -145,7 +145,7 @@ class Comanda(models.Model):
 		return total
 
 	pret_total = property(set_pret_total)
-	data_primire = models.DateField('Data primire',blank=True, null=True)
+	data_primire = models.DateField('Data primire',blank=False, null=True)
 	group = models.ManyToManyField(Group, related_name='coamandas')
 
 

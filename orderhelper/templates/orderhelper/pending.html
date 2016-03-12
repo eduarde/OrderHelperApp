@@ -72,7 +72,7 @@
 		   			 	
 		   			 			<a  class="{% if subcomanda.status.text != 'Deschis' %} btn btn-default disabled {% endif %} btn btn-default actionCloseSubcomanda" data-toggle="modal" rel="tooltip" data-placement="right"  title="Close" data-target="#modal" href="{% url 'pending_subcomanda_close' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-check"></span></a>
 
-		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" rel="tooltip" data-placement="right"  title="Cancel" data-target="#modal" href="{% url 'pending_subcomanda_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
+		   			 			<a class="{% if subcomanda.status.text == 'Anulat' %} btn btn-default disabled {% endif %} btn btn-default actionCancelSubcomanda" data-toggle="modal" rel="tooltip" data-placement="right"  title="Cancel" data-target="#modal" href="{% url 'pending_modal_cancel' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
 		   			 			
 		   			 		</div>
 		   			 	

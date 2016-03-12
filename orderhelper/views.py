@@ -196,21 +196,32 @@ class DashboardComandaCreateView(FormView):
 	
 		return render(request, self.template_name, {'comandaform': form})
 
+# Comanda edit view
+class DashboardComandaEditView(FormView):
 
-@login_required
-def dashboard_comanda_edit(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
+	template_name = 'orderhelper/dashboard_comanda_edit.html'
+	success_url = 'dashboard_comanda';
+	form_class = ComandaEditForm
+
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object();		
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'comandaform': form})
+
+	def get_object(self):
+		return get_object_or_404(Comanda, pk=self.kwargs.get("pk"))
 	
-	if request.method == "POST":
-		comandaform = ComandaEditForm(request.POST, instance=comanda)
-		if comandaform.is_valid():
-			comanda = comandaform.save(commit=True)
-			comanda.save()
-			return redirect('dashboard_comanda')
-			
-	comandaform = ComandaEditForm(instance=comanda)
-	return render(request,'orderhelper/dashboard_comanda_edit.html', {'comandaform':comandaform})
-
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
+		if form.is_valid():
+			self.object = form.save(commit=True)
+			self.object.save()
+			return redirect(self.success_url)
+	
+		return render(request, self.template_name, {'comandaform': form})
 
 
 # Subcomanda create view
@@ -247,18 +258,32 @@ class DashboardSubcomandaCreateView(FormView):
 		return render(request, self.template_name, {'subcomandaform': form})
 
 
-@login_required
-def dashboard_subcomanda_edit(request,pk):
-	subcomanda = get_object_or_404(Subcomanda, pk=pk)
-	if request.method == "POST":
-		subcomandaform = SubcomandaEditForm(request.POST, instance=subcomanda)
-		if subcomandaform.is_valid():
-			subcomanda = subcomandaform.save(commit=False)
-			subcomanda.save()		
-			return redirect('dashboard_subcomanda')
-		
-	subcomandaform = SubcomandaEditForm(instance=subcomanda)	
-	return render(request,'orderhelper/dashboard_subcomanda_edit.html', {'subcomandaform' : subcomandaform})
+# Subcomanda edit view
+class DashboardSubcomandaEditView(FormView):
+
+	template_name = 'orderhelper/dashboard_subcomanda_edit.html'
+	success_url = 'dashboard_subcomanda';
+	form_class = SubcomandaEditForm
+
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object();		
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'subcomandaform': form})
+
+	def get_object(self):
+		return get_object_or_404(Subcomanda, pk=self.kwargs.get("pk"))
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
+		if form.is_valid():
+			self.object = form.save(commit=True)
+			self.object.save()
+			return redirect(self.success_url)
+	
+		return render(request, self.template_name, {'subcomandaform': form})
 
 
 # Reper create view
@@ -285,22 +310,37 @@ class DashboardReperCreateView(FormView):
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
 
 
-@login_required
-def reper_edit(request, pk):
-	reper = get_object_or_404(Reper, pk=pk)
-	dialog_title = "Editeaza reper"
-	url = '/reper/edit/' + pk
+# Reper edit view
+class DashboardReperEditView(FormView):
 
-	if request.method == "POST":
-		form = ReperForm(request.POST,instance=reper)
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ReperForm
+	dialog_title = "Editeaza reper"
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/reper/edit/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
+
+	def get_object(self):
+		return get_object_or_404(Reper, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/reper/edit/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
 		if form.is_valid():
-			reper = form.save(commit=True)
-			reper.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = ReperForm(instance=reper)
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
-
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
 
 # Producator create view
 class DashboardProducatorCreateView(FormView):
@@ -350,22 +390,37 @@ class DashboardFurnizorCreateView(FormView):
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
 
 
-@login_required
-def furnizor_edit(request,pk):
-	furnizor = get_object_or_404(Furnizor, pk=pk)
-	dialog_title = "Editeaza furnizor"
-	url = '/furnizor/edit/' + pk
+# Furnizor edit view
+class DashboardFurnizorEditView(FormView):
 
-	if request.method == "POST":
-		form = FurnizorForm(request.POST, instance=furnizor)
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = FurnizorForm
+	dialog_title = "Editeaza furnizor"
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/furnizor/edit/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
+
+	def get_object(self):
+		return get_object_or_404(Furnizor, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/furnizor/edit/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
 		if form.is_valid():
-			furnizor = form.save(commit=True)
-			furnizor.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = FurnizorForm(instance=furnizor)
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url': url})
-
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
 
 # Proiect create view
 class DashboardProiectCreateView(FormView):
@@ -390,21 +445,37 @@ class DashboardProiectCreateView(FormView):
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
 
-@login_required
-def proiect_edit(request, pk):
-	proiect = get_object_or_404(Proiect, pk=pk)
-	dialog_title = 'Editeaza proiect'
-	url = '/proiect/edit/' + pk
+# Proiect edit view
+class DashboardProiectEditView(FormView):
 
-	if request.method == "POST":
-		form = ProiectForm(request.POST,instance=proiect)
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ProiectForm
+	dialog_title = "Editeaza proiect"
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/proiect/edit/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
+
+	def get_object(self):
+		return get_object_or_404(Proiect, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/proiect/edit/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
 		if form.is_valid():
-			proiect = form.save(commit=True)
-			proiect.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
 	
-	form = ProiectForm(instance=proiect)
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
 
 
 # Persoana create view
@@ -431,37 +502,70 @@ class DashboardPersoanaCreateView(FormView):
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
 
 
-@login_required
-def producator_edit(request, pk):
-	producator = get_object_or_404(Producator, pk=pk)
-	dialog_title = 'Editeaza producator'
-	url = '/producator/edit/' + pk
-	if request.method == "POST":
-		form = ProducatorForm(request.POST,instance=producator)
+# Producator edit view
+class DashboardProducatorEditView(FormView):
+
+	template_name = 'orderhelper/modal_dialog.html'
+	form_class = ProducatorForm
+	dialog_title = "Editeaza producator"
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/producator/edit/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
+
+	def get_object(self):
+		return get_object_or_404(Producator, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/producator/edit/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
 		if form.is_valid():
-			producator = form.save(commit=True)
-			producator.save()
+			self.object = form.save(commit=True)
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
+	
+		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
 
-	form = ProducatorForm(instance=producator)
-	return render(request,'orderhelper/modal_dialog.html', {'form': form, 'dialog_title':dialog_title, 'url':url})
+# Pending subcomanda close view
+class PendingSubcomandaCloseView(FormView):
 
-@login_required
-def pending_subcomanda_close(request, pk):
-	subcomanda = get_object_or_404(Subcomanda, pk=pk)
-	status_inchis = Status.objects.filter(text='Inchis')[0]
+	template_name = 'orderhelper/pending_modal_edit.html'
+	form_class = SubcomandaCloseForm
 	dialog_title = "Inchide subcomanda"
-	url = '/subcomanda/close/' + pk
-	if request.method == "POST":
-		form = SubcomandaCloseForm(request.POST,instance=subcomanda)
-		if form.is_valid():
-			subcomanda = form.save(commit=False)
-			subcomanda.status = status_inchis
-			subcomanda.save()
-			return redirect(request.META['HTTP_REFERER'])
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/subcomanda/close/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'subcomanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
-	form = SubcomandaCloseForm(instance=subcomanda)
-	return render(request,'orderhelper/pending_modal_edit.html', {'form': form, 'subcomanda':subcomanda, 'dialog_title':dialog_title, 'url':url})
+	def get_object(self):
+		return get_object_or_404(Subcomanda, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/subcomanda/close/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
+		if form.is_valid():
+			self.object = form.save(commit=False)
+			self.object.status = Status.objects.filter(text='Inchis')[0]
+			self.object.save()
+			return redirect(request.META['HTTP_REFERER'])
+	
+		return render(request, self.template_name, {'form': form, 'subcomanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
 @login_required
 def pending_comanda_close(request, pk):
@@ -481,23 +585,32 @@ def pending_comanda_close(request, pk):
 	form = ComandaCloseForm(instance=comanda)
 	return render(request,'orderhelper/pending_modal_edit.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url': url})
 
-@login_required
-def pending_subcomanda_cancel(request, pk):
-	subcomanda = get_object_or_404(Subcomanda, pk=pk)
-	status_anulat = Status.objects.filter(text='Anulat')[0]
-	dialog_title = "Anuleaza subcomanda"
-	url = '/subcomanda/cancel/' + pk
+# Pending subcomanda close view
+class PendingSubcomandaCancelView(ListView):
 
-	if request.method == "POST":
-		form = SubcomandaCancelForm(request.POST,instance=subcomanda)
-		if form.is_valid():
-			subcomanda = form.save(commit=False)
-			subcomanda.status = status_anulat
-			subcomanda.save()
-			return redirect(request.META['HTTP_REFERER'])
+	template_name = 'orderhelper/pending_modal_cancel.html'
+	dialog_title = "Inchide subcomanda"
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/subcomanda/cancel/' + self.get_primary_key()
+		self.object = self.get_object()
+		return render(request, self.template_name, {'subcomanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
-	form = SubcomandaCancelForm(instance=subcomanda)
-	return render(request,'orderhelper/pending_subcomanda_cancel.html', {'form': form, 'subcomanda':subcomanda, 'dialog_title':dialog_title, 'url':url})
+	def get_object(self):
+		return get_object_or_404(Subcomanda, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/subcomanda/cancel/' + self.get_primary_key()
+		self.object = self.get_object();
+		self.object.status = Status.objects.filter(text='Anulat')[0]
+		self.object.save()	
+		return redirect(request.META['HTTP_REFERER'])
+		
 
 @login_required
 def pending_comanda_cancel(request, pk):
