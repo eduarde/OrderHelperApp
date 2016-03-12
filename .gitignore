@@ -52,3 +52,8 @@ __pycache__
 myvenv
 db.sqlite3
 .DS_Store
+*.py
+*.pyc
+*.pyc
+*.sqlite3
+*.pyc

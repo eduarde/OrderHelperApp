@@ -50,7 +50,7 @@
 				<td>{{ subcomanda.producator }}</td>
 				<td>{{ subcomanda.reper.cod_reper }}</td>
 				<td>{{ subcomanda.reper.reper }}</td>
-				 <td><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
+				<td> {% if subcomanda.reper.link %} <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>{% endif %}</td>
 				<td>{{ subcomanda.furnizor }}</td>
 				<td>{{ subcomanda.cantitate }}</td>
 				<td>{{ subcomanda.data_livrare }}</td>

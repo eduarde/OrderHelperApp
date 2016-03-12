@@ -28,7 +28,7 @@
 			    <tr>
 			    	<th></th>
 			    	<th>ID</th>
-			        <th>Cod reper</th>
+			        <th>Cod</th>
 			        <th>Reper</th>
 			        <th>Link</th>
  				</tr>
@@ -41,7 +41,7 @@
 			    <td>{{ reper.pk }}</td>
 				<td>{{ reper.cod_reper }}</td>
 				<td>{{ reper.reper }}</td>
-				 <td><a href="{{ reper.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a></td>
+				 <td>{% if reper.link %}<a href="{{ reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</td>
 			</tr>
 			{% endfor %}
 			</tbody>

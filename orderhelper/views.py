@@ -98,7 +98,7 @@ class DashboardProiectView(PaginationMixin, ListView):
 	model = Proiect
 	template_name = 'orderhelper/dashboard_proiect.html'
 	context_object_name = 'proiecte'
-	paginate_by = 8
+	paginate_by = 10
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -106,14 +106,14 @@ class DashboardProiectView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Proiect.objects.all().filter(group__in=groups_list).order_by('pk')
+		return Proiect.objects.all().filter(group__in=groups_list).order_by('-pk')
 
 # Furnizor view in Dashboard 
 class DashboardFurnizorView(PaginationMixin, ListView):
 	model = Furnizor
 	template_name = 'orderhelper/dashboard_furnizor.html'
 	context_object_name = 'furnizori'
-	paginate_by = 8
+	paginate_by = 10
 
 
 	@method_decorator(login_required)
@@ -122,14 +122,14 @@ class DashboardFurnizorView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Furnizor.objects.all().filter(group__in=groups_list).order_by('pk')
+		return Furnizor.objects.all().filter(group__in=groups_list).order_by('-pk')
 
 # Producator view in Dashboard 
 class DashboardProducatorView(PaginationMixin, ListView):
 	model = Producator
 	template_name = 'orderhelper/dashboard_producator.html'
 	context_object_name = 'producatori'
-	paginate_by = 8
+	paginate_by = 10
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -137,14 +137,14 @@ class DashboardProducatorView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return  Producator.objects.all().filter(group__in=groups_list).order_by('pk')
+		return  Producator.objects.all().filter(group__in=groups_list).order_by('-pk')
 
 # Reper view in Dashboard 
 class DashboardReperView(PaginationMixin, ListView):
 	model = Reper
 	template_name = 'orderhelper/dashboard_reper.html'
 	context_object_name = 'reperi'
-	paginate_by = 5
+	paginate_by = 10
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -152,7 +152,7 @@ class DashboardReperView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Reper.objects.all().filter(group__in=groups_list).order_by('pk')	
+		return Reper.objects.all().filter(group__in=groups_list).order_by('-pk')	
 
 
 # Comanda create view

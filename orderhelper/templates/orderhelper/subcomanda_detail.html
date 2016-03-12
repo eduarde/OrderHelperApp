@@ -32,7 +32,7 @@
 	        		
 	        		<div class="col-md-4"><p><b>Cod reper:</b> {{ subcomanda.reper.cod_reper }} </p></div>
 	        		<div class="col-md-4"><p><b>Reper:</b> {{ subcomanda.reper.reper }}</p></div>
-	        		<div class="col-md-4"><p><b>Link:</b> <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> </p></div>
+	        		<div class="col-md-4"><p><b>Link:</b> {% if subcomanda.reper.link %} <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</p></div>
 	        	</div>	
 
 	        	<div class="row">

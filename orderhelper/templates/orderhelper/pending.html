@@ -60,7 +60,7 @@
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
 		   			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
-		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Link"><a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>
+		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Link">{% if subcomanda.reper.link %}<a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>{% endif %}
 		   			 		</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
