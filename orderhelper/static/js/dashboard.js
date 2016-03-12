@@ -2,6 +2,7 @@
 var urlExtract;
 
 $(".actionAdd").click(function () {
+	console.log('OrderHelper-Dashboard: Add object.')
 	urlExtract = $(this).attr("href");
 });
 
@@ -9,6 +10,7 @@ $(document).ready(function(){
 
 	// Make call to edit 
 	$("#edit").click(function(){
+		console.log('OrderHelper-Dashboard: Edit object.')
 		$(location).attr('href', urlExtract );
 	});
 
