@@ -13,10 +13,23 @@ $(".actionViewSubcomanda").click(function () {
     });
 
 $(".actionCloseComanda").click(function () {
-    urlExtract = $(this).attr("href");
+
+	if ($(this).hasClass('disabled')) {
+  		event.stopImmediatePropagation();
+        return(false);
+  	}
+
+	
+		 urlExtract = $(this).attr("href");
  });
 
 $(".actionCancelComanda").click(function () {
+
+	if ($(this).hasClass('disabled')) {
+  		event.stopImmediatePropagation();
+        return(false);
+  	}
+	
 	urlExtract = $(this).attr("href");
 });
 

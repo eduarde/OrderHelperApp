@@ -107,10 +107,8 @@
             
             <div class="col-md-2" id="actions">
                 <a class="btn btn-primary actionViewSubcomanda" rel="tooltip" data-placement="top" title="Details"  data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>
-         
-               <a class="btn btn-danger actionViewSubcomanda" rel="tooltip" data-placement="top" title="Order details"  data-toggle="modal" data-target="#modal" href="/comanda/detail/" + {{ subcomanda.comanda_ref.pk}}><span class="glyphicon glyphicon-briefcase"></span></a>
-      
 
+                <a class="btn btn-danger actionViewDetailComanda" rel="tooltip" data-placement="top" title="Order details"  data-toggle="modal" pk="{{ subcomanda.comanda_ref.pk }}" data-target="#modal" href="#"><span class="glyphicon glyphicon-briefcase"></span></a> 
 
                 
             </div>
@@ -125,7 +123,7 @@
 {% include "orderhelper/_pagination.html" %}
 
 <div class="modal fade" id="modal"></div>
-    
+
 <!-- Keep scripts in this order 1. search.js / 2. ajaxModal.js -->    
 <script src="{% static 'js/search.js' %}"></script>
 <script src="{% static 'js/ajaxModal.js' %}"></script>

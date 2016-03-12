@@ -61,5 +61,16 @@ $(document).ready(function(){
 
 // Get the url to trigger the modal
 $(".actionViewSubcomanda").click(function () {
+  console.log('OrderHelper-Search: view suborder details. ');
   urlExtract = $(this).attr("href");
+});
+
+
+$('.actionViewDetailComanda').click(function(){
+  
+  console.log('OrderHelper-Search: view parent order details. ');
+  var pk = $(this).attr('pk');
+    urlExtract = '/comanda/detail/' + pk;
+   
+
 });
