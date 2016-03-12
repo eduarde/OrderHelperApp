@@ -660,52 +660,77 @@ class PendingComandaCancelView(ListView):
 			subcomanda.save()	
 		return redirect(request.META['HTTP_REFERER'])
 
-@login_required
-def comanda_detail(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
+# Comanda detail view displayed in modal
+class ComandaDetailView(ListView):
+	template_name = 'orderhelper/comanda_detail.html'
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object()
+		return render(request, self.template_name, {'comanda': self.object})
 
-	return render(request,'orderhelper/comanda_detail.html', {'comanda':comanda})
+	def get_object(self):
+		return get_object_or_404(Comanda, pk=self.kwargs.get("pk"))	
 
-@login_required
-def subcomanda_detail(request, pk):
-	subcomanda = get_object_or_404(Subcomanda, pk=pk)
 
-	return render(request,'orderhelper/subcomanda_detail.html', {'subcomanda':subcomanda})
+# Subcomanda detail view displayed in modal
+class SubcomandaDetailView(ListView):
+	template_name = 'orderhelper/subcomanda_detail.html'
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object()
+		return render(request, self.template_name, {'subcomanda': self.object})
 
-@login_required
-def search_view(request, cod_reper_text, reper_text, furnizor_text, proiect_text, obiect_text):
+	def get_object(self):
+		return get_object_or_404(Subcomanda, pk=self.kwargs.get("pk"))	
 
-	qlist = []
-	if cod_reper_text != 'none':
-		qlist.append(Q(reper__cod_reper__icontains=cod_reper_text))
-	if reper_text != 'none':
-		qlist.append(Q(reper__reper__icontains=reper_text))
-	if furnizor_text != 'none':	
-		qlist.append(Q(furnizor__nume__icontains=furnizor_text))
-	if proiect_text != 'none':	
-		qlist.append(Q(comanda_ref__proiect__titlu__icontains=proiect_text))
-	if obiect_text != 'none':	
-		qlist.append(Q(comanda_ref__obiect_succint__icontains=obiect_text))
-
-	if qlist:
-		subcomenzi = Subcomanda.objects.filter(reduce(AND, qlist))
-	else:
-		subcomenzi = Subcomanda.objects.all()
-	return render(request,'orderhelper/search.html',{'subcomenzi':subcomenzi})
-
+# Search view class
 class SearchView(PaginationMixin, ListView):
 	model = Subcomanda
 	template_name = 'orderhelper/search.html'
 	context_object_name = 'subcomenzi'
-	paginate_by = 8
+	paginate_by = 5
+	cod_reper_text = ''
+	reper_text = ''
+	furnizor_text = ''
+	proiect_text = ''
+	obiect_text = ''
+	qlist = []
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(SearchView, self).dispatch(*args, **kwargs)
-	
+
+	def build_queries(self):
+		qlist = []
+		if self.cod_reper_text != 'none':
+			qlist.append(Q(reper__cod_reper__icontains=self.cod_reper_text))
+		if self.reper_text != 'none':
+			qlist.append(Q(reper__reper__icontains=self.reper_text))
+		if self.furnizor_text != 'none':	
+			qlist.append(Q(furnizor__nume__icontains=self.furnizor_text))
+		if self.proiect_text != 'none':	
+			qlist.append(Q(comanda_ref__proiect__titlu__icontains=self.proiect_text))
+		if self.obiect_text != 'none':	
+			qlist.append(Q(comanda_ref__obiect_succint__icontains=self.obiect_text))
+
+		return qlist
+
 	def get_queryset(self):
-		groups_list = self.request.user.groups.all()
-		return Subcomanda.objects.all().filter(group__in=groups_list).order_by('data')
+		self.cod_reper_text = self.kwargs.get("cod_reper_text")
+		self.reper_text = self.kwargs.get("reper_text")
+		self.furnizor_text = self.kwargs.get("furnizor_text")
+		self.proiect_text = self.kwargs.get("proiect_text")
+		self.obiect_text = self.kwargs.get("obiect_text")
+
+		qlist = self.build_queries()
+		print(qlist)
+		if qlist:
+			return Subcomanda.objects.filter(reduce(AND, qlist))
+		else:
+			return Subcomanda.objects.all()
+
 
 
 

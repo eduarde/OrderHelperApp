@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
-from .views import PendingView, DashboardView, HistoryView,SearchView,PendingSubcomandaCloseView,PendingComandaCloseView, PendingComandaCancelView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
+from .views import PendingView, DashboardView, HistoryView, SearchView, PendingSubcomandaCloseView, SubcomandaDetailView, ComandaDetailView, PendingComandaCloseView, PendingComandaCancelView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -18,8 +18,8 @@ urlpatterns = [
     url(r'^comanda/close/(?P<pk>\d+)$', PendingComandaCloseView.as_view(), name='pending_comanda_close'),
     url(r'^subcomanda/cancel/(?P<pk>\d+)$', PendingSubcomandaCancelView.as_view(), name='pending_subcomanda_cancel'),
     url(r'^comanda/cancel/(?P<pk>\d+)$', PendingComandaCancelView.as_view(), name='pending_comanda_cancel'),
-    url(r'^comanda/detail/(?P<pk>\d+)$', views.comanda_detail, name='comanda_detail'),
-    url(r'^subcomanda/detail/(?P<pk>\d+)$', views.subcomanda_detail, name='subcomanda_detail'),
+    url(r'^comanda/detail/(?P<pk>\d+)$', ComandaDetailView.as_view(), name='comanda_detail'),
+    url(r'^subcomanda/detail/(?P<pk>\d+)$', SubcomandaDetailView.as_view(), name='subcomanda_detail'),
 
     # Dashboard
     url(r'^dashboard/$', DashboardView.as_view() , name='dashboard'),
@@ -53,7 +53,7 @@ urlpatterns = [
     # # Search
     # url(r'^search$', SearchView.as_view(), name='search'),  
      
-    url(r'^search/(?P<cod_reper_text>[ \w ]+)/(?P<reper_text>[ \w ]+)/(?P<furnizor_text>[ \w ]+)/(?P<proiect_text>[ \w ]+)/(?P<obiect_text>[ \w ]+)$', views.search_view, name='search'),
+    url(r'^search/(?P<cod_reper_text>[ \w ]+)/(?P<reper_text>[ \w ]+)/(?P<furnizor_text>[ \w ]+)/(?P<proiect_text>[ \w ]+)/(?P<obiect_text>[ \w ]+)$', SearchView.as_view(), name='search'),
    
     
 ]
