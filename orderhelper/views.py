@@ -725,7 +725,6 @@ class SearchView(PaginationMixin, ListView):
 		self.obiect_text = self.kwargs.get("obiect_text")
 
 		qlist = self.build_queries()
-		print(qlist)
 		if qlist:
 			return Subcomanda.objects.filter(reduce(AND, qlist))
 		else:
