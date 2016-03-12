@@ -43,6 +43,8 @@
 				<td>{{ reper.reper }}</td>
 				 <td>{% if reper.link %}<a href="{{ reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</td>
 			</tr>
+			{% empty %}
+    			<div class="alert alert-warning" role="alert">There is no data available.</div>
 			{% endfor %}
 			</tbody>
 		</table>     	

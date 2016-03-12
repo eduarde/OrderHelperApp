@@ -45,9 +45,9 @@ class Persoana(models.Model):
 		return self.nume + ' ' + self.prenume;
 
 class Proiect(models.Model):
-	titlu = models.CharField('Denumire', max_length=255)
+	titlu = models.CharField('Denumire', blank=False, null=False, max_length=255)
 	descriere = models.TextField('Descriere', blank=True, null=True)
-	group = models.ManyToManyField(Group, related_name='proiects')
+	group = models.ManyToManyField(Group,blank=False, null=False, related_name='proiects')
 
 	def __str__(self):
 		return self.titlu

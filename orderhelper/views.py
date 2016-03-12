@@ -690,7 +690,7 @@ class SearchView(PaginationMixin, ListView):
 	model = Subcomanda
 	template_name = 'orderhelper/search.html'
 	context_object_name = 'subcomenzi'
-	paginate_by = 5
+	paginate_by = 8
 	cod_reper_text = ''
 	reper_text = ''
 	furnizor_text = ''
@@ -730,6 +730,8 @@ class SearchView(PaginationMixin, ListView):
 			return Subcomanda.objects.filter(reduce(AND, qlist))
 		else:
 			return Subcomanda.objects.all()
+
+
 
 
 

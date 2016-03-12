@@ -39,6 +39,8 @@
 				<td>{{ furnizor.telefon }}</td>
 				<td>{{ furnizor.descriere }}</td>
 			</tr>
+			{% empty %}
+    			<div class="alert alert-warning" role="alert">There is no data available.</div>
 			{% endfor %}
 			</tbody>
 		</table>     	
