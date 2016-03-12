@@ -45,7 +45,7 @@ class PendingView(ListView):
 	
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('data')
+		return Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('-data')
 
 # History view 
 class HistoryView(PaginationMixin, ListView):
