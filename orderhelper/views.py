@@ -567,35 +567,51 @@ class PendingSubcomandaCloseView(FormView):
 	
 		return render(request, self.template_name, {'form': form, 'subcomanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
-@login_required
-def pending_comanda_close(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
-	status_inchis = Status.objects.filter(text='Inchis')[0]
+# Pending comanda close view
+class PendingComandaCloseView(FormView):
+
+	template_name = 'orderhelper/pending_modal_edit.html'
+	form_class = ComandaCloseForm
 	dialog_title = "Inchide comanda"
-	url = '/comanda/close/' + pk
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/comanda/close/' + self.get_primary_key()
+		self.object = self.get_object()
+		form = self.form_class(instance=self.object)
+		return render(request, self.template_name, {'form': form, 'comanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
-	if request.method == "POST":
-		form = ComandaCloseForm(request.POST,instance=comanda)
+	def get_object(self):
+		return get_object_or_404(Comanda, pk=self.kwargs.get("pk"))	
+
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/comanda/close/' + self.get_primary_key()
+		self.object = self.get_object();
+		form = self.form_class(request.POST,instance=self.object)
 		if form.is_valid():
-			comanda = form.save(commit=False)
-			comanda.status = status_inchis
-			comanda.save()
+			self.object = form.save(commit=False)
+			self.object.status = Status.objects.filter(text='Inchis')[0]
+			self.object.save()
 			return redirect(request.META['HTTP_REFERER'])
+	
+		return render(request, self.template_name, {'form': form, 'comanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
 
-	form = ComandaCloseForm(instance=comanda)
-	return render(request,'orderhelper/pending_modal_edit.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url': url})
-
-# Pending subcomanda close view
+# Pending subcomanda cancel view
 class PendingSubcomandaCancelView(ListView):
 
 	template_name = 'orderhelper/pending_modal_cancel.html'
-	dialog_title = "Inchide subcomanda"
+	dialog_title = "Anuleaza subcomanda"
+	content = "Sunteti sigur ca doriti sa anulati aceasta subcomanda?"
 	
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		url = '/subcomanda/cancel/' + self.get_primary_key()
 		self.object = self.get_object()
-		return render(request, self.template_name, {'subcomanda': self.object, 'dialog_title': self.dialog_title, 'url': url})
+		return render(request, self.template_name, {'subcomanda': self.object,'content': self.content, 'dialog_title': self.dialog_title, 'url': url})
 
 	def get_object(self):
 		return get_object_or_404(Subcomanda, pk=self.kwargs.get("pk"))	
@@ -612,27 +628,37 @@ class PendingSubcomandaCancelView(ListView):
 		return redirect(request.META['HTTP_REFERER'])
 		
 
-@login_required
-def pending_comanda_cancel(request, pk):
-	comanda = get_object_or_404(Comanda, pk=pk)
-	status_anulat = Status.objects.filter(text='Anulat')[0]
+# Pending comanda cancel view
+class PendingComandaCancelView(ListView):
+
+	template_name = 'orderhelper/pending_modal_cancel.html'
 	dialog_title = "Anuleaza comanda"
-	url = '/comanda/cancel/' + pk
+	content = "Sunteti sigur ca doriti sa anulati aceasta comanda? Subcomenzile asociate acestei comenzi se vor anula implicit."
+	
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		url = '/comanda/cancel/' + self.get_primary_key()
+		self.object = self.get_object()
+		return render(request, self.template_name, {'comanda': self.object,'content':self.content, 'dialog_title': self.dialog_title, 'url': url})
 
-	if request.method == "POST":
-		form = ComandaCancelForm(request.POST,instance=comanda)
-		if form.is_valid():
-			comanda = form.save(commit=False)
-			comanda.status = status_anulat
-			comanda.save()
-			subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=pk)
-			for subcomanda in subcomenzi:
-				subcomanda.status = status_anulat
-				subcomanda.save()
-			return redirect(request.META['HTTP_REFERER'])
+	def get_object(self):
+		return get_object_or_404(Comanda, pk=self.kwargs.get("pk"))	
 
-	form = ComandaCancelForm(instance=comanda)
-	return render(request,'orderhelper/pending_comanda_cancel.html', {'form': form, 'comanda':comanda, 'dialog_title':dialog_title, 'url':url})
+	def get_primary_key(self):
+		return self.kwargs.get("pk")	
+
+	@method_decorator(login_required)
+	def post(self, request, *args, **kwargs):
+		url = '/comanda/cancel/' + self.get_primary_key()
+		status_anulat = Status.objects.filter(text='Anulat')[0]
+		self.object = self.get_object();
+		self.object.status = status_anulat
+		self.object.save()
+		subcomenzi = Subcomanda.objects.filter(comanda_ref__pk=self.get_primary_key())
+		for subcomanda in subcomenzi:
+			subcomanda.status = status_anulat
+			subcomanda.save()	
+		return redirect(request.META['HTTP_REFERER'])
 
 @login_required
 def comanda_detail(request, pk):

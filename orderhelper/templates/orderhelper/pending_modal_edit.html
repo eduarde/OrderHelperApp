@@ -25,12 +25,13 @@
   </div><!-- /.modal-dialog -->
 
 <script>
+	
 
 	$(document).ready(function(){
 	    $("#idprimire").datetimepicker({
-			format: 'mm/dd/yyyy'})
-
-	   $("#idprimire").datetimepicker('setDate', new Date());
+			format: 'mm/dd/yyyy'}) 
+		$("#idprimire").datetimepicker('setDate', new Date());
+	    $('.modal-body').closest('div').find('#idprimire').closest('#idprimire').find('#idprimire').trigger('focus'); 
 	});
 
     var form_options = { target: '#modal', success: function(response) {} };

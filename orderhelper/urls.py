@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
-from .views import PendingView, DashboardView, HistoryView,SearchView,PendingSubcomandaCloseView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
+from .views import PendingView, DashboardView, HistoryView,SearchView,PendingSubcomandaCloseView,PendingComandaCloseView, PendingComandaCancelView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -15,9 +15,9 @@ urlpatterns = [
 
     # Comanda/Subcomanda urls used Pending & History
     url(r'^subcomanda/close/(?P<pk>\d+)$', PendingSubcomandaCloseView.as_view(), name='pending_subcomanda_close'),
-    url(r'^comanda/close/(?P<pk>\d+)$', views.pending_comanda_close, name='pending_comanda_close'),
-    url(r'^subcomanda/cancel/(?P<pk>\d+)$', PendingSubcomandaCancelView.as_view(), name='pending_modal_cancel'),
-    url(r'^comanda/cancel/(?P<pk>\d+)$', views.pending_comanda_cancel, name='pending_comanda_cancel'),
+    url(r'^comanda/close/(?P<pk>\d+)$', PendingComandaCloseView.as_view(), name='pending_comanda_close'),
+    url(r'^subcomanda/cancel/(?P<pk>\d+)$', PendingSubcomandaCancelView.as_view(), name='pending_subcomanda_cancel'),
+    url(r'^comanda/cancel/(?P<pk>\d+)$', PendingComandaCancelView.as_view(), name='pending_comanda_cancel'),
     url(r'^comanda/detail/(?P<pk>\d+)$', views.comanda_detail, name='comanda_detail'),
     url(r'^subcomanda/detail/(?P<pk>\d+)$', views.subcomanda_detail, name='subcomanda_detail'),
 
