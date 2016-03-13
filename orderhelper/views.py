@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comanda, Subcomanda, Proiect, Furnizor, Producator, Reper, Status
-from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, ComandaEditForm, SubcomandaForm, SubcomandaEditForm, SubcomandaCloseForm, ComandaCloseForm, SubcomandaCancelForm, ComandaCancelForm
+from .forms import PersoanaForm, ProiectForm, FurnizorForm, ProducatorForm, ReperForm, ComandaForm, ComandaEditForm, SubcomandaForm, SubcomandaEditForm, SubcomandaCloseForm, ComandaCloseForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -54,7 +54,7 @@ class PendingView(ListView):
 	
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('-data')
+		return Comanda.objects.all().filter(status__text='Deschis',group__in=groups_list).order_by('-pk')
 
 # History view 
 class HistoryView(PaginationMixin, ListView):
@@ -69,7 +69,7 @@ class HistoryView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('data')
+		return Comanda.objects.all().filter(status__text='Inchis',group__in=groups_list).order_by('-pk')
 
 # Comanda view in Dashboard 
 class DashboardComandaView(PaginationMixin, ListView):
@@ -84,7 +84,7 @@ class DashboardComandaView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
+		return Comanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-pk')
 
 # Subcomanda view in Dashboard 
 class DashboardSubcomandaView(PaginationMixin, ListView):
@@ -99,7 +99,7 @@ class DashboardSubcomandaView(PaginationMixin, ListView):
 
 	def get_queryset(self):
 		groups_list = self.request.user.groups.all()
-		return Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-data')
+		return Subcomanda.objects.all().filter(group__in=groups_list,data__gte=datetime.now()-timedelta(days=30)).order_by('-pk')
 
 
 # Proiect view in Dashboard 
@@ -247,8 +247,8 @@ class DashboardSubcomandaCreateView(FormView):
 	
 	def calculate_numar_curent(self):
 		numar_curent = 0
-		if Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.object.comanda_ref.numar_unic).exists(): 
-				numar_curent = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.object.comanda_ref.numar_unic).latest('pk').numar_curent
+		if Subcomanda.objects.all().filter(comanda_ref__pk=self.object.comanda_ref.pk).exists(): 
+				numar_curent = Subcomanda.objects.all().filter(comanda_ref__pk=self.object.comanda_ref.pk).latest('pk').numar_curent
 		numar_curent = numar_curent + 1
 		return numar_curent
 

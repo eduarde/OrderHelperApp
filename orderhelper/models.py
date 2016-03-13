@@ -124,11 +124,10 @@ class Subcomanda(models.Model):
 		return date.today().isoformat() == self.data_livrare.isoformat()	
 
 	def __str__(self):
-		return 'Subcomanda #' + str(self.numar_curent)
+		return 'Subcomanda: ' + str(self.numar_curent)
 
 
 class Comanda(models.Model):
-	numar_unic = models.IntegerField()
 	status = models.ForeignKey('Status', null=True)
 	data = models.DateField('Data',default=now())
 	obiect_succint = models.TextField('Obiect Succint', null=True)
@@ -138,7 +137,7 @@ class Comanda(models.Model):
 	proiect = models.ForeignKey('Proiect', null=True)
 
 	def set_pret_total(self):
-		subcomenzi = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__numar_unic=self.numar_unic)
+		subcomenzi = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__pk=self.pk)
 		total = 0
 		for subcomanda in subcomenzi:
 			total += subcomanda.pret_total
@@ -150,31 +149,31 @@ class Comanda(models.Model):
 
 
 	def is_late(self):
-		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic, status__text='Deschis')
+		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=self.pk, status__text='Deschis')
 		for subcomanda in subcomenzi:
 			if date.today().isoformat() > subcomanda.data_livrare.isoformat():
 				return True
 		return False
 
 	def is_today(self):
-		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic, status__text='Deschis')
+		subcomenzi = Subcomanda.objects.all().filter(comanda_ref__pk=self.pk, status__text='Deschis')
 		for subcomanda in subcomenzi:
 			if date.today().isoformat() == subcomanda.data_livrare.isoformat():
 				return True
 		return False
 
 	def calculate_progress(self):
-		subcomenzi_total = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__numar_unic=self.numar_unic).count()
-		subcomenzi_finished = Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic,status__text='Inchis').count()
+		subcomenzi_total = Subcomanda.objects.exclude(status__text='Anulat').filter(comanda_ref__pk=self.pk).count()
+		subcomenzi_finished = Subcomanda.objects.all().filter(comanda_ref__pk=self.pk,status__text='Inchis').count()
 		if subcomenzi_total == 0:
 			return 0
 		return ( subcomenzi_finished * 100 ) / subcomenzi_total
 
 	def show_subcomenzi(self):
-		return Subcomanda.objects.all().filter(comanda_ref__numar_unic=self.numar_unic)
+		return Subcomanda.objects.all().filter(comanda_ref__pk=self.pk)
 
 	def show_valuta(self):
-		return	Subcomanda.objects.filter(comanda_ref__numar_unic=self.numar_unic).latest('pk').valuta
+		return	Subcomanda.objects.filter(comanda_ref__pk=self.pk).latest('pk').valuta
 		
 	def __str__(self):
-		return 'Comanda #' + str(self.numar_unic)
+		return 'Comanda: ' + str(self.pk)

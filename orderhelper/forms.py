@@ -68,9 +68,8 @@ class ComandaForm(forms.ModelForm):
 
 	class Meta:
 		model = Comanda
-		fields = ('numar_unic','obiect_succint','solicitant','proiect','group',)
+		fields = ('obiect_succint','solicitant','proiect','group',)
 		widgets = {
-			'numar_unic': forms.NumberInput(attrs={'class': 'form-control'}),
 			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
 			'solicitant': forms.Select(attrs={'class': 'form-control'}),
 			'proiect': forms.Select(attrs={'class': 'form-control'}),
@@ -81,9 +80,8 @@ class ComandaEditForm(forms.ModelForm):
 
 	class Meta:
 		model = Comanda
-		fields = ('numar_unic','status','obiect_succint','solicitant','proiect','group',)
+		fields = ('status','obiect_succint','solicitant','proiect','group',)
 		widgets = {
-			'numar_unic': forms.NumberInput(attrs={'class': 'form-control'}),
 			'status': forms.Select(attrs={'class': 'form-control'}),
 			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
 			'solicitant': forms.Select(attrs={'class': 'form-control'}),
@@ -95,7 +93,7 @@ class SubcomandaForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(SubcomandaForm, self).__init__(*args, **kwargs)
-		self.fields['comanda_ref'].queryset = Comanda.objects.filter(status__text='Deschis')
+		self.fields['comanda_ref'].queryset = Comanda.objects.filter(status__text='Deschis').order_by('-pk')
 
 	class Meta:
 		model = Subcomanda
@@ -178,33 +176,4 @@ class ComandaCloseForm(forms.ModelForm):
 		}
 		widgets = {
 			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
-		}
-
-
-class SubcomandaCancelForm(forms.ModelForm):
-
-	class Meta:
-		model = Subcomanda
-		fields = ('data_primire','numar_curent',)
-		dateOptions = {
-			'format': 'mm/dd/yyyy',
-			'autoclose': True
-		}
-		widgets = {
-			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
-			'numar_curent': HiddenInput(),
-		}
-		
-class ComandaCancelForm(forms.ModelForm):
-
-	class Meta:
-		model = Comanda
-		fields = ('data_primire','numar_unic',)
-		dateOptions = {
-			'format': 'mm/dd/yyyy',
-			'autoclose': True
-		}
-		widgets = {
-			'data_primire': DateWidget(attrs={'id':"idprimire"}, bootstrap_version=3, options = dateOptions),
-			'numar_unic': HiddenInput(),
 		}

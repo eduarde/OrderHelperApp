@@ -94,22 +94,19 @@
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-<!--   {% if subcomenzi %}
-  {% endif %} -->
-
   {% for subcomanda in subcomenzi %}	
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         	<div class="row">
-            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Comanda">Comanda: {{ subcomanda.comanda_ref.numar_unic }}</div>
+            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Referinta comanda">Comanda: {{ subcomanda.comanda_ref.pk }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Proiect">{{ subcomanda.comanda_ref.proiect }}</div>
             <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span></div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data livrare">{{ subcomanda.data_livrare }}</div>
-            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data primire">{{ subcomanda.data_primire }} </div>
+            <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Data primire"> {% if subcomanda.data_primire %} {{ subcomanda.data_primire }} {% else %} <span class="glyphicon glyphicon-remove"></span> {% endif %} </div>
             
             <div class="col-md-2" id="actions">
                 <a class="btn btn-primary actionViewSubcomanda" rel="tooltip" data-placement="top" title="Details"  data-toggle="modal" data-target="#modal" href="{% url 'subcomanda_detail' pk=subcomanda.pk %}"><span class="glyphicon glyphicon-eye-open"></span></a>

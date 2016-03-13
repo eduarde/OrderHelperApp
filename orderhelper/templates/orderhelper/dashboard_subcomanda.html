@@ -45,7 +45,7 @@
 				<td><input type="checkbox" id="{{ subcomanda.pk }}" url="{%  url 'dashboard_subcomanda_edit' pk=subcomanda.pk  %}" aria-label="select"></td>  
 			    <td>{{ subcomanda.pk }}</td>
 			    <td>#{{ subcomanda.numar_curent }}</td>
-				<td>{{ subcomanda.comanda_ref.numar_unic }}</td>
+				<td>{{ subcomanda.comanda_ref.pk }}</td>
 				<td><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></td>
 				<td>{{ subcomanda.producator }}</td>
 				<td>{{ subcomanda.reper.cod_reper }}</td>

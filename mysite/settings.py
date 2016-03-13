@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'yan%@fw$+%fg*coibl7gnyog30wj$l5-uumhzl%8tt8r!lfxwd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['orderhelper.pythonanywhere.com']
 
 
 # Application definition

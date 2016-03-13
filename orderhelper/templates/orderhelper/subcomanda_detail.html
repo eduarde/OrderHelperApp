@@ -9,7 +9,7 @@
 	    <div class="modal-body">
 	      	
 	     	<div class="row">
-          		<div class="col-md-4"> <p><b>Referinta comanda:</b> {{ subcomanda.comanda_ref.numar_unic }}<p></div>
+          		<div class="col-md-4"> <p><b>Referinta comanda:</b> {{ subcomanda.comanda_ref.pk }}<p></div>
           		<div class="col-md-4"><p><b>Status:</b> <span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></p></div>
           		<div class="col-md-4"><p><b>Data:</b> {{ subcomanda.data}} <p></div>
 	        </div>	
@@ -35,7 +35,7 @@
 
 	        <div class="row">
 	        	<div class="col-md-4"><p><b>Data livrare:</b> {{ subcomanda.data_livrare }}</p></div>
-	        	<div class="col-md-8"><p><b>Data primire:</b> {{ subcomanda.data_primire }} </p></div>
+	        	<div class="col-md-8"><p><b>Data primire:</b> {% if subcomanda.data_primire %} {{ subcomanda.data_primire }} {% else %} <span class="glyphicon glyphicon-remove"></span> {% endif %}</p></div>
 	        </div>	
 
 	        <div class="row">
