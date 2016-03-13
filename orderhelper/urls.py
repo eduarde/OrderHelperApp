@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from . import views
-from .views import PendingView, DashboardView, HistoryView, SearchView, PendingSubcomandaCloseView, SubcomandaDetailView, ComandaDetailView, PendingComandaCloseView, PendingComandaCancelView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
+from .views import ProfileView, PendingView, DashboardView, HistoryView, SearchView, PendingSubcomandaCloseView, SubcomandaDetailView, ComandaDetailView, PendingComandaCloseView, PendingComandaCancelView, PendingSubcomandaCancelView, DashboardComandaEditView,DashboardProducatorEditView, DashboardProiectEditView,  DashboardFurnizorEditView, DashboardReperEditView, DashboardSubcomandaEditView, DashboardProiectView,DashboardReperModalView, DashboardFurnizorView, DashboardProducatorView, DashboardReperView, DashboardComandaView, DashboardComandaCreateView, DashboardPersoanaCreateView, DashboardProiectCreateView, DashboardFurnizorCreateView, DashboardProducatorCreateView, DashboardReperCreateView, DashboardSubcomandaCreateView, DashboardSubcomandaView
 
 
 urlpatterns = [
@@ -8,7 +8,8 @@ urlpatterns = [
     # url(r'^comanda/(?P<pk>[0-9]+)/$', views.comanda_subcomenzi, name='comanda_subcomenzi'),
 
     url(r'^$', 'django.contrib.auth.views.login'),
-    url(r'^logout/$', views.logout_page, name='logout_page'), 
+    url(r'^logout/$', views.logout_page, name='logout_page'),
+    url(r'^profile/$', ProfileView.as_view(), name='profile'),  
 
     # Pending 
     url(r'^pending/$', PendingView.as_view(), name='pending'),

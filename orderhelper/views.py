@@ -25,6 +25,15 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
+class ProfileView(View):
+	template_name = 'orderhelper/profile.html'
+
+	@method_decorator(login_required)
+	def get(self, request):
+		return render(request, self.template_name)
+
+
 # Dashboard view 
 class DashboardView(View):
 	template_name = 'orderhelper/dashboard.html'

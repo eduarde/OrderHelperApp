@@ -7,13 +7,22 @@
 		        <h3 class="modal-title"><b>Lista reper</b></h3>
 	      	</div>
 	      	<div class="modal-body">
-	      		{% for reper in reperi %}
-	      		<div class="row">
-          			<div class="col-md-2"> <p><b>Cod:</b> {{ reper.cod_reper}}<p></div>
-	        		<div class="col-md-9"><p><b>Reper:</b> {{ reper.reper }}</div>
-	        		<div class="col-md-1"><p>{% if reper.link %}<a href="{{ reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></span></a> {% endif %}</div>
-	        	</div>		      			
-	      		{% endfor %}
+	      		<div class="table-responsive">
+		<table class="table table-striped">
+		    <tbody>
+		              
+			{% for reper in reperi %}			
+			<tr>         
+				<td><b>{{ reper.cod_reper }}</b></td>
+				<td>{{ reper.reper }}</td>
+				<td>{% if reper.link %}<a href="{{ reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a> {% endif %}</td>
+			</tr>
+			{% empty %}
+    			<div class="alert alert-warning" role="alert">There is no data available.</div>
+			{% endfor %}
+			</tbody>
+		</table>     	
+	</div>
 	      	</div>
     
 

@@ -8,9 +8,8 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-	<h1 class="sub-header">Dashboard  </h1>
+	<h1 class="sub-header">Dashboard <small> Adauga subcomanda </small>  </h1>
 	 <br />
-	<h2><em> Adauga subcomanda </em></h2>
 	
 	<br />
 	 <form method="POST" class="proiect-form">{% csrf_token %}
@@ -43,6 +42,8 @@
                 	<h4><span class="glyphicon glyphicon-eye-open"> Reper</span></h4>
             </div>
 	    </div>		
+	     
+	     <hr class="featurette-divider">
 	     
 	    <div class="row"> 
 	      	<div class="col-md-6">
