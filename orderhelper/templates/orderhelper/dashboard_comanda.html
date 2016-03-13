@@ -20,6 +20,7 @@
 			    <tr>
 			    	<th></th>
 			    	<th>Numar</th>
+			    	<th>Status</th>
 			        <th>Data</th>
 			        <th>Obiect succint</th>
 			        <th>Solicitant</th>
@@ -33,6 +34,7 @@
 			<tr>         
 				<td><input type="checkbox" url="{%  url 'dashboard_comanda_edit' pk=comanda.pk  %}" aria-label="select"></td> 
 			    <td>{{ comanda.pk }}</td>
+			    <td><span class="btn {% if comanda.status.text == 'Deschis' %}btn-success{% endif %} {% if comanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if comanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></td>
 				<td>{{ comanda.data }}</td>
 				<td>{{ comanda.obiect_succint }}</td>
 				<td>{{ comanda.solicitant }}</td>
