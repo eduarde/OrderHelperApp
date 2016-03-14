@@ -38,7 +38,7 @@ class Status(models.Model):
 class Persoana(models.Model):
 	nume = models.CharField('Nume', max_length=100)
 	prenume = models.CharField('Prenume', max_length=100)
-	telefon = models.CharField('Telefon', max_length=10)
+	telefon = models.CharField('Telefon', max_length=10, blank=True, null=True)
 	group = models.ManyToManyField(Group, related_name='persoanas')
 
 	def __str__(self):
@@ -95,7 +95,7 @@ class Subcomanda(models.Model):
 	comanda_ref = models.ForeignKey('Comanda', null=True, verbose_name='Comanda') 
 	numar_curent = models.IntegerField('Numar Curent',null=True)
 	status = models.ForeignKey('Status',null=True)
-	producator = models.ForeignKey('Producator', null=True)
+	producator = models.ForeignKey('Producator',blank=True, null=True)
 	reper = models.ForeignKey('Reper', null=True)
 	furnizor = models.ForeignKey('Furnizor', null=True)
 	cantitate = models.DecimalField('Cantitate', default=0, max_digits=9, decimal_places=0, null=True)

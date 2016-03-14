@@ -58,10 +58,8 @@
 		   			 	<div class="row">
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Status"><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></div>
-		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
-		   			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
-		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Link">{% if subcomanda.reper.link %}<a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>{% endif %}
-		   			 		</div>
+		   			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{% if subcomanda.producator %} {{ subcomanda.producator }} {% else %} <span class="glyphicon glyphicon-remove"></span> {% endif %}</p></div>
+		   			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b><br /> {{ subcomanda.reper.reper }}</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
 		   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} </div>
