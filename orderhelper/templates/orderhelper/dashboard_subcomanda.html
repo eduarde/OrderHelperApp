@@ -47,7 +47,7 @@
 			    <td>#{{ subcomanda.numar_curent }}</td>
 				<td>{{ subcomanda.comanda_ref.pk }}</td>
 				<td><span class="btn {% if subcomanda.status.text == 'Deschis' %}btn-success{% endif %} {% if subcomanda.status.text == 'Inchis' %}btn-danger{% endif %} {% if subcomanda.status.text == 'Anulat' %}btn-warning{% endif %} "></span></td>
-				<td>{{ subcomanda.producator }}</td>
+				<td>{% if subcomanda.producator %} {{ subcomanda.producator }} {% else %} <span class="glyphicon glyphicon-remove"></span> {% endif %}</td>
 				<td>{{ subcomanda.reper.cod_reper }}</td>
 				<td>{{ subcomanda.reper.reper }}</td>
 				<td> {% if subcomanda.reper.link %} <a href="{{ subcomanda.reper.link }}" target="_blank"><span class="glyphicon glyphicon-link"></a>{% endif %}</td>

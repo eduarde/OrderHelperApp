@@ -44,11 +44,10 @@
     </div>
 
     <br /><br />
+    <hr class="featurette-divider">
     <div class="row">
-    	<div class="col-sm-6 col-md-8 placeholder"><a href="/logout/" type="button" class="btn btn-primary">Logout</a></div>
-    	<!-- <div class="col-sm-6 col-md-4 placeholder">
-    		<a href="/logout/" type="button" class="btn btn-primary">Logout</a>
-    	</div> -->
+      <div class="col-sm-2 col-md-2 placeholder"><a href="/admin/" type="button" class="{% if user.is_staff %} btn btn-info {% else %} btn btn-info disabled {% endif %}">Admin Page</a></div>
+    	<div class="col-sm-6 col-md-6 placeholder"><a href="/logout/" type="button" class="btn btn-primary">Logout</a></div>
     </div>
 
 </div>

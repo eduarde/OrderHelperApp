@@ -101,7 +101,7 @@
         	<div class="row">
             <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Referinta comanda">Comanda: {{ subcomanda.comanda_ref.pk }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Proiect">{{ subcomanda.comanda_ref.proiect }}</div>
-            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> {{ subcomanda.reper.reper }}</div>
+            <div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> <br /> {{ subcomanda.reper.reper }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">Q: {{ subcomanda.cantitate }}</div>
             <div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Pret">{{ subcomanda.pret }} <span class="glyphicon {% if subcomanda.valuta.text == 'EURO' %} glyphicon-euro {% else %}  {% if subcomanda.valuta.text == 'USD' %} glyphicon-usd {% else %} glyphicon-registration-mark {% endif %} {% endif %}"></span></div>
