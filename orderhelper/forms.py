@@ -80,12 +80,17 @@ class ComandaEditForm(forms.ModelForm):
 
 	class Meta:
 		model = Comanda
-		fields = ('status','obiect_succint','solicitant','proiect','group',)
+		dateOptions = {
+			'format': 'mm/dd/yyyy',
+			'autoclose': True
+		}
+		fields = ('status','obiect_succint','solicitant','proiect','data','group',)
 		widgets = {
 			'status': forms.Select(attrs={'class': 'form-control'}),
 			'obiect_succint': forms.TextInput(attrs={'class': 'form-control'}),
 			'solicitant': forms.Select(attrs={'class': 'form-control'}),
 			'proiect': forms.Select(attrs={'class': 'form-control'}),
+			'data': DateWidget(attrs={'id':"iddata"}, bootstrap_version=3, options = dateOptions),
             'group': forms.SelectMultiple(attrs={'class': 'form-control'}),
 		}
 
