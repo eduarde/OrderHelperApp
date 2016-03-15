@@ -319,9 +319,7 @@ class DashboardReperCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=False)
 			exist_cod_reper = Reper.objects.all().filter(cod_reper=self.object.cod_reper)
-			print(exist_cod_reper)
 			if exist_cod_reper:
-				
 				messages.add_message(request, messages.ERROR, 'Reperul ' +  str(self.object.cod_reper) + ' se afla deja in baza de date')
 			else:
 				self.object = form.save(commit=True)
@@ -383,9 +381,14 @@ class DashboardProducatorCreateView(FormView):
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			self.object = form.save(commit=True)
-			self.object.save()
-			messages.add_message(request, messages.INFO, 'Producatorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
+			self.object = form.save(commit=False)
+			exist_producator = Producator.objects.all().filter(nume=self.object.nume)
+			if exist_producator:
+				messages.add_message(request, messages.ERROR, 'Producatorul ' +  str(self.object.nume) + ' se afla deja in baza de date')
+			else:
+				self.object = form.save(commit=True)
+				self.object.save()
+				messages.add_message(request, messages.INFO, 'Producatorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -408,9 +411,14 @@ class DashboardFurnizorCreateView(FormView):
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			self.object = form.save(commit=True)
-			self.object.save()
-			messages.add_message(request, messages.INFO, 'Furnizorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
+			self.object = form.save(commit=False)
+			exist_furnizor = Furnizor.objects.all().filter(nume=self.object.nume)
+			if exist_furnizor:
+				messages.add_message(request, messages.ERROR, 'Furnizorul ' +  str(self.object.nume) + ' se afla deja in baza de date')
+			else:
+				self.object = form.save(commit=True)
+				self.object.save()
+				messages.add_message(request, messages.INFO, 'Furnizorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -466,9 +474,15 @@ class DashboardProiectCreateView(FormView):
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			self.object = form.save(commit=True)
-			self.object.save()
-			messages.add_message(request, messages.INFO, 'Proiectul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.titlu) + ' a fost creat cu succes.')
+			self.object = form.save(commit=False)
+			exist_proiect = Proiect.objects.all().filter(titlu=self.object.titlu)
+			if exist_proiect:
+				messages.add_message(request, messages.ERROR, 'Proiectul ' +  str(self.object.titlu) + ' se afla deja in baza de date')
+			else:
+				self.object = form.save(commit=True)
+				self.object.save()
+				messages.add_message(request, messages.INFO, 'Proiectul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.titlu) + ' a fost creat cu succes.')
+
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -689,7 +703,8 @@ class PendingComandaCancelView(ListView):
 		subcomenzi = Subcomanda.objects.filter(comanda_ref__pk=self.get_primary_key())
 		for subcomanda in subcomenzi:
 			subcomanda.status = status_anulat
-			subcomanda.save()	
+			subcomanda.save()
+		messages.add_message(request, messages.INFO, 'Comanda  ' + str(self.object.pk) + ' si subcomenzile asociate au fost anulate.')	
 		return redirect(request.META['HTTP_REFERER'])
 
 # Comanda detail view displayed in modal
