@@ -39,7 +39,7 @@
    			 <button type="button" class="list-group-item">
    			 	<div class="row">
    			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Numar curent">{{ subcomanda.numar_curent }}</div>
-   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{{ subcomanda.producator }}</div>
+   			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Producator">{% if subcomanda.producator %} {{ subcomanda.producator }} {% else %} <span class="glyphicon glyphicon-remove"></span> {% endif %}</div>
    			 		<div class="col-md-2" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Reper"><b>{{ subcomanda.reper.cod_reper }}</b> <br />{{ subcomanda.reper.reper }}</div>
    			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Furnizor">{{ subcomanda.furnizor }}</div>
    			 		<div class="col-md-1" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Cantitate">{{ subcomanda.cantitate }}</div>
