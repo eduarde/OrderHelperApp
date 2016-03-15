@@ -319,6 +319,7 @@ class DashboardReperCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Reperul ' + str(self.object.pk) + ' cu codul ' +  str(self.object.cod_reper) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -352,6 +353,7 @@ class DashboardReperEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Reperul ' + str(self.object.pk) + ' cu codul ' +  str(self.object.cod_reper) + ' a fost editat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
@@ -375,6 +377,7 @@ class DashboardProducatorCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Producatorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -399,6 +402,7 @@ class DashboardFurnizorCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Furnizorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -432,6 +436,7 @@ class DashboardFurnizorEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Furnizorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost editat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
@@ -455,6 +460,7 @@ class DashboardProiectCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Proiectul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.titlu) + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -471,6 +477,7 @@ class DashboardProiectEditView(FormView):
 		url = '/proiect/edit/' + self.get_primary_key()
 		self.object = self.get_object()
 		form = self.form_class(instance=self.object)
+		messages.add_message(request, messages.INFO, 'Proiectul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.titlu) + ' a fost editat cu succes.')
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
 
 	def get_object(self):
@@ -511,6 +518,7 @@ class DashboardPersoanaCreateView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Solicitantul ' + str(self.object)  + ' a fost creat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})
@@ -544,6 +552,7 @@ class DashboardProducatorEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Producatorul  ' + str(self.object.pk) + ' cu numele ' +  str(self.object.nume) + ' a fost editat cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': url})
