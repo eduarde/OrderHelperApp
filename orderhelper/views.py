@@ -294,7 +294,7 @@ class DashboardSubcomandaEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
-			messages.add_message(request, messages.INFO, 'Subcomanda ' + str(self.object.pk) + ' cu numarul curent ' + str(self.object.numar_curent) + ' al comenzii ' + str(self.object.comanda_ref.pk) + ' a fost creata cu succes.')
+			messages.add_message(request, messages.INFO, 'Subcomanda ' + str(self.object.pk) + ' cu numarul curent ' + str(self.object.numar_curent) + ' al comenzii ' + str(self.object.comanda_ref.pk) + ' a fost editata cu succes.')
 			return redirect(self.success_url)
 	
 		return render(request, self.template_name, {'subcomandaform': form})
@@ -317,9 +317,17 @@ class DashboardReperCreateView(FormView):
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			self.object = form.save(commit=True)
-			self.object.save()
-			messages.add_message(request, messages.INFO, 'Reperul ' + str(self.object.pk) + ' cu codul ' +  str(self.object.cod_reper) + ' a fost creat cu succes.')
+			self.object = form.save(commit=False)
+			exist_cod_reper = Reper.objects.all().filter(cod_reper=self.object.cod_reper)
+			print(exist_cod_reper)
+			if exist_cod_reper:
+				
+				messages.add_message(request, messages.ERROR, 'Reperul ' +  str(self.object.cod_reper) + ' se afla deja in baza de date')
+			else:
+				self.object = form.save(commit=True)
+				self.object.save()
+				messages.add_message(request, messages.INFO, 'Reperul ' + str(self.object.pk) + ' cu codul ' +  str(self.object.cod_reper) + ' a fost creat cu succes.')
+			
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'dialog_title': self.dialog_title, 'url': self.url})

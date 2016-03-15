@@ -8,9 +8,12 @@
 	{% if messages %}
 	<div class="messages">
     	{% for message in messages %}
-    	<div class="alert alert-success" role="alert">{{ message }}</div>
-    		<!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
-   		 {% endfor %}
+	    	{% if message.level == 20 %}
+	    		<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-info-sign"></span> {{ message }}</div>
+	    	{% else %}
+	    		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> {{ message }}</div>
+	    	{% endif %}
+   		{% endfor %}
 	</div>
 	{% endif %}
 	
