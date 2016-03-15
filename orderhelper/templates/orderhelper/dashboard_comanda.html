@@ -5,6 +5,15 @@
   {% if user.is_authenticated %}
 	<h1 class="sub-header">Dashboard <small> Comanda </small> </h1>
 
+	{% if messages %}
+	<div class="messages">
+    	{% for message in messages %}
+    	<div class="alert alert-success" role="alert">{{ message }}</div>
+    		<!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+   		 {% endfor %}
+	</div>
+	{% endif %}
+
 	<br /> <br />
 	<div class="btn-group" role="group" aria-label="...">
  		<a href="{% url 'dashboard_comanda_new' %}" type="button" class="btn btn-primary">Add</a>

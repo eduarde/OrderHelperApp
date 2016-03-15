@@ -16,6 +16,7 @@ from pure_pagination.mixins import PaginationMixin
 from django.db.models import Q
 from operator import __and__ as AND
 from functools import reduce
+from django.contrib import messages
 
 # def handler404(request):
 # 	return render(request,'orderhelper/error404.html');
@@ -201,6 +202,7 @@ class DashboardComandaCreateView(FormView):
 			self.object.preluat = self.request.user
 			self.object.save()
 			form.save_m2m()
+			messages.add_message(request, messages.INFO, 'Comanda ' + str(self.object.pk) + ' a fost creata cu succes.')
 			return redirect(self.success_url)
 	
 		return render(request, self.template_name, {'comandaform': form})
@@ -228,6 +230,7 @@ class DashboardComandaEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Comanda ' + str(self.object.pk) + ' a fost editata cu succes.')
 			return redirect(self.success_url)
 	
 		return render(request, self.template_name, {'comandaform': form})
@@ -262,6 +265,7 @@ class DashboardSubcomandaCreateView(FormView):
 			self.object.data = datetime.now()
 			self.object.save()
 			form.save_m2m()
+			messages.add_message(request, messages.INFO, 'Subcomanda ' + str(self.object.pk) + ' cu numarul curent ' + str(self.object.numar_curent) + ' al comenzii ' + str(self.object.comanda_ref.pk) + ' a fost creata cu succes.')
 			return redirect(self.success_url)
 	
 		return render(request, self.template_name, {'subcomandaform': form})
@@ -290,6 +294,7 @@ class DashboardSubcomandaEditView(FormView):
 		if form.is_valid():
 			self.object = form.save(commit=True)
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Subcomanda ' + str(self.object.pk) + ' cu numarul curent ' + str(self.object.numar_curent) + ' al comenzii ' + str(self.object.comanda_ref.pk) + ' a fost creata cu succes.')
 			return redirect(self.success_url)
 	
 		return render(request, self.template_name, {'subcomandaform': form})
@@ -605,6 +610,7 @@ class PendingComandaCloseView(FormView):
 			self.object = form.save(commit=False)
 			self.object.status = Status.objects.filter(text='Inchis')[0]
 			self.object.save()
+			messages.add_message(request, messages.INFO, 'Comanda ' + str(self.object.pk) + ' a fost inchisa cu succes.')
 			return redirect(request.META['HTTP_REFERER'])
 	
 		return render(request, self.template_name, {'form': form, 'comanda': self.object, 'dialog_title': self.dialog_title, 'url': url})

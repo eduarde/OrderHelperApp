@@ -4,6 +4,16 @@
 	{% block content %}
 	{% if user.is_authenticated %}
 	<h1 class="sub-header">Pending</h1>
+
+	{% if messages %}
+	<div class="messages">
+    	{% for message in messages %}
+    	<div class="alert alert-success" role="alert">{{ message }}</div>
+    		<!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+   		 {% endfor %}
+	</div>
+	{% endif %}
+	
 	<br /><br />
 
 {% block extra_js%}
