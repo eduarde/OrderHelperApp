@@ -25,10 +25,10 @@ Several topics to consider:
 * Create a virtual environment under your project. Run `python3 -m venv myvenv` ( you can choose a different name instead of myvenv)
 * Activate your virtual environment. Run `myvenv\Scripts\activate`
 * Install the required dependencies:
-    * pip install django==1.X
-    * pip install django-widget-tweaks
-    * pip install django-datetime-widget
-    * pip install django-pure-pagination
+    * `pip install django==1.X`
+    * `pip install django-widget-tweaks`
+    * `pip install django-datetime-widget`
+    * `pip install django-pure-pagination`
 * Make migrations by running: `python manage.py makemigrations orderhelper`
 * Migrate by running: `python manage.py migrate orderhelper`
 * Create a super user in order to have access to administration page: `python manage.py createsuperuser`
